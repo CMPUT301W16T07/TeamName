@@ -96,24 +96,22 @@ public class TutorTraderActivityTest extends ActivityInstrumentationTestCase2 {
     *
     */
     private void createSearch(String searchText){
-	    assertNotNull(activity.findViewById(com.teamneam.tutortrader.R.id.search));
-	    searchInput.setText(searchText);
-	    ((Button) activity.findViewById(com.teamneam.tutortrader.R.id.search)).performClick();
+    	assertNotNull(activity.findViewById(com.teamneam.tutortrader.R.id.search));
+    	searchInput.setText(searchText);
+	((Button) activity.findViewById(com.teamneam.tutortrader.R.id.search)).performClick();
     }
 
-    public 	void testSearchOneWord(){
-	    TutorTradeAcitivity tta = (TutorTradeAcitivity)getActivity();
-	    createSession("Math", "Tutor for highschool math classes.");
-	    createSession("Math", "Tutor for university math classes.");
-	    
-	    createSearch("highschool")
+    public void testSearchOneWord(){
+	TutorTradeAcitivity tta = (TutorTradeAcitivity)getActivity();
+	createSession("Math", "Tutor for highschool math classes.");
+	createSession("Math", "Tutor for university math classes.");
+	createSearch("highschool")
 
-	    ArrayAdapter<Session> arrayAdapter = tta.getAdapter();
-	    assertEquals(1, arrayAdapter.getCount()); 
-	
-    	Session session = arrayAdapter.getItem(arrayAdapter.getCount()-1);
+	ArrayAdapter<Session> arrayAdapter = tta.getAdapter();
+	assertEquals(1, arrayAdapter.getCount()); 
+	Session session = arrayAdapter.getItem(arrayAdapter.getCount()-1);
     	assertEquals("Should be math title",session.getTitle(), "Math");
-	    assertEquals("Should be the description for highschool math session", session.getDescription(), "Tutor for highschool math classes.");	
+	assertEquals("Should be the description for highschool math session", session.getDescription(), "Tutor for highschool math classes.");	
     }
 
     
