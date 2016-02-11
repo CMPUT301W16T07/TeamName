@@ -15,6 +15,7 @@ public class TutorTraderActivityTest extends ActivityInstrumentationTestCase2 {
     Activity activity;
     EditText titleInput;
     EditText descriptionInput;
+    EditText searchInput;
 
     public TutorTraderActivityTest(Class activityClass) {
         super(activityClass);
@@ -83,4 +84,77 @@ public class TutorTraderActivityTest extends ActivityInstrumentationTestCase2 {
      * "As an owner, I want to view a list of all my sessions, and their descriptions and statuses."
      *
      */
+     
+     
+
+
+    /**
+    *	US 04.01.01 - As a borrower, I want to specify a set of keywords, and search for all things not currently
+    *                 borrowed whose description contains all keywords. 
+    *	Assumes that the search bar exists in the main Activity and does not have its own View.
+    *	Assumes the search updates the existing Array adapter with the new search information
+    *
+    */
+    private void createSearch(String searchText){
+	    assertNotNull(activity.findViewById(com.teamneam.tutortrader.R.id.search));
+	    searchInput.setText(searchText);
+	    ((Button) activity.findViewById(com.teamneam.tutortrader.R.id.search)).performClick();
+    }
+
+    public 	void testSearchOneWord(){
+	    TutorTradeAcitivity tta = (TutorTradeAcitivity)getActivity();
+	    createSession("Math", "Tutor for highschool math classes.");
+	    createSession("Math", "Tutor for university math classes.");
+	    
+	    createSearch("highschool")
+
+	    ArrayAdapter<Session> arrayAdapter = tta.getAdapter();
+	    assertEquals(1, arrayAdapter.getCount()); 
+	
+    	Session session = arrayAdapter.getItem(arrayAdapter.getCount()-1);
+    	assertEquals("Should be math title",session.getTitle(), "Math");
+	    assertEquals("Should be the description for highschool math session", session.getDescription(), "Tutor for highschool math classes.");	
+    }
+
+    
+    /**
+    *	how do we want the search to deal with multiple words?
+    *	do we look for partial matches or ignore those?
+    *	do we look for exact matches or just descriptions with two matching words?
+    * 	test assumes search words individualy.
+    **/
+    public void testSearchTwoWords(){
+    	TutorTradeAcitivity tta = (TutorTradeAcitivity)getActivity();
+    	createSession("Math", "Tutor for highschool classes.");
+    	createSession("Math", "Tutor for university math classes.");
+    	createSession("Biology", "Tutor for biology 101, 102");
+    	
+    	createSearch("highschool math");
+    
+    	ArrayAdapter<Session> arrayAdapter = tta.getAdapter();
+    	assertEquals(2, arrayAdapter.getCount()); 
+    	
+    	Session session = arrayAdapter.getItem(arrayAdapter.getCount()-1);
+    	assertNotEquals("Should not be Bio title",session.getTitle(), "Biology");
+    	session = arrayAdapter.getItem(arrayAdapter.getCount()-2);
+    	assertNotEquals("Should not be Bio title",session.getTitle(), "Biology")
+    }
+
+    /**
+    *	check that empty list is empty.
+    *	
+    *
+    */
+    public void testSearchEmpty(){
+    	TutorTradeAcitivity tta = (TutorTradeAcitivity)getActivity();
+    	createSession("Math", "Tutor for highschool math classes.");
+    	
+    	createSearch("nothing");
+    	
+    	ArrayAdapter<Session> arrayAdapter = tta.getAdapter();
+    	assertEquals(0, arrayAdapter.getCount()); 
+    	
+    }
+         
+         
 }
