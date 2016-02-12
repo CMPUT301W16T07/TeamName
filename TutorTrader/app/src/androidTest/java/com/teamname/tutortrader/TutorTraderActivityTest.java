@@ -114,28 +114,24 @@ public class TutorTraderActivityTest extends ActivityInstrumentationTestCase2 {
 	assertEquals("Should be the description for highschool math session", session.getDescription(), "Tutor for highschool math classes.");	
     }
 
-    
-    /**
-    *	how do we want the search to deal with multiple words?
-    *	do we look for partial matches or ignore those?
-    *	do we look for exact matches or just descriptions with two matching words?
-    * 	test assumes search words individualy.
-    **/
+    /*
+    * should only get the Session with both 'highschool' and 'math' in the description
+     */
     public void testSearchTwoWords(){
     	TutorTradeAcitivity tta = (TutorTradeAcitivity)getActivity();
-    	createSession("Math", "Tutor for highschool classes.");
+    	createSession("Math", "Tutor for highschool math classes.");
     	createSession("Math", "Tutor for university math classes.");
     	createSession("Biology", "Tutor for biology 101, 102");
     	
     	createSearch("highschool math");
     
     	ArrayAdapter<Session> arrayAdapter = tta.getAdapter();
-    	assertEquals(2, arrayAdapter.getCount()); 
+    	assertEquals(1, arrayAdapter.getCount());
     	
     	Session session = arrayAdapter.getItem(arrayAdapter.getCount()-1);
-    	assertNotEquals("Should not be Bio title",session.getTitle(), "Biology");
-    	session = arrayAdapter.getItem(arrayAdapter.getCount()-2);
-    	assertNotEquals("Should not be Bio title",session.getTitle(), "Biology")
+    	assertEquals("Should be math, highschool math", session.getTitle(), "Math");
+        assertEquals("Should be math, highschool math",session.getDescription(), "Tutor for highschool math classes.");
+
     }
 
     /**
