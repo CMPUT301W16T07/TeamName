@@ -57,7 +57,7 @@ public class TutorTraderActivityTest extends ActivityInstrumentationTestCase2 {
         assertTrue("Did you add a Session object?",
                 arrayAdapter.getItem(arrayAdapter.getCount() - 1) instanceof Session);
 
-        Session session = arrayAdapter.getItem(arrayAdapter.getCount()-1);
+        Session session = arrayAdapter.getItem(arrayAdapter.getCount() - 1);
         assertEquals("this is the title we expected", session.getTitle(), "Math");
         assertEquals("this is the description we expected", session.getDescription(),
                 "Tutor for linear Algebra for all university levels");
@@ -98,20 +98,20 @@ public class TutorTraderActivityTest extends ActivityInstrumentationTestCase2 {
     private void createSearch(String searchText){
     	assertNotNull(activity.findViewById(com.teamneam.tutortrader.R.id.search));
     	searchInput.setText(searchText);
-	((Button) activity.findViewById(com.teamneam.tutortrader.R.id.search)).performClick();
+	    ((Button) activity.findViewById(com.teamneam.tutortrader.R.id.search)).performClick();
     }
 
     public void testSearchOneWord(){
-	TutorTradeAcitivity tta = (TutorTradeAcitivity)getActivity();
-	createSession("Math", "Tutor for highschool math classes.");
-	createSession("Math", "Tutor for university math classes.");
-	createSearch("highschool")
+	    TutorTradeAcitivity tta = (TutorTradeAcitivity)getActivity();
+	    createSession("Math", "Tutor for highschool math classes.");
+    	createSession("Math", "Tutor for university math classes.");
+    	createSearch("highschool")
 
-	ArrayAdapter<Session> arrayAdapter = tta.getAdapter();
-	assertEquals(1, arrayAdapter.getCount()); 
-	Session session = arrayAdapter.getItem(arrayAdapter.getCount()-1);
-    	assertEquals("Should be math title",session.getTitle(), "Math");
-	assertEquals("Should be the description for highschool math session", session.getDescription(), "Tutor for highschool math classes.");	
+    	ArrayAdapter<Session> arrayAdapter = tta.getAdapter();
+    	assertEquals(1, arrayAdapter.getCount());
+    	Session session = arrayAdapter.getItem(arrayAdapter.getCount()-1);
+    	assertEquals("Should be math title", session.getTitle(), "Math");
+    	assertEquals("Should be the description for highschool math session", session.getDescription(), "Tutor for highschool math classes.");
     }
 
     /*
@@ -148,6 +148,30 @@ public class TutorTraderActivityTest extends ActivityInstrumentationTestCase2 {
     	ArrayAdapter<Session> arrayAdapter = tta.getAdapter();
     	assertEquals(0, arrayAdapter.getCount()); 
     	
+    }
+
+
+    /*
+    *   US - US 07.01.01 - RETURNING
+    *   As an owner, I want to set a borrowed thing to be available when it is returned.
+    *   Creates a session. goes yo session info. Clicks edit. And click the 'repost' button
+     */
+
+    public void testReturn(){
+        TutorTraderActivity tta = (TutorTraderActivity)getActivity();
+        int oldLength = tta.getAdapter().getCount();
+        createSession("Math", "Tutor for highschool math classes.");
+
+        ArrayAdapter<Session> arrayAdapter = tta.getAdapter();
+        assertEquals(oldLength + 1, arrayAdapter.getCount());
+
+        arrayAdapter.getView(oldLength - 1, null ,null).performClick();
+        activity.findViewById(R.id.edit).performClick();
+        activity.findViewById(R.id.repost).performClick();
+
+        assertEquals("check status is back to available", arrayAdapter.getItem(oldLength -1).getStauts, "available");
+
+
     }
          
          
