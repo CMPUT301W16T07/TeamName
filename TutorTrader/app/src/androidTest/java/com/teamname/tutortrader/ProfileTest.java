@@ -10,9 +10,11 @@ import android.widget.EditText;
  * Abrosda @12/2/2016
  * US 03.02.01
  * As a user, I want to edit the contact information in my profile.
+ *
+ * For profile tests.
  */
 
-public class ProfileTestTex extends ActivityInstrumentationTestCase2 {
+public class ProfileTest extends ActivityInstrumentationTestCase2 {
 
     Instrumentation instrumentation;
     Activity activity;
@@ -23,15 +25,32 @@ public class ProfileTestTex extends ActivityInstrumentationTestCase2 {
     public ProfileTestText(Class activityClass) {
         super(activityClass);
     }
-    public void testEditemail() {
+
+    public void testEditEmail() {
         User user = new User;
         user.setEmail("randomemail@gmail.ca")
         assertTrue(user.getEmail(), "randomemail@gmail.ca")
     }
-    public void testEditphon() {
+
+    public void testEditPhone() {
         User user = new User;
         user.setPhone("7804737373");
         assertTrue(user.getPhone(),"7804737373")
+
+    }
+
+
+    /**
+     *  added by abrosda
+     *  US 03.03.01
+     * As a user, I want to, when a username is presented for a thing, retrieve and show its contact information.
+     */
+    public void testShowUser() {
+        TutorTradeAcitivity tta = (TutorTradeAcitivity)getActivity();
+        User user = new User;
+        session = createSession("Math", "Tutor for highschool math classes.");
+        session.setUser(user);
+        assertTrue(session.getuser(), user );
 
     }
 }

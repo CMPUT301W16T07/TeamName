@@ -63,4 +63,26 @@ public class BorrowTest extends ActivityInstrumentationTestCase2 {
         assertTrue(session, arrayAdapter.getItem(arrayAdapter.getCount() - 1) instanceof Session);
 
     }
+
+    /**
+    *   US - US 07.01.01 - RETURNING
+    *   As an owner, I want to set a borrowed thing to be available when it is returned.
+    *   Creates a session. goes yo session info. Clicks edit. And click the 'repost' button
+    */
+    public void testReturn(){
+        TutorTraderActivity tta = (TutorTraderActivity)getActivity();
+        int oldLength = tta.getAdapter().getCount();
+        createSession("Math", "Tutor for highschool math classes.");
+
+        ArrayAdapter<Session> arrayAdapter = tta.getAdapter();
+        assertEquals(oldLength + 1, arrayAdapter.getCount());
+
+        arrayAdapter.getView(oldLength - 1, null ,null).performClick();
+        activity.findViewById(R.id.edit).performClick();
+        activity.findViewById(R.id.repost).performClick();
+
+        assertEquals("check status is back to available", arrayAdapter.getItem(oldLength - 1).getStauts, "available");
+
+
+    }
 }
