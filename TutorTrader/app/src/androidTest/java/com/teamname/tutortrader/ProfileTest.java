@@ -27,17 +27,18 @@ public class ProfileTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testEditEmail() {
-        User user = new User;
-        user.setEmail("randomemail@gmail.ca")
-        assertTrue(user.getEmail(), "randomemail@gmail.ca")
+        Profile user = new Profile();
+        user.setEmail("randomemail@gmail.ca");
+        assertEquals(user.getEmail(), "randomemail@gmail.ca");
     }
 
     public void testEditPhone() {
-        User user = new User;
+        Profile user = new Profile();
         user.setPhone("7804737373");
-        assertTrue(user.getPhone(),"7804737373")
+        assertEquals(user.getPhone(),"7804737373");
 
     }
+
 
 
     /**
