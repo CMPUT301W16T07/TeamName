@@ -1,6 +1,7 @@
 package com.teamname.tutortrader;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * Created by taylorarnett on 2016-03-01.
@@ -8,13 +9,14 @@ import java.util.ArrayList;
 
 /**
  * Session object class
+ *
  */
 public class Session {
     private String title;
     private String description;
     private Profile tutor;
     private String status;
-    private Integer sessionID;
+    private UUID sessionID;
     private ArrayList<Bid> bids;
 
     public Session(String title, String description, Profile tutor) {
@@ -22,16 +24,24 @@ public class Session {
         this.description = description;
         this.status = "available";
         this.tutor = tutor;
-        // TODO: figure out android ID generator. Also needed in Profile.class
-        this.sessionID = null;
+        this.sessionID = UUID.randomUUID();
         this.bids = new ArrayList<Bid>();
 
     }
 
+    /**
+     * When creates a new bid the bid is passed into addBid for the specific session.
+     * @param bid This is a bid object that will be added to the array of bids for a given session.
+     */
     public void addBid(Bid bid) {
         bids.add(bid);
     }
 
+    /**
+     * getBids will return a list of bids that a specific session has.
+     *
+     * @return will return an arraylist of bids.
+     */
     public ArrayList<Bid> getBids () {
         return bids;
     }
@@ -41,6 +51,10 @@ public class Session {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public UUID getSessionID() {
+        return sessionID;
     }
 
     public String getDescription() {
