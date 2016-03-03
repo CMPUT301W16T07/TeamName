@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="My Profile"
+            android:id="@+id/myProfile"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/mySessions" />
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Current bids"
+            android:id="@+id/currentBids"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/availibleSessions" />
+
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Availible Sessions"
+            android:id="@+id/availibleSessions"
+            android:layout_alignBottom="@+id/currentBids"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="My sessions"
+            android:id="@+id/mySessions"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/currentBids" />
+
+
+
+    </RelativeLayout>
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:id="@+id/currentBidsList"
+        android:layout_height="450dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"></ListView>
+</LinearLayout>
