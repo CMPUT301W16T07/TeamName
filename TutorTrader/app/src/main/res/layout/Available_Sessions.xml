@@ -65,10 +65,10 @@
         <EditText
             android:layout_width="300dp"
             android:layout_height="50dp"
-            android:text="Enter keywords here"
             android:id="@+id/searchtext"
             android:layout_alignParentBottom="true"
-            android:layout_toStartOf="@+id/searchButton" />
+            android:layout_toStartOf="@+id/searchButton"
+            android:hint="Enter keywords here" />
 
         <Button
             android:layout_width="100dp"
