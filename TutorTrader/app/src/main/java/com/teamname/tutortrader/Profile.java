@@ -1,5 +1,6 @@
 package com.teamname.tutortrader;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 /**
@@ -12,7 +13,7 @@ public class Profile {
     private String phone;
     private String email;
 
-    public void Profile(String name, String phone, String email){
+    public Profile(String name, String phone, String email){
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -46,5 +47,13 @@ public class Profile {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    /**
+     * Returns an array list of all current bids that this user
+     * has placed on other user's sessions.
+     */
+    public ArrayList<Bid> getCurrentBids() {
+        return new ArrayList<>();
     }
 }

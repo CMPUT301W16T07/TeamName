@@ -24,7 +24,7 @@
     <Button
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="Current bids"
+        android:text="Current Bids"
         android:id="@+id/currentBids"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/availibleSessions" />
@@ -33,7 +33,7 @@
     <Button
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="Availible Sessions"
+        android:text="Available Sessions"
         android:id="@+id/availibleSessions"
         android:layout_alignBottom="@+id/currentBids"
         android:layout_alignParentStart="true" />
