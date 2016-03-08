@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:id="@+id/saveNewSession">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Edit Session"
+        android:id="@+id/AddNewSession"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.06"
+        android:textAlignment="center"
+        android:textIsSelectable="false"
+        android:textSize="30dp"
+        android:textColor="#080808" />
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:id="@+id/subjectEdit"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@+id/searchButton"
+        android:hint="Subject" />
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:id="@+id/descriptionEdit"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@+id/searchButton"
+        android:hint="Description" />
+
+    <Button
+        android:layout_width="157dp"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:id="@+id/saveButton"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.19" />
+
+    <Button
+        android:layout_width="157dp"
+        android:layout_height="94dp"
+        android:text="Cancel"
+        android:id="@+id/cancelEditSession"
+        android:layout_gravity="center_horizontal" />
+
+</LinearLayout>
