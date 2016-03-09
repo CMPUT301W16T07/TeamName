@@ -1,12 +1,7 @@
 package com.teamname.tutortrader;
 
-import android.app.Activity;
-import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
-import android.widget.EditText;
-
-import javax.net.ssl.SSLSessionBindingListener;
 
 /**
  * malba @12/2/2016
@@ -85,7 +80,7 @@ public class BiddingTest extends ActivityInstrumentationTestCase2 {
      * This tests the UI.
      */
     public void testViewPendingBids() {
-        TutorTradeActivity tta = (TutorTradeActivity)getActivity();
+        AvailableSessionsActivity tta = (AvailableSessionsActivity)getActivity();
         int oldLength = tta.getAdapter().getCount();
         createSession("Math", "Tutor for linear Algebra for all university levels");
         ArrayAdapter<Session> arrayAdapter = tta.getAdapter();
@@ -105,7 +100,7 @@ public class BiddingTest extends ActivityInstrumentationTestCase2 {
      * This tests the UI.
      */
     public void testViewSessionsWithBids() {
-        TutorTradeActivity tta = (TutorTradeActivity)getActivity();
+        AvailableSessionsActivity tta = (AvailableSessionsActivity)getActivity();
         int oldLength = tta.getAdapter().getCount();
         createSession("Math", "Tutor for linear Algebra for all university levels");
         ArrayAdapter<Session> arrayAdapter = tta.getAdapter();

@@ -91,7 +91,7 @@ public class TutorTraderActivityTest extends ActivityInstrumentationTestCase2 {
      * to the view to see if the sessions persist.
      */
     public void testViewSessions () {
-        TutorTradeActivity tta = (TutorTradeActivity)getActivity();
+        AvailableSessionsActivity tta = (AvailableSessionsActivity)getActivity();
         assertNotNull(activity.findViewById(com.teamname.tutortrader.R.id.MySessionsButton));
         ((Button) activity.findViewById(com.teamname.tutortrader.R.id.mySessionsButton)).performClick();
         MySessionsActivity msa = (MySessionsActivity)getActivity();
@@ -100,7 +100,7 @@ public class TutorTraderActivityTest extends ActivityInstrumentationTestCase2 {
         createSession("Stats", "Tutor for Stats 252 and 141");
         assertNotNull(activity.findViewById(com.teamname.tutortrader.R.id.currentBidsButton));
         ((Button) activity.findViewById(com.teamname.tutortrader.R.id.availableSessionsButton)).performClick();
-        TutorTradeActivity tta = (TutorTradeActivity)getActivity();
+        AvailableSessionsActivity tta = (AvailableSessionsActivity)getActivity();
         ((Button) activity.findViewById(com.teamname.tutortrader.R.id.mySessionsButton)).performClick();
         MySessionsActivity msa = (MySessionsActivity)getActivity();
 
