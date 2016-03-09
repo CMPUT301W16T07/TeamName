@@ -20,17 +20,12 @@ public class CurrentBidsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.my_sessions);
+        setContentView(R.layout.current_bids);
+
+        //adapter = new CurrentBidsAdapter(this, profile.getCurrentBids());
+        //currentBidsList.setAdapter(adapter);
 
         profile = new Profile("name", "phone", "email");
         currentBidsList = (ListView) findViewById(R.id.currentBidsList);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        //loadFromFile();
-        adapter = new CurrentBidsAdapter(this, profile.getCurrentBids());
-        currentBidsList.setAdapter(adapter);
     }
 }

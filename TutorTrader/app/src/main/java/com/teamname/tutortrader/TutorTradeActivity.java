@@ -37,6 +37,18 @@ public class TutorTradeActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * Clicking on the "Current Bids" tab.
+         */
+        Button currentBids = (Button) findViewById(R.id.currentBids);
+        currentBids.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TutorTradeActivity.this, CurrentBidsActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override

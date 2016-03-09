@@ -19,7 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".AddSessionActivity" />
-        <activity android:name=".MySessionsActivity"></activity>
+        <activity android:name=".MySessionsActivity" />
+        <activity android:name=".CurrentBidsActivity" />
     </application>
 
 </manifest>
