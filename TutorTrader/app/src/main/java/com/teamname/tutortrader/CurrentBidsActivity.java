@@ -8,10 +8,12 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.logging.MemoryHandler;
+
 /**
  * Created by MJ Alba on 2016-03-08.
  */
-public class CurrentBidsActivity extends AppCompatActivity {
+public class CurrentBidsActivity extends MethodsController {
 
     private Profile profile; // the current user's profile
     private ListView currentBidsList; // view to display the current bids

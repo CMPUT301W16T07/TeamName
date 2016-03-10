@@ -21,6 +21,22 @@ public class MethodsController extends AppCompatActivity {
     private ArrayList<Profile> profiles = new ArrayList<Profile>();
     private ArrayList<Bid> bids = new ArrayList<Bid>();
 
+    private Button btn_availableSession, btn_myProfile, btn_CurrentBids, btn_mySessions;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        btn_CurrentBids = (Button) findViewById(R.id.currentBids);
+        btn_CurrentBids.setOnClickListener(onClickListener);
+        btn_myProfile = (Button) findViewById(R.id.myProfile);
+        btn_myProfile.setOnClickListener(onClickListener);
+        btn_mySessions = (Button) findViewById(R.id.mySessions);
+        btn_mySessions.setOnClickListener(onClickListener);
+        btn_availableSession = (Button) findViewById(R.id.availibleSessions);
+        btn_availableSession.setOnClickListener(onClickListener);
+    }
+
+
     private void saveInFile(String fileName){
         //TODO: Implement this
     }
@@ -42,51 +58,26 @@ public class MethodsController extends AppCompatActivity {
         return Boolean.FALSE;
     }
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.available_sessions);
-
-        Button availableSessions = (Button) findViewById(R.id.availibleSessions);
-        availableSessions.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    private View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (v == btn_myProfile) {
+                setContentView(R.layout.my_profile);
+                Intent intent = new Intent(MethodsController.this, MyProfileActivity.class);
+                startActivity(intent);
+            } else if (v == btn_availableSession) {
+                setContentView(R.layout.available_sessions);
                 Intent intent = new Intent(MethodsController.this, AvailableSessionsActivity.class);
                 startActivity(intent);
-            }
-        });
-
-        Button mySessions = (Button) findViewById(R.id.mySessions);
-        mySessions.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            } else if (v == btn_CurrentBids) {
+                setContentView(R.layout.current_bids);
+                Intent intent = new Intent(MethodsController.this, CurrentBidsActivity.class);
+                startActivity(intent);
+            } else if (v == btn_mySessions) {
+                setContentView(R.layout.my_sessions);
                 Intent intent = new Intent(MethodsController.this, MySessionsActivity.class);
                 startActivity(intent);
             }
-        });
-
-        /**
-         * Clicking on the "Current Bids" tab.
-         */
-        Button currentBids = (Button) findViewById(R.id.currentBids);
-        currentBids.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MethodsController.this, CurrentBidsActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        Button myProfile = (Button) findViewById(R.id.myProfile);
-        myProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MethodsController.this, MyProfileActivity.class);
-                startActivity(intent);
-            }
-        });
-
-    }
-
+        }
+    };
 }

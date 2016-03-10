@@ -13,19 +13,12 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class AvailableSessionsActivity extends AppCompatActivity {
+public class AvailableSessionsActivity extends MethodsController {
 
 
     private ListView oldSessions;
     private ArrayList<Session> sessions = new ArrayList<Session>();
     private ArrayAdapter<Session> adapter;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.available_sessions);
-
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

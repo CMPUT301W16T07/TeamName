@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class MySessionsActivity extends AppCompatActivity {
+public class MySessionsActivity extends MethodsController {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
