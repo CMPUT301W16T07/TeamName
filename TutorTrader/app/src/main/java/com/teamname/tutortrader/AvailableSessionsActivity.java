@@ -25,28 +25,6 @@ public class AvailableSessionsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.available_sessions);
 
-
-        Button mySessions = (Button) findViewById(R.id.mySessions);
-        mySessions.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AvailableSessionsActivity.this, MySessionsActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        /**
-         * Clicking on the "Current Bids" tab.
-         */
-        Button currentBids = (Button) findViewById(R.id.currentBids);
-        currentBids.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AvailableSessionsActivity.this, CurrentBidsActivity.class);
-                startActivity(intent);
-            }
-        });
-
     }
 
     @Override
