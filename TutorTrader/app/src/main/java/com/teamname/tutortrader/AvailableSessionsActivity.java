@@ -21,6 +21,20 @@ public class AvailableSessionsActivity extends MethodsController {
     private ArrayAdapter<Session> adapter;
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.available_sessions);
+        btn_CurrentBids = (Button) findViewById(R.id.currentBids);
+        btn_CurrentBids.setOnClickListener(btnClickListener);
+        btn_myProfile = (Button) findViewById(R.id.myProfile);
+        btn_myProfile.setOnClickListener(btnClickListener);
+        btn_mySessions = (Button) findViewById(R.id.mySessions);
+        btn_mySessions.setOnClickListener(btnClickListener);
+        btn_availableSession = (Button) findViewById(R.id.availibleSessions);
+        btn_availableSession.setOnClickListener(btnClickListener);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_tutor_trade, menu);

@@ -23,11 +23,14 @@ public class CurrentBidsActivity extends MethodsController {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.current_bids);
+        btn_CurrentBids = (Button) findViewById(R.id.currentBids);
+        btn_CurrentBids.setOnClickListener(btnClickListener);
+        btn_myProfile = (Button) findViewById(R.id.myProfile);
+        btn_myProfile.setOnClickListener(btnClickListener);
+        btn_mySessions = (Button) findViewById(R.id.mySessions);
+        btn_mySessions.setOnClickListener(btnClickListener);
+        btn_availableSession = (Button) findViewById(R.id.availibleSessions);
+        btn_availableSession.setOnClickListener(btnClickListener);
 
-        //adapter = new CurrentBidsAdapter(this, profile.getCurrentBids());
-        //currentBidsList.setAdapter(adapter);
-
-        //profile = new Profile("name", "phone", "email");
-        currentBidsList = (ListView) findViewById(R.id.currentBidsList);
     }
 }

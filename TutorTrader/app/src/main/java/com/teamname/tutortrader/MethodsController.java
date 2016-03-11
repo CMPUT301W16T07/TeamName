@@ -36,20 +36,56 @@ public class MethodsController extends AppCompatActivity {
     protected ArrayList<Profile> profiles = new ArrayList<Profile>();
     protected ArrayList<Bid> bids = new ArrayList<Bid>();
 
-    private Button btn_availableSession, btn_myProfile, btn_CurrentBids, btn_mySessions;
+    protected Button btn_availableSession, btn_myProfile, btn_CurrentBids, btn_mySessions;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-        btn_CurrentBids = (Button) findViewById(R.id.currentBids);
-        btn_CurrentBids.setOnClickListener(onClickListener);
-        btn_myProfile = (Button) findViewById(R.id.myProfile);
-        btn_myProfile.setOnClickListener(onClickListener);
-        btn_mySessions = (Button) findViewById(R.id.mySessions);
-        btn_mySessions.setOnClickListener(onClickListener);
-        btn_availableSession = (Button) findViewById(R.id.availibleSessions);
-        btn_availableSession.setOnClickListener(onClickListener);
-    }
+
+//http://stackoverflow.com/questions/7873480/android-one-onclick-method-for-multiple-buttons
+
+    protected View.OnClickListener btnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (v.getId() == R.id.myProfile) {
+                Intent intent = new Intent(MethodsController.this, MyProfileActivity.class);
+                startActivity(intent);
+            } else if (v.getId() == R.id.availibleSessions) {
+                setContentView(R.layout.available_sessions);
+                btn_CurrentBids = (Button) findViewById(R.id.currentBids);
+                btn_CurrentBids.setOnClickListener(btnClickListener);
+                btn_myProfile = (Button) findViewById(R.id.myProfile);
+                btn_myProfile.setOnClickListener(btnClickListener);
+                btn_mySessions = (Button) findViewById(R.id.mySessions);
+                btn_mySessions.setOnClickListener(btnClickListener);
+                btn_availableSession = (Button) findViewById(R.id.availibleSessions);
+                btn_availableSession.setOnClickListener(btnClickListener);
+                Intent intent = new Intent(MethodsController.this, AvailableSessionsActivity.class);
+                startActivity(intent);
+            } else if (v.getId() == R.id.currentBids) {
+                setContentView(R.layout.current_bids);
+                btn_CurrentBids = (Button) findViewById(R.id.currentBids);
+                btn_CurrentBids.setOnClickListener(btnClickListener);
+                btn_myProfile = (Button) findViewById(R.id.myProfile);
+                btn_myProfile.setOnClickListener(btnClickListener);
+                btn_mySessions = (Button) findViewById(R.id.mySessions);
+                btn_mySessions.setOnClickListener(btnClickListener);
+                btn_availableSession = (Button) findViewById(R.id.availibleSessions);
+                btn_availableSession.setOnClickListener(btnClickListener);
+                Intent intent = new Intent(MethodsController.this, CurrentBidsActivity.class);
+                startActivity(intent);
+            } else if (v.getId() == R.id.mySessions) {
+                setContentView(R.layout.my_sessions);
+                btn_CurrentBids = (Button) findViewById(R.id.currentBids);
+                btn_CurrentBids.setOnClickListener(btnClickListener);
+                btn_myProfile = (Button) findViewById(R.id.myProfile);
+                btn_myProfile.setOnClickListener(btnClickListener);
+                btn_mySessions = (Button) findViewById(R.id.mySessions);
+                btn_mySessions.setOnClickListener(btnClickListener);
+                btn_availableSession = (Button) findViewById(R.id.availibleSessions);
+                btn_availableSession.setOnClickListener(btnClickListener);
+                Intent intent = new Intent(MethodsController.this, MySessionsActivity.class);
+                startActivity(intent);
+            }
+        }
+    };
 
     /**
      * saveinFile borrowed from lonelyTwitter.
@@ -90,26 +126,4 @@ public class MethodsController extends AppCompatActivity {
         return Boolean.FALSE;
     }
 
-    private View.OnClickListener onClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (v == btn_myProfile) {
-                setContentView(R.layout.my_profile);
-                Intent intent = new Intent(MethodsController.this, MyProfileActivity.class);
-                startActivity(intent);
-            } else if (v == btn_availableSession) {
-                setContentView(R.layout.available_sessions);
-                Intent intent = new Intent(MethodsController.this, AvailableSessionsActivity.class);
-                startActivity(intent);
-            } else if (v == btn_CurrentBids) {
-                setContentView(R.layout.current_bids);
-                Intent intent = new Intent(MethodsController.this, CurrentBidsActivity.class);
-                startActivity(intent);
-            } else if (v == btn_mySessions) {
-                setContentView(R.layout.my_sessions);
-                Intent intent = new Intent(MethodsController.this, MySessionsActivity.class);
-                startActivity(intent);
-            }
-        }
-    };
 }

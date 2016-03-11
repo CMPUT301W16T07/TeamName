@@ -15,6 +15,14 @@ public class MyProfileActivity extends MethodsController {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_profile);
+        btn_CurrentBids = (Button) findViewById(R.id.currentBids);
+        btn_CurrentBids.setOnClickListener(btnClickListener);
+        btn_myProfile = (Button) findViewById(R.id.myProfile);
+        btn_myProfile.setOnClickListener(btnClickListener);
+        btn_mySessions = (Button) findViewById(R.id.mySessions);
+        btn_mySessions.setOnClickListener(btnClickListener);
+        btn_availableSession = (Button) findViewById(R.id.availibleSessions);
+        btn_availableSession.setOnClickListener(btnClickListener);
 
         //get profile singleton
         Profile currentProfile = Profile.getInstance();
