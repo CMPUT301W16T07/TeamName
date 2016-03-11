@@ -27,7 +27,7 @@ public class CurrentBidsActivity extends MethodsController {
         //adapter = new CurrentBidsAdapter(this, profile.getCurrentBids());
         //currentBidsList.setAdapter(adapter);
 
-        profile = new Profile("name", "phone", "email");
+        //profile = new Profile("name", "phone", "email");
         currentBidsList = (ListView) findViewById(R.id.currentBidsList);
     }
 }

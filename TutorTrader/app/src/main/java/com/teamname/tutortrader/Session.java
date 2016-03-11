@@ -16,7 +16,7 @@ import java.util.UUID;
 public class Session {
     private String title;
     private String description;
-    private Profile tutor;
+    protected Profile tutor;
     private String status;
     private UUID sessionID;
     private ArrayList<Bid> bids;
