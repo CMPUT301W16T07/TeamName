@@ -24,6 +24,9 @@ public class MySessionsActivity extends MethodsController {
         });
 
         //Selecting a session from list
+        // TODO: pass the index of the list item to fill fields in the ViewOneSession activity
+        Intent intent = new Intent(MySessionsActivity.this, ViewOneSessionActivity.class);
+
 
     }
 }

@@ -1,5 +1,6 @@
 package com.teamname.tutortrader;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.gson.Gson;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 /**
@@ -16,6 +28,11 @@ public class MethodsController extends AppCompatActivity {
     private static final String SESSIONSFILE = "sessions.sav";
     private static final String USERFILE = "profile.sav";
     private static final String BIDFILE = "bids.sav";
+
+    /**
+     * when user logs in maybe we can set the currentUser to the profile in use?
+     */
+    private Profile currentUser;
 
     private ArrayList<Session> sessions = new ArrayList<Session>();
     private ArrayList<Profile> profiles = new ArrayList<Profile>();
@@ -36,9 +53,26 @@ public class MethodsController extends AppCompatActivity {
         btn_availableSession.setOnClickListener(onClickListener);
     }
 
-
-    private void saveInFile(String fileName){
-        //TODO: Implement this
+    /**
+     * saveinFile borrowed from lonelyTwitter.
+     *
+     * @param fileName specifies which file we are going to save to
+     * @param list the arraylist we are saving to the file
+     */
+    private void saveInFile(String fileName, ArrayList list){
+        try {
+            FileOutputStream fos = openFileOutput(fileName,
+                    Context.MODE_PRIVATE);
+            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
+            Gson gson = new Gson();
+            gson.toJson(list, out);
+            out.flush();
+            fos.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            //e.printStackTrace();
+            throw new RuntimeException();
+        }
     }
 
     private void loadFromFile(String fileName){

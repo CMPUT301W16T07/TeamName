@@ -10,7 +10,7 @@ import android.widget.EditText;
 /**
  * Created by ALI on 2016-03-07.
  */
-public class EditSessionActivity extends AppCompatActivity {
+public class EditSessionActivity extends MethodsController {
 
     @Override
   protected void onCreate(Bundle savedInstanceState) {

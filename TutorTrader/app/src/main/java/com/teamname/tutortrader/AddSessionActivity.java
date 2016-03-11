@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class AddSessionActivity extends AppCompatActivity {
+public class AddSessionActivity extends MethodsController {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

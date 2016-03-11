@@ -21,6 +21,7 @@
         <activity android:name=".AddSessionActivity" />
         <activity android:name=".MySessionsActivity" />
         <activity android:name=".CurrentBidsActivity" />
+        <activity android:name=".ViewOneSessionActivity"></activity>
     </application>
 
 </manifest>
