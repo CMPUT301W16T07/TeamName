@@ -2,4 +2,7 @@
     <string name="app_name">TutorTrader</string>
     <string name="action_settings">Settings</string>
     <string name="Availible">Availible Sessions</string>
+    <string name="title_activity_edit_profile">EditProfileActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>
