@@ -24,8 +24,7 @@ public class MyProfileActivity extends MethodsController {
         btn_availableSession = (Button) findViewById(R.id.availibleSessions);
         btn_availableSession.setOnClickListener(btnClickListener);
 
-        //get profile singleton
-        Profile currentProfile = Profile.getInstance();
+
 
         //get textviews
         TextView displayUsername = (TextView) findViewById(R.id.username);
@@ -44,8 +43,9 @@ public class MyProfileActivity extends MethodsController {
             public void onClick(View v) {
 
                 //TODO: make editProfileActivty.
-               // Intent intent = new Intent(MyProfileActivity.this, EditProfileActivity.class );
-               // startActivity(intent);
+                //DONE
+               Intent intent = new Intent(MyProfileActivity.this, EditProfileActivity.class );
+               startActivity(intent);
 
             }
         });
