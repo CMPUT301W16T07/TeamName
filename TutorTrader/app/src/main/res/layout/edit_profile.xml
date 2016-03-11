@@ -72,6 +72,19 @@
             android:hint="Enter New PhoneNumber" />
     </LinearLayout>
 
+    <Button
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:id="@+id/saveButton"
+    android:text="Save"
+    />
+    <Button
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:id="@+id/cancelButton"
+        android:text="Cancel"
+        />
+
 
 
 

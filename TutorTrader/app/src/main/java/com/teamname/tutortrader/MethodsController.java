@@ -29,7 +29,7 @@ public class MethodsController extends AppCompatActivity {
     protected static final String USERFILE = "profile.sav";
     protected static final String BIDFILE = "bids.sav";
 
-    //get profile singleton
+    //TODO:load user profile if it exists or make new one.
     protected Profile currentProfile = Profile.getInstance();
 
     protected ArrayList<Session> sessions = new ArrayList<Session>();

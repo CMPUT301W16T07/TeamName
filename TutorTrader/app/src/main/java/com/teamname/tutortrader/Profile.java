@@ -9,38 +9,26 @@ import java.util.UUID;
  * Created by taylorarnett on 2016-03-01.
  */
 
-/**
- * Singleton class
- * access with Profile.getInstance()
- * use setters to set info
- * //TODO: make sure I did it right.
- *
- */
+
 public class Profile {
 
-    private UUID ProfileID = UUID.randomUUID();
+    private UUID ProfileID;
     private String name;
     private String phone;
     private String email;
 
-    private static final Profile instance = new Profile();
+   // private static final Profile instance = new Profile();
 
-    /*
-    private Profile(String name, String phone, String email){
+
+    public Profile(String name, String phone, String email){
         this.name = name;
         this.phone = phone;
         this.email = email;
         //set
         this.ProfileID = UUID.randomUUID();
     }
-     */
-    private Profile(){
-        //do i need to construct anything?
-    }
 
-    public static Profile getInstance(){
-        return instance;
-    }
+
 
     public UUID getProfileID() {
         return ProfileID;
