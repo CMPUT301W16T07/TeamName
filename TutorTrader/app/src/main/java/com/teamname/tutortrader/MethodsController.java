@@ -25,18 +25,16 @@ import java.util.ArrayList;
  * Created by iali1 on 3/8/16.
  */
 public class MethodsController extends AppCompatActivity {
-    private static final String SESSIONSFILE = "sessions.sav";
-    private static final String USERFILE = "profile.sav";
-    private static final String BIDFILE = "bids.sav";
+    protected static final String SESSIONSFILE = "sessions.sav";
+    protected static final String USERFILE = "profile.sav";
+    protected static final String BIDFILE = "bids.sav";
 
-    /**
-     * when user logs in maybe we can set the currentUser to the profile in use?
-     */
-    private Profile currentUser;
+    //get profile singleton
+    protected Profile currentProfile = Profile.getInstance();
 
-    private ArrayList<Session> sessions = new ArrayList<Session>();
-    private ArrayList<Profile> profiles = new ArrayList<Profile>();
-    private ArrayList<Bid> bids = new ArrayList<Bid>();
+    protected ArrayList<Session> sessions = new ArrayList<Session>();
+    protected ArrayList<Profile> profiles = new ArrayList<Profile>();
+    protected ArrayList<Bid> bids = new ArrayList<Bid>();
 
     private Button btn_availableSession, btn_myProfile, btn_CurrentBids, btn_mySessions;
 
@@ -59,7 +57,7 @@ public class MethodsController extends AppCompatActivity {
      * @param fileName specifies which file we are going to save to
      * @param list the arraylist we are saving to the file
      */
-    private void saveInFile(String fileName, ArrayList list){
+    public void saveInFile(String fileName, ArrayList list){
         try {
             FileOutputStream fos = openFileOutput(fileName,
                     Context.MODE_PRIVATE);
@@ -75,9 +73,9 @@ public class MethodsController extends AppCompatActivity {
         }
     }
 
-    private void loadFromFile(String fileName){
+    /*public void loadFromFile(String fileName){
         //TODO: Implement this
-    }
+    }*/
 
     private void verifyFields(){
         //TODO: not needed straight away so don't need to do this yet

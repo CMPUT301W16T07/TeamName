@@ -32,8 +32,9 @@ public class AddSessionActivity extends MethodsController {
                     EditText subjectEdit = (EditText) findViewById(R.id.subjectEdit);
                     EditText descriptionEdit = (EditText) findViewById(R.id.descriptionEdit);
                     // TODO: implement Tutor
-                    //Session newSession = new Session(subjectEdit.getText().toString(),descriptionEdit.getText().toString(),tutor);
-
+                    Session newSession = new Session(subjectEdit.getText().toString(),descriptionEdit.getText().toString(),currentProfile);
+                    sessions.add(newSession);
+                    saveInFile(SESSIONSFILE, sessions);
                     Intent intent = new Intent(AddSessionActivity.this, MySessionsActivity.class);
                     startActivity(intent);
                 }
