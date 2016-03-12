@@ -30,6 +30,7 @@ public class AvailableSessionsActivity extends MethodsController {
     private ArrayAdapter<Session> adapter;
     protected EditText query;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,6 +98,10 @@ public class AvailableSessionsActivity extends MethodsController {
         loadFromFile(SESSIONSFILE);
         adapter = new ArrayAdapter<Session>(this, R.layout.session_list_item);
         oldSessions.setAdapter(adapter);
+        //TODO: load list to contorller
+
+
+
     }
 
 
@@ -122,4 +127,7 @@ public class AvailableSessionsActivity extends MethodsController {
 
         }
     }
+
+
+
 }

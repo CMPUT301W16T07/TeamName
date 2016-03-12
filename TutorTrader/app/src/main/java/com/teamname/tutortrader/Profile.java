@@ -13,11 +13,11 @@ import java.util.UUID;
 public class Profile {
 
     private UUID ProfileID;
-    private String name;
+    private String name = null;
     private String phone;
     private String email;
 
-   // private static final Profile instance = new Profile();
+    //private static final Profile instance = new Profile();
 
 
     public Profile(String name, String phone, String email){

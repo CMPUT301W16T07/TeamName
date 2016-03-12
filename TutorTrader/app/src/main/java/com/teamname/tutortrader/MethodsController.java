@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -24,13 +25,14 @@ import java.util.ArrayList;
 /**
  * Created by iali1 on 3/8/16.
  */
+
 public class MethodsController extends AppCompatActivity {
     protected static final String SESSIONSFILE = "sessions.sav";
     protected static final String USERFILE = "profile.sav";
     protected static final String BIDFILE = "bids.sav";
 
     //TODO:load user profile if it exists or make new one.
-    //protected Profile currentProfile = Profile.getInstance();
+    protected Profile currentProfile;
 
     protected ArrayList<Session> sessions = new ArrayList<Session>();
     protected ArrayList<Profile> profiles = new ArrayList<Profile>();
@@ -38,7 +40,15 @@ public class MethodsController extends AppCompatActivity {
 
     protected Button btn_availableSession, btn_myProfile, btn_CurrentBids, btn_mySessions;
 
+    private static final MethodsController instance = new MethodsController();
 
+    private void MethodsController(){
+        //Load current profile
+        loadProfile(USERFILE);
+        if(currentProfile.getName() == null) {
+            //TODO: make new profile
+        }
+    }
     /**
      * This method is used so whenever a person clicks one of the buttons at the top of the screen
      * we can switch to that screen
@@ -86,6 +96,21 @@ public class MethodsController extends AppCompatActivity {
         }
     }
 
+    private void loadProfile(String filename){
+        try{
+            FileInputStream fis = openFileInput(filename);
+            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+            Gson gson = new Gson();
+            // Took from https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/com/google/gson/Gson.html 01-2016-19
+            Type profileType = new TypeToken<Profile>() {
+            }.getType();
+            currentProfile = gson.fromJson(in, profileType);
+
+        }catch(FileNotFoundException e){
+            //TODO Auto-generated catch block
+        }
+    }
+
     /*public void loadFromFile(String fileName){
         //TODO: Implement this
     }*/
@@ -101,6 +126,18 @@ public class MethodsController extends AppCompatActivity {
     private Boolean updateDatabase(){
         //TODO: not needed straight away so don't do this yet
         return Boolean.FALSE;
+    }
+
+    public static MethodsController getInstance(){
+        return instance;
+    }
+
+    public Profile getCurrentProfile(){
+        return currentProfile;
+    }
+
+    public void setCurrentProfile(Profile user){
+        this.currentProfile = user;
     }
 
 }
