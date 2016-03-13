@@ -1,5 +1,6 @@
 package com.teamname.tutortrader;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,21 +12,42 @@ import android.widget.EditText;
 
 public class EditProfileActivity extends ActionBarActivity {
 
-    //MethodsController controller = MethodsController.getInstance();
-   // Profile currentProfile = controller.getCurrentProfile();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_profile);
         Button saveButton = (Button) findViewById(R.id.saveButton);
         Button cancelButton = (Button) findViewById(R.id.cancelButton);
-       // EditText newUsername = E
+        final EditText newUsername = (EditText) findViewById(R.id.editUsername);
+        final EditText newEmail = (EditText) findViewById(R.id.editEmail);
+        final EditText newPhone = (EditText) findViewById(R.id.editPhone);
+
+        final MethodsController instance = MethodsController.getInstance();
+        final Profile currentProfile = instance.getCurrentProfile();
+
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(newUsername.getText() != null) {
+                    currentProfile.setName(newUsername.getText().toString());
+                }
+                if(newEmail.getText() != null) {
+                    currentProfile.setEmail(newEmail.getText().toString());
+                }
+                if(newUsername.getText() != null) {
+                    currentProfile.setPhone(newPhone.getText().toString());
+                }
+                instance.saveProfile();
+                setResult(RESULT_OK);
+                finish();
+            }
+        });
 
-
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
 
             }
         });

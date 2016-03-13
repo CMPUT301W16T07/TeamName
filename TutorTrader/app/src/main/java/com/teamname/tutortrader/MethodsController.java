@@ -47,6 +47,7 @@ public class MethodsController extends AppCompatActivity {
         loadProfile(USERFILE);
         if(currentProfile.getName() == null) {
             //TODO: make new profile
+            currentProfile = new Profile("test username","test phone","test email");
         }
     }
     /**
@@ -87,6 +88,24 @@ public class MethodsController extends AppCompatActivity {
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
             Gson gson = new Gson();
             gson.toJson(list, out);
+            out.flush();
+            fos.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            //e.printStackTrace();
+            throw new RuntimeException();
+        }
+    }
+
+    public void saveProfile(){
+        try {
+            FileOutputStream fos = openFileOutput(USERFILE,
+                    Context.MODE_PRIVATE);
+            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
+            Type profileType = new TypeToken<Profile>() {
+            }.getType();
+            Gson gson = new Gson();
+            gson.toJson(profileType, out);
             out.flush();
             fos.close();
         } catch (IOException e) {

@@ -52,13 +52,13 @@ public class BorrowTest extends ActivityInstrumentationTestCase2 {
         User user = new User;
         User owner = new User;
         Session session = new Session("subject", "description", user);
-        owner.addSession(session)
+        owner.addSession(session);
         session.setStatusBorrowed();
         sessions.addSession(session);
 
         assertTrue(sessions.get(0), session);
 
-        adapter.notifyDatasetchanged
+        adapter.notifyDatasetchanged;
         assertEquals(1, arrayAdapter.getCount());
         assertTrue(session, arrayAdapter.getItem(arrayAdapter.getCount() - 1) instanceof Session);
 

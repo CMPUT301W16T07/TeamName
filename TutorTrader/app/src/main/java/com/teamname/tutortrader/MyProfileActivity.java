@@ -42,8 +42,6 @@ public class MyProfileActivity extends MethodsController {
             @Override
             public void onClick(View v) {
 
-                //TODO: make editProfileActivty.
-                //DONE
                Intent intent = new Intent(MyProfileActivity.this, EditProfileActivity.class );
                startActivity(intent);
 
