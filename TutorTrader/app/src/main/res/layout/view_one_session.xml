@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Description Text"
-        android:id="@+id/bodyDescription" />
+        android:id="@+id/descriptionBody" />
 
     <Space
         android:layout_width="match_parent"

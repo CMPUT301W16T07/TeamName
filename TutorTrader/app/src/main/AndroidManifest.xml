@@ -22,6 +22,8 @@
         <activity android:name=".MySessionsActivity" />
         <activity android:name=".CurrentBidsActivity" />
         <activity android:name=".ViewOneSessionActivity" />
+        <activity android:name=".MyProfileActivity" />
+
         <activity
             android:name=".EditProfileActivity"
             android:label="@string/title_activity_edit_profile" >

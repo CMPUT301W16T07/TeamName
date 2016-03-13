@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class ViewOneSessionActivity extends MethodsController {
 
@@ -14,6 +16,17 @@ public class ViewOneSessionActivity extends MethodsController {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_one_session);
+        Intent intent = getIntent();
+        /*
+            The index of the entry that was clicked in the list of entries displayed on the main
+            screen is passed through the intent. Here is where we access it
+        */
+        String index_receive = intent.getStringExtra("index");
+        final int index_r = Integer.parseInt(index_receive);
+        loadSessions(SESSIONSFILE);
+        initializeFields(index_r);
+
+
         Button editButton = (Button) findViewById(R.id.editButton);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,4 +63,27 @@ public class ViewOneSessionActivity extends MethodsController {
         });
     }
 
+    /**
+     * initializeFields sets the texts of ViewOneSession with the sessions information
+     * @param index the index of the session in the sessions arraylist is passed in.
+     */
+    public void initializeFields(int index) {
+        TextView subjectText = (TextView) findViewById(R.id.subjectText);
+        TextView titleBody = (TextView) findViewById(R.id.titleBody);
+        TextView descriptionBody = (TextView) findViewById(R.id.descriptionBody);
+        TextView postedByBody = (TextView) findViewById(R.id.postedByBody);
+        TextView bodyEmail = (TextView) findViewById(R.id.bodyEmail);
+        TextView bodyPhone = (TextView) findViewById(R.id.bodyPhone);
+        TextView bodyStatus = (TextView) findViewById(R.id.bodyStatus);
+
+        subjectText.setText(sessions.get(index).getTitle());
+        titleBody.setText("Title: "+ sessions.get(index).getTitle());
+        descriptionBody.setText("Description: "+sessions.get(index).getDescription());
+        postedByBody.setText("Posted By: "+sessions.get(index).tutor.getName());
+        bodyEmail.setText("Email: " + sessions.get(index).tutor.getEmail());
+        bodyPhone.setText("Phone" +sessions.get(index).tutor.getPhone());
+        bodyStatus.setText("Status: "+sessions.get(index).getStatus());
+
+
+    }
 }
