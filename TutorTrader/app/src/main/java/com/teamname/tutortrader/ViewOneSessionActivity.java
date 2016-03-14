@@ -26,6 +26,15 @@ public class ViewOneSessionActivity extends MethodsController {
         loadSessions(SESSIONSFILE);
         initializeFields(index_r);
 
+        Button allSessionsButton = (Button) findViewById(R.id.allSessionsButton);
+        allSessionsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: we should pass the data entry so the fields can be filled in
+                Intent intent = new Intent(ViewOneSessionActivity.this, MySessionsActivity.class);
+                startActivity(intent);
+            }
+        });
 
         Button editButton = (Button) findViewById(R.id.editButton);
         editButton.setOnClickListener(new View.OnClickListener() {
@@ -46,8 +55,8 @@ public class ViewOneSessionActivity extends MethodsController {
                         .setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                // fire an intent go to your next activity
-                                //TODO: implement the delete process
+                                sessions.remove(index_r);
+                                saveInFile(SESSIONSFILE,sessions);
                                 Intent intent = new Intent(ViewOneSessionActivity.this, MySessionsActivity.class);
                                 startActivity(intent);
                             }

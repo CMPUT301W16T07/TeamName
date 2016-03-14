@@ -20,6 +20,7 @@
         </activity>
         <activity android:name=".AddSessionActivity" />
         <activity android:name=".MySessionsActivity" />
+        <activity android:name=".EditSessionActivity"/>
         <activity android:name=".CurrentBidsActivity" />
         <activity android:name=".ViewOneSessionActivity" />
         <activity android:name=".MyProfileActivity" />
