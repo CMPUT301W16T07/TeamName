@@ -3,10 +3,13 @@ package com.teamname.tutortrader;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 /**
  * Created by taylorarnett on 2016-02-10.
@@ -26,53 +29,38 @@ public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCa
     }
 
 
-    /** USECASE 1 = AddSession
-     * This tests use case 1 but in the case where the input fields are incomplete
-     * This tests the UI
-     */
-    public void testAddSessionIncomplete() {
-        MySessionsActivity msa = (MySessionsActivity)getActivity();
-        int oldLength = msa.getAdapter().getCount();
-        createSession("Math", null);
-        ArrayAdapter<Session> arrayAdapter = msa.getAdapter();
-        assertEquals(oldLength, arrayAdapter.getCount());
-
-        assertFalse("Did you add a Session object?",
-                arrayAdapter.getItem(arrayAdapter.getCount() - 1) instanceof Session);
-
-    }
-
     /**
      * Testing UseCase 01.02.01 - ViewSessions
      * "As an owner, I want to view a list of all my sessions, and their descriptions and statuses."
-     *
+     * <p/>
      * To test, we create 2 new sessions and then we leave the MySessions view, and return
      * to the view to see if the sessions persist.
      */
-    public void testViewSessions () {
-        AvailableSessionsActivity tta = (AvailableSessionsActivity)getActivity();
-        assertNotNull(activity.findViewById(com.teamname.tutortrader.R.id.MySessionsButton));
-        ((Button) activity.findViewById(com.teamname.tutortrader.R.id.mySessionsButton)).performClick();
-        MySessionsActivity msa = (MySessionsActivity)getActivity();
+    public void testViewSessions() {
+        AvailableSessionsActivity tta = (AvailableSessionsActivity) getActivity();
+        assertNotNull(activity.findViewById(R.id.mySessions));
+        ((Button) activity.findViewById(R.id.mySessions)).performClick();
+        MySessionsActivity msa = (MySessionsActivity) getActivity();
+        ArrayList<Session> sessions = new ArrayList<Session>();
+        Profile profile = new Profile("Name", "Phone", "Email");
+        Session session = new Session("Math", "Tutor for linear Algebra for all university levels", profile);\
+        Session session2 = new Session("Stats", "Tutor for Stats 252 and 141");
+        assertNotNull(activity.findViewById(R.id.currentBids));
+        ((Button) activity.findViewById(R.id.currentBids)).performClick();
+        ((Button) activity.findViewById(R.id.availibleSessions)).performClick();
+        sessions.add(session);
+        session2.add(session2);
 
-        createSession("Math", "Tutor for linear Algebra for all university levels");
-        createSession("Stats", "Tutor for Stats 252 and 141");
-        assertNotNull(activity.findViewById(com.teamname.tutortrader.R.id.currentBidsButton));
-        ((Button) activity.findViewById(com.teamname.tutortrader.R.id.availableSessionsButton)).performClick();
-        AvailableSessionsActivity tta = (AvailableSessionsActivity)getActivity();
-        ((Button) activity.findViewById(com.teamname.tutortrader.R.id.mySessionsButton)).performClick();
-        MySessionsActivity msa = (MySessionsActivity)getActivity();
-
-        ArrayAdapter<Session> arrayAdapter = msa.getAdapter();
 
         // To test that two sessions show up
-        assertEquals(arrayAdapter.getCount(), 2);
+        assertEquals(sessions.size(), 2);
 
         assertTrue("There is the math session",
-                arrayAdapter.getItem(0).getTitle() == "Math");
+                session.get(0).getTitle() == "Math");
         assertTrue("There is the stats session",
-                arrayAdapter.getItem(0).getTitle() == "Stats");
+                sessions.get(0).getTitle() == "Stats");
     }
+}
 
     /**
      * Testing UseCase 01.04.01 - ViewOneSession
@@ -81,7 +69,7 @@ public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCa
      * We will perform a click on list entry to bring us to the ViewOneSession view.
      * From here we test to see that all the buttons are present, and all the TextViews are
      * accurate
-     */
+     *
     public void testViewOneSession() {
         MySessionsActivity msa = (MySessionsActivity)getActivity();
         assertNotNull(activity.findViewById(com.teamname.tutortrader.R.id.MySessionsButton));
@@ -115,7 +103,7 @@ public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCa
      * Testing Use Case 01.04.01 - EditSession
      * "As an owner, I want to edit a thing in my things."
      *
-     */
+     *
     //EditSessionSuccess will be the case where the user clicks "save"
     public void testEditSessionSuccess () {
         MySessionsActivity msa = (MySessionsActivity)getActivity();
@@ -203,7 +191,7 @@ public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCa
      * view. The first test case tests if the delete occured when the user confirmed the delete.
      *
      * The second test tests the case when the user does not confirm the delete.
-     */
+     *
     public void testDeleteSessionConfirmed () {
         MySessionsActivity msa = (MySessionsActivity)getActivity();
         createSession("Delete Me", "Delete this session");
@@ -230,7 +218,7 @@ public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCa
 
     /** this tests to see that the session is not deleted when the user clicks cancel
     *   on the delete confirmation prompt
-    */
+    *
     public void testDeleteSessionCancelled () {
         MySessionsActivity msa = (MySessionsActivity)getActivity();
         createSession("Delete Me", "Delete this session");
