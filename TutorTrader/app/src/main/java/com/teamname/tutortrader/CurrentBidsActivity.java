@@ -38,19 +38,8 @@ public class CurrentBidsActivity extends MethodsController {
         currentBidsList = (ListView) findViewById(R.id.currentBidsList);
         loadSessions(SESSIONSFILE);
         loadCurrentBids(); // reload the global bids array
-        ArrayList<Bid> bidsCopy = bids;
         adapter = new ArrayAdapter<>(this,
                 R.layout.current_bids_list_item, bids);
-        currentBidsList.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        currentBidsList = (ListView) findViewById(R.id.currentBidsList);
-        loadSessions(SESSIONSFILE);
-        loadCurrentBids(); // reload the global bids array
         currentBidsList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }

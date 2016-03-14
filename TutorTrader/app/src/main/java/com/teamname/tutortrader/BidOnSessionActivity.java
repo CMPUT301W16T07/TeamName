@@ -56,7 +56,8 @@ public class BidOnSessionActivity extends MethodsController {
             @Override
             public void onClick(View v) {
 
-                float bidvalue = 0;
+                float bidvalue;
+
                 try {
                     EditText bidtext = ((EditText) findViewById(R.id.bidtext));
                     /**
