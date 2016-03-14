@@ -10,6 +10,11 @@ import android.widget.Button;
 
 public class BiddingTest extends ActivityInstrumentationTestCase2 {
 
+
+    public AddSessionActivityTest() {
+        super(Bid.class);
+    }
+
     /** USECASE 5 - BidSession
      *  bidSession(bid) fills in the bid amount
      *  clicks the 'bid' button for the activity:

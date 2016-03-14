@@ -13,13 +13,17 @@ public class Bid {
 
     private UUID bidID; // unique identifying ID
     private UUID bidder; // a user ID
+    private UUID sessionID; // a session ID
+    private String sessionTitle; // the title of the session
     private Float amount; // in dollars per hour
     private String status; // pending, accepted, declined, etc.
 
-    // initialize Bids by passing a bidder ID and amount
-    public Bid(UUID bidder, Float amount) {
+    // initialize Bids by passing a session ID, bidder ID, and amount
+    public Bid(UUID session, String title, UUID bidder, Float amount) {
         this.bidID = UUID.randomUUID();
         this.bidder = bidder;
+        this.sessionID = session;
+        this.sessionTitle = title;
         this.amount = amount;
         this.status = "pending";
     }
@@ -55,6 +59,6 @@ public class Bid {
 
     @Override
     public String toString() {
-        return "Amount: " + amount + " Status: " + status;
+        return "Session: " + sessionTitle + " || Amount: " + amount + " || Status: " + status;
     }
 }
