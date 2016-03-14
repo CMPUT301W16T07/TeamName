@@ -57,10 +57,11 @@ public class MethodsController extends AppCompatActivity {
         //loadSessions(SESSIONSFILE);
         if(currentProfile == null) {
             //ArrayList<Profile> profiles = new ArrayList<Profile>();
-            //TODO: make new profile
-            currentProfile = new Profile("test username","test phone","test email");
+            Intent intent = new Intent(MethodsController.this, CreateProfileActivity.class);
+            startActivity(intent);
+            //currentProfile = new Profile("test username","test phone","test email");
             profiles.add(currentProfile);
-            //saveInFile(USERFILE, profiles);
+            saveProfile(currentProfile);
         }
 
     }
@@ -110,15 +111,15 @@ public class MethodsController extends AppCompatActivity {
         }
     }
 
-    public void saveProfile(){
+    public void saveProfile(Profile profile){
         try {
             FileOutputStream fos = openFileOutput(USERFILE,
                     Context.MODE_PRIVATE);
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
-            Type profileType = new TypeToken<Profile>() {
-            }.getType();
+            //Type profileType = new TypeToken<Profile>() {
+           // }.getType();
             Gson gson = new Gson();
-            gson.toJson(profileType, out);
+            gson.toJson(profile, out);
             out.flush();
             fos.close();
         } catch (IOException e) {

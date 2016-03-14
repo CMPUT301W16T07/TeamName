@@ -1,6 +1,5 @@
 package com.teamname.tutortrader;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,30 +9,24 @@ import android.widget.Button;
 import android.widget.EditText;
 
 
-public class EditProfileActivity extends MethodsController {
+public class CreateProfileActivity extends MethodsController {
 
+    Button saveButton = (Button) findViewById(R.id.saveButton);
+    Button cancelButton = (Button) findViewById(R.id.cancelButton);
     final EditText newUsername = (EditText) findViewById(R.id.editUsername);
     final EditText newEmail = (EditText) findViewById(R.id.editEmail);
     final EditText newPhone = (EditText) findViewById(R.id.editPhone);
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.edit_profile);
-        Button saveButton = (Button) findViewById(R.id.saveButton);
-        Button cancelButton = (Button) findViewById(R.id.cancelButton);
+        setContentView(R.layout.create_profile);
 
-        newUsername.setText(currentProfile.getName());
-        newEmail.setText(currentProfile.getEmail());
-        newPhone.setText(currentProfile.getPhone());
-
-        //final MethodsController instance = MethodsController.getInstance();
-        //final Profile currentProfile = instance.getCurrentProfile();
 
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 boolean valid = verifyFields();
                 if (valid) {
                     currentProfile.setName(newUsername.getText().toString());
@@ -68,10 +61,8 @@ public class EditProfileActivity extends MethodsController {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_edit_profile, menu);
+        getMenuInflater().inflate(R.menu.menu_create_profile, menu);
         return true;
-
-
     }
 
     @Override
