@@ -158,7 +158,7 @@ public class MethodsController extends AppCompatActivity {
             sessions = gson.fromJson(in, listType);
             for (int i =0; i < sessions.size();i++){
                 //TODO: we need to properly save and load profiles so the proper ProfileID is saved and not randomly generated each time we use the app
-                if (sessions.get(i).tutor.getProfileID() == currentProfile.getProfileID()) {
+                if (currentProfile.getProfileID().compareTo(sessions.get(i).tutor.getProfileID())==0) {
                     sessionsOfInterest.add(sessions.get(i));
                 }
             }

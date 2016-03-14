@@ -5,6 +5,7 @@ import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import javax.net.ssl.SSLSessionBindingListener;
 
@@ -29,7 +30,7 @@ public class BorrowTest extends ActivityInstrumentationTestCase2 {
      *As a borrower, I want to view a list of things I am borrowing, each thing with its description and owner username.
      */
     public void testBorrowedList() {
-        Sessionlist sessions = new SessionList;
+         sessions = new SessionList;
         User user = new User;
         Session testses = new Session("subject", "description", user);
         sessions.addSession(testses);
