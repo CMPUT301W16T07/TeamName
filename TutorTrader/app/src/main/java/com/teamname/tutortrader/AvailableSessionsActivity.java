@@ -1,9 +1,7 @@
 package com.teamname.tutortrader;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,7 +9,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
@@ -43,8 +40,8 @@ public class AvailableSessionsActivity extends MethodsController {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.available_sessions);
-        ListView sessionList = (ListView) findViewById(R.id.sessionList);
-        sessionList.setBackgroundResource(R.drawable.apple_righ);
+
+
         btn_CurrentBids = (Button) findViewById(R.id.currentBids);
         btn_CurrentBids.setOnClickListener(btnClickListener);
         btn_myProfile = (Button) findViewById(R.id.myProfile);
@@ -57,9 +54,10 @@ public class AvailableSessionsActivity extends MethodsController {
 
         //populates the list of all sessions
         oldSessions = (ListView) findViewById(R.id.sessionList);
+        oldSessions.setBackgroundResource(R.drawable.apple_righ);
         loadSessions(SESSIONSFILE);
         adapter = new ArrayAdapter<>(this,
-                R.layout.session_list_item, sessions);
+                R.layout.list_colour, sessions);
         oldSessions.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
