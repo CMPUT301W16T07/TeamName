@@ -58,15 +58,11 @@ public class MethodsController extends AppCompatActivity {
             Profile tempProfile = new Profile("Default","Default","Default");
             profiles.add(tempProfile);
             //ArrayList<Profile> profiles = new ArrayList<Profile>();
-/*
-            Intent intent = new Intent(MethodsController.this, CreateProfileActivity.class);
-            startActivity(intent);
-            Profile newProfile;
-            */
-            //newProfile = new Profile("JIM username","phoneoneone phone","HELLO email");
-           // profiles.add(newProfile);
 
-           // saveInFile(USERFILE, profiles);
+            //Intent intent = new Intent(MethodsController.this, CreateProfileActivity.class);
+           // startActivity(intent);
+
+
         }
         currentProfile = profiles.get(0);
         loadSessions(SESSIONSFILE);
@@ -195,6 +191,8 @@ public class MethodsController extends AppCompatActivity {
                 UUID tutorProfileID = sessions.get(i).tutor.getProfileID();
                 if (currentProfileID.compareTo(tutorProfileID) == 0) {
                     sessionsOfInterest.add(sessions.get(i));
+
+
                 }
             }
 
