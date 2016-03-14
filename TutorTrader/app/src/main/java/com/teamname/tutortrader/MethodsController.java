@@ -203,6 +203,34 @@ public class MethodsController extends AppCompatActivity {
 
         }
     }
+
+    /**
+     * loadCurrentBids loads all bids from the sessions array that were made
+     * by the current user.
+     */
+    public void loadCurrentBids () {
+
+        int size = sessions.size(); // size of sessions
+        UUID currentProfileID = currentProfile.getProfileID(); // current profileID
+
+        // cycle through sessions
+        for (int i = 0; i < size; i++){
+            ArrayList<Bid> sessionBids = sessions.get(i).getBids();
+            int sizeBids = sessionBids.size(); // size of that bids array
+
+            // cycle through those bids
+            for (int j = 0; j < sizeBids; j++) {
+
+                // compare bidder with current profileID
+                if (currentProfileID.compareTo(sessionBids.get(j).getBidder()) == 0) {
+
+                    // and add to bids array if it's a match
+                    bids.add(sessionBids.get(j));
+                }
+            }
+        }
+    }
+
     /*public void loadFromFile(String fileName){
         //TODO: Implement this
     }*/
