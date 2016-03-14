@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
@@ -35,6 +36,8 @@ public class AvailableSessionsActivity extends MethodsController {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.available_sessions);
+        ListView sessionList = (ListView) findViewById(R.id.sessionList);
+        sessionList.setBackgroundResource(R.drawable.apple_righ);
         btn_CurrentBids = (Button) findViewById(R.id.currentBids);
         btn_CurrentBids.setOnClickListener(btnClickListener);
         btn_myProfile = (Button) findViewById(R.id.myProfile);

@@ -3,6 +3,7 @@ package com.teamname.tutortrader;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -66,13 +67,13 @@ public class EditSessionActivity extends MethodsController {
     }
 
     /**
-     * initializeFields sets the texts of ViewOneSession with the sessions information
+     * initializeFields sets the texts of EditSession with the sessions information
+     *
      * @param index the index of the session in the sessions arraylist is passed in.
      */
     public void initializeFields(int index) {
         EditText subjectEdit = (EditText) findViewById(R.id.subjectEdit);
         EditText descriptionEdit = (EditText) findViewById(R.id.descriptionEdit);
-
 
         subjectEdit.setText(sessions.get(index).getTitle());
         descriptionEdit.setText(sessions.get(index).getDescription());

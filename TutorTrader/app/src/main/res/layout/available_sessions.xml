@@ -7,7 +7,8 @@
     android:fitsSystemWindows="true"
     tools:context=".AvailableSessionsActivity"
     android:weightSum="1"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/linearLayourA">
 
     <RelativeLayout
     android:layout_width="fill_parent"
