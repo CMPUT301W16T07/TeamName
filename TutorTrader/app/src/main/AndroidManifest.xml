@@ -22,9 +22,16 @@
         <activity android:name=".CurrentBidsActivity" />
         <activity android:name=".ViewOneSessionActivity" />
         <activity android:name=".BidOnSessionActivity" />
+        <activity android:name=".MyProfileActivity" />
+        <activity android:name=".EditSessionActivity" />
+
         <activity
             android:name=".EditProfileActivity"
             android:label="@string/title_activity_edit_profile" >
+        </activity>
+        <activity
+            android:name=".CreateProfileActivity"
+            android:label="@string/title_activity_create_profile" >
         </activity>
     </application>
 

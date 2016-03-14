@@ -111,7 +111,9 @@ public class AvailableSessionsActivity extends MethodsController {
         super.onStart();
         loadFromFile(SESSIONSFILE);
         //adapter = new ArrayAdapter<Session>(this, R.layout.session_list_item);
+        oldSessions = (ListView) findViewById(R.id.sessionList);
         oldSessions.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
         //TODO: load list to contorller
 
 
