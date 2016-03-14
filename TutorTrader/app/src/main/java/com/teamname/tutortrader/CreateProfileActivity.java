@@ -10,38 +10,42 @@ import android.widget.Button;
 import android.widget.EditText;
 
 
-public class EditProfileActivity extends MethodsController {
+public class CreateProfileActivity extends MethodsController {
 
-    final EditText newUsername = (EditText) findViewById(R.id.editUsername);
-    final EditText newEmail = (EditText) findViewById(R.id.editEmail);
-    final EditText newPhone = (EditText) findViewById(R.id.editPhone);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.edit_profile);
-        Button saveButton = (Button) findViewById(R.id.saveButton);
-        Button cancelButton = (Button) findViewById(R.id.cancelButton);
+        setContentView(R.layout.create_profile);
 
-        newUsername.setText(currentProfile.getName());
-        newEmail.setText(currentProfile.getEmail());
-        newPhone.setText(currentProfile.getPhone());
-
-        //final MethodsController instance = MethodsController.getInstance();
-        //final Profile currentProfile = instance.getCurrentProfile();
-
+        final Button saveButton = (Button) findViewById(R.id.saveButton);
+        final Button cancelButton = (Button) findViewById(R.id.cancelButton);
+        final EditText newUsername = (EditText) findViewById(R.id.editUsername);
+        final EditText newEmail = (EditText) findViewById(R.id.editEmail);
+        final EditText newPhone = (EditText) findViewById(R.id.editPhone);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 boolean valid = verifyFields();
                 if (valid) {
-                    currentProfile.setName(newUsername.getText().toString());
-                    currentProfile.setEmail(newEmail.getText().toString());
-                    currentProfile.setPhone(newPhone.getText().toString());
-                    saveProfile(currentProfile);
+                    Profile newProfile;
+                    //newProfile = new Profile("JIM username","phoneoneone phone","HELLO email");
+                    //profiles.add(newProfile);
+
+                    //saveInFile(USERFILE, profiles);
+                    newProfile= new Profile(newUsername.getText().toString(),newEmail.getText().toString(),newPhone.getText().toString());
+
+                    profiles.add(newProfile);
+                    saveInFile(USERFILE, profiles);
+                    currentProfile = profiles.get(0);
+                    loadSessions(SESSIONSFILE);
                     setResult(RESULT_OK);
-                    finish();
+                    Intent intent = new Intent(CreateProfileActivity.this, AvailableSessionsActivity.class);
+                    startActivity(intent);
+                    //finish();
+
                 }
             }
         });
@@ -49,7 +53,7 @@ public class EditProfileActivity extends MethodsController {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+               // finish();
 
             }
         });
@@ -58,6 +62,11 @@ public class EditProfileActivity extends MethodsController {
 
     public boolean verifyFields () {
         //Boolean validFields = false;
+        Button saveButton = (Button) findViewById(R.id.saveButton);
+        Button cancelButton = (Button) findViewById(R.id.cancelButton);
+        EditText newUsername = (EditText) findViewById(R.id.editUsername);
+        EditText newEmail = (EditText) findViewById(R.id.editEmail);
+        EditText newPhone = (EditText) findViewById(R.id.editPhone);
 
         if ((!newUsername.getText().toString().equals("")) && (!newEmail.getText().toString().equals("")) && (!newPhone.getText().toString().equals(""))) {
             return true;
@@ -68,10 +77,8 @@ public class EditProfileActivity extends MethodsController {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_edit_profile, menu);
+        getMenuInflater().inflate(R.menu.menu_create_profile, menu);
         return true;
-
-
     }
 
     @Override

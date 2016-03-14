@@ -23,8 +23,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class MySessionsActivity extends MethodsController {
-    final MethodsController instance = MethodsController.getInstance();
-    final Profile currentProfile = instance.getCurrentProfile();
+    //final MethodsController instance = MethodsController.getInstance();
+    //final Profile currentProfile = instance.getCurrentProfile();
 
     private ListView oldSessionsList;
 
@@ -73,11 +73,8 @@ public class MySessionsActivity extends MethodsController {
             startActivity(intent);*/
         }
         loadSessions(SESSIONSFILE);
-        //TODO: CHANGE BACK TO SESSIONSOFINTEREST ONCE IMPLEMENTED PROPER PROFILE LOAD AND SAVE
-        //adapter = new ArrayAdapter<>(this,
-              //  R.layout.my_sessions_list,sessionsOfInterest);
         adapter = new ArrayAdapter<>(this,
-          R.layout.my_sessions_list,sessions);
+          R.layout.my_sessions_list,sessionsOfInterest);
         oldSessionsList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 

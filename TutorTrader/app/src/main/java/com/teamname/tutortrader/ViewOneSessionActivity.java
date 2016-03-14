@@ -56,7 +56,8 @@ public class ViewOneSessionActivity extends MethodsController {
                         .setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                sessions.remove(index_r);
+                                sessions.remove(sessionsOfInterest.get(index_r));
+                                sessionsOfInterest.remove(index_r);
                                 saveInFile(SESSIONSFILE,sessions);
                                 Intent intent = new Intent(ViewOneSessionActivity.this, MySessionsActivity.class);
                                 startActivity(intent);
@@ -86,14 +87,12 @@ public class ViewOneSessionActivity extends MethodsController {
         TextView bodyPhone = (TextView) findViewById(R.id.bodyPhone);
         TextView bodyStatus = (TextView) findViewById(R.id.bodyStatus);
 
-        subjectText.setText(sessions.get(index).getTitle());
-        titleBody.setText("Title: "+ sessions.get(index).getTitle());
-        descriptionBody.setText("Description: "+sessions.get(index).getDescription());
-        postedByBody.setText("Posted By: "+sessions.get(index).tutor.getName());
-        bodyEmail.setText("Email: " + sessions.get(index).tutor.getEmail());
-        bodyPhone.setText("Phone" +sessions.get(index).tutor.getPhone());
-        bodyStatus.setText("Status: "+sessions.get(index).getStatus());
-
-
+        subjectText.setText(sessionsOfInterest.get(index).getTitle());
+        titleBody.setText("Title: "+ sessionsOfInterest.get(index).getTitle());
+        descriptionBody.setText("Description: "+sessionsOfInterest.get(index).getDescription());
+        postedByBody.setText("Posted By: "+sessionsOfInterest.get(index).tutor.getName());
+        bodyEmail.setText("Email: " + sessionsOfInterest.get(index).tutor.getEmail());
+        bodyPhone.setText("Phone" +sessionsOfInterest.get(index).tutor.getPhone());
+        bodyStatus.setText("Status: "+sessionsOfInterest.get(index).getStatus());
     }
 }
