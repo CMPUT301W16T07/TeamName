@@ -16,14 +16,24 @@ public class Profile {
     private String name = null;
     private String phone;
     private String email;
+    private boolean defaultUser = Boolean.TRUE;
 
     //private static final Profile instance = new Profile();
 
 
-    public Profile(String name, String phone, String email){
+    public boolean isDefaultUser() {
+        return defaultUser;
+    }
+
+    public void setDefaultUser(boolean defaultUser) {
+        this.defaultUser = defaultUser;
+    }
+
+    public Profile(String name, String email, String phone){
         this.name = name;
         this.phone = phone;
         this.email = email;
+
         //set
         this.ProfileID = UUID.randomUUID();
     }
