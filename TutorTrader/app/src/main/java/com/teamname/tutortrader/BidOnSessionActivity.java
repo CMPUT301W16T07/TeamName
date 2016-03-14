@@ -24,22 +24,23 @@ public class BidOnSessionActivity extends MethodsController {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.bid_on_session);
         Intent intent = getIntent();
         /*
             The index of the entry that was clicked in the list of entries displayed on the main
             screen is passed through the intent. Here is where we access it
         */
         String index_receive = intent.getStringExtra("index");
-        final int index = Integer.parseInt(index_receive);
+        int index = Integer.parseInt(index_receive);
         loadSessions(SESSIONSFILE);
-        final Session selectedSession = sessions.get(index);
-        //initializeFields(selectedSession);
+        Session selectedSession = sessions.get(index);
+        initializeFields(index);
 
 
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.bid_on_session);
+        //super.onCreate(savedInstanceState);
+        //setContentView(R.layout.bid_on_session);
         Button backToAllButton = (Button) findViewById(R.id.allSessionsButton);
         backToAllButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +64,7 @@ public class BidOnSessionActivity extends MethodsController {
                     bidvalue = Float.valueOf(bidtext.getText().toString());
                     UUID id = currentProfile.getProfileID();
                     Bid newbid = new Bid(id, bidvalue);
-                    selectedSession.addBid(newbid);
+                    //selectedSession.addBid(newbid);
                     Intent intent = new Intent(BidOnSessionActivity.this, AvailableSessionsActivity.class);
                     startActivity(intent);
                 } catch (Exception err) {
@@ -84,9 +85,9 @@ public class BidOnSessionActivity extends MethodsController {
 
     /**
      * initializeFields sets the texts of ViewOneSession with the sessions information
-     * @param theSession index of the session in the sessions arraylist is passed in.
+     * @param index index of the session in the sessions arraylist is passed in.
      */
-    public void initializeFields(Session theSession) {
+    public void initializeFields(int index) {
         TextView subjectText = (TextView) findViewById(R.id.subjectTextB);
         TextView titleBody = (TextView) findViewById(R.id.titleBodyB);
         TextView descriptionBody = (TextView) findViewById(R.id.descriptionBodyB);
@@ -95,13 +96,15 @@ public class BidOnSessionActivity extends MethodsController {
         TextView bodyPhone = (TextView) findViewById(R.id.bodyPhoneB);
         TextView bodyStatus = (TextView) findViewById(R.id.bodyStatusB);
 
-        subjectText.setText(theSession.getTitle());
-        titleBody.setText("Title: " + theSession.getTitle());
-        descriptionBody.setText("Description: "+theSession.getDescription());
-        postedByBody.setText("Posted By: " + theSession.tutor.getName());
-        bodyEmail.setText("Email: " + theSession.tutor.getEmail());
-        bodyPhone.setText("Phone" + theSession.tutor.getPhone());
-        bodyStatus.setText("Status: " + theSession.getStatus());
+        Session currentSession = sessions.get(index);
+
+        subjectText.setText(sessions.get(index).getTitle());
+        titleBody.setText("Title: "+ sessions.get(index).getTitle());
+        descriptionBody.setText("Description: "+sessions.get(index).getDescription());
+        postedByBody.setText("Posted By: "+sessions.get(index).tutor.getName());
+        bodyEmail.setText("Email: " + sessions.get(index).tutor.getEmail());
+        bodyPhone.setText("Phone" +sessions.get(index).tutor.getPhone());
+        bodyStatus.setText("Status: "+sessions.get(index).getStatus());
 
 
     }

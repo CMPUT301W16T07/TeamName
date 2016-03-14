@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.UUID;
 import java.util.logging.MemoryHandler;
 
 /**
@@ -15,7 +16,6 @@ import java.util.logging.MemoryHandler;
  */
 public class CurrentBidsActivity extends MethodsController {
 
-    private Profile profile; // the current user's profile
     private ListView currentBidsList; // view to display the current bids
     private CurrentBidsAdapter adapter; // current bids adapter
 
@@ -32,5 +32,9 @@ public class CurrentBidsActivity extends MethodsController {
         btn_availableSession = (Button) findViewById(R.id.availibleSessions);
         btn_availableSession.setOnClickListener(btnClickListener);
 
+        // get current profileID
+        UUID bidderID = currentProfile.getProfileID();
+
+        // TODO: use ElasticSearch to find all Bid objects with the bidderID
     }
 }
