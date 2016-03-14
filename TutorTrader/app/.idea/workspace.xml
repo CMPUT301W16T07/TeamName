@@ -28,7 +28,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/com/teamname/tutortrader/BidOnSessionActivity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="47" column="52" selection-start-line="47" selection-start-column="52" selection-end-line="47" selection-end-column="52" />
+              <caret line="48" column="52" selection-start-line="48" selection-start-column="52" selection-end-line="48" selection-end-column="52" />
               <folding />
             </state>
           </provider>
@@ -47,17 +47,20 @@
       <file leaf-file-name="MethodsController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/teamname/tutortrader/MethodsController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.1863468">
-              <caret line="190" column="0" selection-start-line="190" selection-start-column="0" selection-end-line="190" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.38745388">
+              <caret line="192" column="151" selection-start-line="192" selection-start-column="151" selection-end-line="192" selection-end-column="151" />
               <folding>
-                <element signature="e#3390#4263#0" expanded="true" />
-                <element signature="e#4262#4263#0" expanded="true" />
-                <element signature="e#8522#8523#0" expanded="true" />
-                <element signature="e#8553#8554#0" expanded="true" />
-                <element signature="e#8594#8595#0" expanded="true" />
-                <element signature="e#8631#8632#0" expanded="true" />
-                <element signature="e#8681#8682#0" expanded="true" />
-                <element signature="e#8723#8724#0" expanded="true" />
+                <element signature="e#1147#1156#0" expanded="true" />
+                <element signature="e#1217#1226#0" expanded="true" />
+                <element signature="e#1447#1456#0" expanded="true" />
+                <element signature="e#3413#4286#0" expanded="true" />
+                <element signature="e#4285#4286#0" expanded="true" />
+                <element signature="e#8685#8686#0" expanded="true" />
+                <element signature="e#8716#8717#0" expanded="true" />
+                <element signature="e#8757#8758#0" expanded="true" />
+                <element signature="e#8794#8795#0" expanded="true" />
+                <element signature="e#8844#8845#0" expanded="true" />
+                <element signature="e#8886#8887#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1264,7 +1267,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="49" width="1920" height="990" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -1277,7 +1280,7 @@
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32979977" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32979977" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1321,7 +1324,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/com/teamname/tutortrader/BidOnSessionActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="47" column="52" selection-start-line="47" selection-start-column="52" selection-end-line="47" selection-end-column="52" />
+          <caret line="48" column="52" selection-start-line="48" selection-start-column="52" selection-end-line="48" selection-end-column="52" />
           <folding />
         </state>
       </provider>
@@ -1336,17 +1339,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/teamname/tutortrader/MethodsController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.1863468">
-          <caret line="190" column="0" selection-start-line="190" selection-start-column="0" selection-end-line="190" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.38745388">
+          <caret line="192" column="151" selection-start-line="192" selection-start-column="151" selection-end-line="192" selection-end-column="151" />
           <folding>
-            <element signature="e#3390#4263#0" expanded="true" />
-            <element signature="e#4262#4263#0" expanded="true" />
-            <element signature="e#8522#8523#0" expanded="true" />
-            <element signature="e#8553#8554#0" expanded="true" />
-            <element signature="e#8594#8595#0" expanded="true" />
-            <element signature="e#8631#8632#0" expanded="true" />
-            <element signature="e#8681#8682#0" expanded="true" />
-            <element signature="e#8723#8724#0" expanded="true" />
+            <element signature="e#1147#1156#0" expanded="true" />
+            <element signature="e#1217#1226#0" expanded="true" />
+            <element signature="e#1447#1456#0" expanded="true" />
+            <element signature="e#3413#4286#0" expanded="true" />
+            <element signature="e#4285#4286#0" expanded="true" />
+            <element signature="e#8685#8686#0" expanded="true" />
+            <element signature="e#8716#8717#0" expanded="true" />
+            <element signature="e#8757#8758#0" expanded="true" />
+            <element signature="e#8794#8795#0" expanded="true" />
+            <element signature="e#8844#8845#0" expanded="true" />
+            <element signature="e#8886#8887#0" expanded="true" />
           </folding>
         </state>
       </provider>
