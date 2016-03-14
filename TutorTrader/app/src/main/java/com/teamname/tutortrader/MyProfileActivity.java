@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 /**
  * Created by ALI on 2016-03-09.
+ *
+ * The activity that allows a user to view their profile.
  */
 public class MyProfileActivity extends MethodsController {
     @Override

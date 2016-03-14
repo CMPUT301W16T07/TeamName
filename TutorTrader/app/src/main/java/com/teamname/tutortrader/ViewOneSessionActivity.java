@@ -10,6 +10,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+/**
+ * Created by MJ Alba on 2016-03-08.
+ *
+ * The activity that allows users to view information about a
+ * single session that they've created.
+ */
 public class ViewOneSessionActivity extends MethodsController {
 
     @Override

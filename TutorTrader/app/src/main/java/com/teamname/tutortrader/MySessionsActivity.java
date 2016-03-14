@@ -22,6 +22,12 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+/**
+ * Created by MJ Alba on 2016-03-08.
+ *
+ * The activity that allows users to view a list of all
+ * the sessions they've created.
+ */
 public class MySessionsActivity extends MethodsController {
     //final MethodsController instance = MethodsController.getInstance();
     //final Profile currentProfile = instance.getCurrentProfile();
@@ -36,6 +42,7 @@ public class MySessionsActivity extends MethodsController {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_sessions);
         oldSessionsList = (ListView) findViewById(R.id.sessionList);
+        oldSessionsList.setBackgroundResource(R.drawable.apple_left);
         btn_CurrentBids = (Button) findViewById(R.id.currentBids);
         btn_CurrentBids.setOnClickListener(btnClickListener);
         btn_myProfile = (Button) findViewById(R.id.myProfile);
@@ -74,7 +81,7 @@ public class MySessionsActivity extends MethodsController {
         }
         loadSessions(SESSIONSFILE);
         adapter = new ArrayAdapter<>(this,
-          R.layout.my_sessions_list,sessionsOfInterest);
+          R.layout.list_colour,sessionsOfInterest);
         oldSessionsList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 

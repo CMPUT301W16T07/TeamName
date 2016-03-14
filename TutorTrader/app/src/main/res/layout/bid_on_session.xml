@@ -87,7 +87,7 @@
         android:id="@+id/bidtext"
         android:inputType="numberDecimal"
         android:layout_alignParentBottom="true"
-        android:hint="Enter your bid here: " />
+        android:hint="Enter your bid here (Dollars per hour): " />
 
     <Button
         android:layout_width="fill_parent"
