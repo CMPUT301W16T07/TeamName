@@ -3,6 +3,7 @@ package com.teamname.tutortrader;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,7 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 
-public class CreateProfileActivity extends MethodsController {
+public class CreateProfileActivity extends AppCompatActivity {
 
 
     @Override
@@ -36,13 +37,14 @@ public class CreateProfileActivity extends MethodsController {
 
                     //saveInFile(USERFILE, profiles);
                     newProfile= new Profile(newUsername.getText().toString(),newEmail.getText().toString(),newPhone.getText().toString());
-
+/*
                     profiles.add(newProfile);
                     saveInFile(USERFILE, profiles);
                     currentProfile = profiles.get(0);
                     loadSessions(SESSIONSFILE);
                     setResult(RESULT_OK);
-                    Intent intent = new Intent(CreateProfileActivity.this, AvailableSessionsActivity.class);
+                   */
+                    Intent intent = new Intent(CreateProfileActivity.this, MyProfileActivity.class);
                     startActivity(intent);
                     //finish();
 
