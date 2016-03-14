@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -65,6 +66,18 @@ public class AvailableSessionsActivity extends MethodsController {
                     setResult(RESULT_OK);
                     String searchstring = query.getText().toString();
 
+            }
+        });
+
+
+        oldSessions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(AvailableSessionsActivity.this, BidOnSessionActivity.class);
+                String index = String.valueOf(position);
+                // http://stackoverflow.com/questions/2091465/how-do-i-pass-data-between-activities-on-android
+                intent.putExtra("index", index);
+                startActivity(intent);
             }
         });
 

@@ -10,8 +10,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".AvailableSessionsActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,8 +21,10 @@
         <activity android:name=".MySessionsActivity" />
         <activity android:name=".CurrentBidsActivity" />
         <activity android:name=".ViewOneSessionActivity" />
+        <activity android:name=".BidOnSessionActivity" />
         <activity android:name=".MyProfileActivity" />
         <activity android:name=".EditSessionActivity" />
+
         <activity
             android:name=".EditProfileActivity"
             android:label="@string/title_activity_edit_profile" >
