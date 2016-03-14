@@ -19,6 +19,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
@@ -39,15 +40,20 @@ public class MethodsController extends AppCompatActivity {
     protected ArrayList<Bid> bids = new ArrayList<Bid>();
 
     protected Button btn_availableSession, btn_myProfile, btn_CurrentBids, btn_mySessions;
+    protected ArrayList<Session> sessionsOfInterest = new ArrayList<Session>(); //this creates a list of sessions
+    //protected ArrayList<Session> allSessions = new ArrayList<>();
 
     private static final MethodsController instance = new MethodsController();
 
-    private void MethodsController(){
+    protected MethodsController(){
         //Load current profile
         loadProfile(USERFILE);
-        if(currentProfile.getName() == null) {
+        if(currentProfile == null) {
+            //ArrayList<Profile> profiles = new ArrayList<Profile>();
             //TODO: make new profile
             currentProfile = new Profile("test username","test phone","test email");
+            profiles.add(currentProfile);
+            //saveInFile(USERFILE, profiles);
         }
     }
     /**
@@ -83,8 +89,7 @@ public class MethodsController extends AppCompatActivity {
      */
     public void saveInFile(String fileName, ArrayList list){
         try {
-            FileOutputStream fos = openFileOutput(fileName,
-                    Context.MODE_PRIVATE);
+            FileOutputStream fos = openFileOutput(fileName,Context.MODE_PRIVATE);
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
             Gson gson = new Gson();
             gson.toJson(list, out);
@@ -125,11 +130,46 @@ public class MethodsController extends AppCompatActivity {
             }.getType();
             currentProfile = gson.fromJson(in, profileType);
 
-        }catch(FileNotFoundException e){
+        }catch(Exception e){
             //TODO Auto-generated catch block
+            currentProfile = null;
         }
     }
 
+    /**
+     * loadSessions in MySessions must load the sessions that are directly owned by the
+     * current User. To do this, we index the sessions array list, matching only the sessions
+     * that are owned by the user of interest.
+     *
+     * @param filename the name of the file containing all the sessions.
+     */
+    public void loadSessions (String filename) {
+
+        //ArrayList<Session> allSessions;
+        //allSessions = new ArrayList<>();
+        sessionsOfInterest = new ArrayList<Session>();
+        try {
+            FileInputStream fis = openFileInput(SESSIONSFILE);
+            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+            Gson gson = new Gson();
+            // Took from https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/com/google/gson/Gson.html 01-2016-19
+            Type listType = new TypeToken<ArrayList<Session>>() {
+            }.getType();
+            sessions = gson.fromJson(in, listType);
+            for (int i =0; i < sessions.size();i++){
+                //TODO: we need to properly save and load profiles so the proper ProfileID is saved and not randomly generated each time we use the app
+                if (sessions.get(i).tutor.getProfileID() == currentProfile.getProfileID()) {
+                    sessionsOfInterest.add(sessions.get(i));
+                }
+            }
+
+
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            sessionsOfInterest = new ArrayList<Session>();
+
+        }
+    }
     /*public void loadFromFile(String fileName){
         //TODO: Implement this
     }*/

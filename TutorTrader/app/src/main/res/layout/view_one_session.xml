@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Description Text"
-        android:id="@+id/bodyDescription" />
+        android:id="@+id/descriptionBody" />
 
     <Space
         android:layout_width="match_parent"
@@ -79,10 +79,6 @@
         android:text="Status: "
         android:id="@+id/bodyStatus"
         android:layout_gravity="center_horizontal" />
-
-    <Space
-        android:layout_width="wrap_content"
-        android:layout_height="105dp" />
 
     <Button
         android:layout_width="fill_parent"

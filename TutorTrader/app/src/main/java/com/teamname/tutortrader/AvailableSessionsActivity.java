@@ -26,7 +26,7 @@ public class AvailableSessionsActivity extends MethodsController {
 
 
     private ListView oldSessions;
-    private ArrayList<Session> sessions = new ArrayList<Session>();
+   // private ArrayList<Session> sessions = new ArrayList<Session>();
     private ArrayAdapter<Session> adapter;
     protected EditText query;
 
@@ -47,11 +47,12 @@ public class AvailableSessionsActivity extends MethodsController {
 
         //populates the list of all sessions
         oldSessions = (ListView) findViewById(R.id.sessionList);
-        loadFromFile(SESSIONSFILE);
-        adapter = new ArrayAdapter<Session>(this,
+        loadSessions(SESSIONSFILE);
+        adapter = new ArrayAdapter<>(this,
                 R.layout.session_list_item, sessions);
         oldSessions.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
 
 
         // TODO implement seaching once elastic search is working

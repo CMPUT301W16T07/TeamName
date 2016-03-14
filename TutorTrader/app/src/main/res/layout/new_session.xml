@@ -42,7 +42,7 @@
     <Button
         android:layout_width="157dp"
         android:layout_height="94dp"
-        android:text="cancel"
+        android:text="Cancel"
         android:id="@+id/cancelAddSession"
         android:layout_gravity="center_horizontal" />
 
