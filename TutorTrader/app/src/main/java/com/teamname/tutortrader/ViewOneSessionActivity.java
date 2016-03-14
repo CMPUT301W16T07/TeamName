@@ -92,7 +92,5 @@ public class ViewOneSessionActivity extends MethodsController {
         bodyEmail.setText("Email: " + sessions.get(index).tutor.getEmail());
         bodyPhone.setText("Phone" +sessions.get(index).tutor.getPhone());
         bodyStatus.setText("Status: "+sessions.get(index).getStatus());
-
-
     }
 }

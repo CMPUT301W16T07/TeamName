@@ -73,11 +73,8 @@ public class MySessionsActivity extends MethodsController {
             startActivity(intent);*/
         }
         loadSessions(SESSIONSFILE);
-        //TODO: CHANGE BACK TO SESSIONSOFINTEREST ONCE IMPLEMENTED PROPER PROFILE LOAD AND SAVE
-        //adapter = new ArrayAdapter<>(this,
-              //  R.layout.my_sessions_list,sessionsOfInterest);
         adapter = new ArrayAdapter<>(this,
-          R.layout.my_sessions_list,sessions);
+          R.layout.my_sessions_list,sessionsOfInterest);
         oldSessionsList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 

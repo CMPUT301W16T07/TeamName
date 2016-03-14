@@ -9,8 +9,8 @@ import android.widget.EditText;
 
 public class AddSessionActivity extends MethodsController {
 
-    final MethodsController instance = MethodsController.getInstance();
-    final Profile currentProfile = instance.getCurrentProfile();
+    //final MethodsController instance = MethodsController.getInstance();
+    //final Profile currentProfile = instance.getCurrentProfile();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

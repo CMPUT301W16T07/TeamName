@@ -45,9 +45,16 @@ public class MethodsController extends AppCompatActivity {
 
     private static final MethodsController instance = new MethodsController();
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        loadSessions(SESSIONSFILE);
+    }
+
     protected MethodsController(){
         //Load current profile
         loadProfile(USERFILE);
+        //loadSessions(SESSIONSFILE);
         if(currentProfile == null) {
             //ArrayList<Profile> profiles = new ArrayList<Profile>();
             //TODO: make new profile
@@ -55,6 +62,7 @@ public class MethodsController extends AppCompatActivity {
             profiles.add(currentProfile);
             //saveInFile(USERFILE, profiles);
         }
+
     }
     /**
      * This method is used so whenever a person clicks one of the buttons at the top of the screen
