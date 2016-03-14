@@ -70,11 +70,11 @@ public class EditSessionActivity extends MethodsController {
      * @param index the index of the session in the sessions arraylist is passed in.
      */
     public void initializeFields(int index) {
-        TextView subjectEdit = (TextView) findViewById(R.id.subjectEdit);
-        TextView descriptionEdit = (TextView) findViewById(R.id.descriptionEdit);
+        EditText subjectEdit = (EditText) findViewById(R.id.subjectEdit);
+        EditText descriptionEdit = (EditText) findViewById(R.id.descriptionEdit);
 
 
         subjectEdit.setText(sessions.get(index).getTitle());
-        descriptionEdit.setText( sessions.get(index).getDescription());
+        descriptionEdit.setText(sessions.get(index).getDescription());
     }
 }
