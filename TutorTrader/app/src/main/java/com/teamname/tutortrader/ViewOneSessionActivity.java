@@ -21,7 +21,7 @@ public class ViewOneSessionActivity extends MethodsController {
             The index of the entry that was clicked in the list of entries displayed on the main
             screen is passed through the intent. Here is where we access it
         */
-        String index_receive = intent.getStringExtra("index");
+        final String index_receive = intent.getStringExtra("index");
         final int index_r = Integer.parseInt(index_receive);
         loadSessions(SESSIONSFILE);
         initializeFields(index_r);
@@ -42,6 +42,7 @@ public class ViewOneSessionActivity extends MethodsController {
             public void onClick(View v) {
                 //TODO: we should pass the data entry so the fields can be filled in
                 Intent intent = new Intent(ViewOneSessionActivity.this, EditSessionActivity.class);
+                intent.putExtra("index", index_receive);
                 startActivity(intent);
             }
         });
