@@ -11,7 +11,7 @@ import android.widget.Button;
 public class BiddingTest extends ActivityInstrumentationTestCase2 {
 
 
-    public AddSessionActivityTest() {
+    public void AddSessionActivityTest() {
         super(Bid.class);
     }
 

@@ -15,6 +15,9 @@ import java.util.logging.MemoryHandler;
 
 /**
  * Created by MJ Alba on 2016-03-08.
+ *
+ * The activity that shows a list of a current users bids
+ * on OTHER users' sessions.
  */
 public class CurrentBidsActivity extends MethodsController {
 

@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 /**
  * Created by ALI on 2016-03-07.
+ *
+ * The activity that allows a user to edit a session
+ * that they previously created.
  */
 public class EditSessionActivity extends MethodsController {
 

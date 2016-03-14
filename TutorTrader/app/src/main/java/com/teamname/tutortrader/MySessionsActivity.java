@@ -22,6 +22,12 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+/**
+ * Created by MJ Alba on 2016-03-08.
+ *
+ * The activity that allows users to view a list of all
+ * the sessions they've created.
+ */
 public class MySessionsActivity extends MethodsController {
     //final MethodsController instance = MethodsController.getInstance();
     //final Profile currentProfile = instance.getCurrentProfile();

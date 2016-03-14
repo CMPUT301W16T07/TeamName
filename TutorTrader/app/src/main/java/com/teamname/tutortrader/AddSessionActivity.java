@@ -7,6 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+/**
+ * Created by taylorarnett on 2016-03-01.
+ *
+ * The activity for adding new tutor sessions as a user.
+ */
 public class AddSessionActivity extends MethodsController {
 
     //final MethodsController instance = MethodsController.getInstance();
