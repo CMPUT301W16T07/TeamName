@@ -50,14 +50,18 @@ public class MethodsController extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         //Load current profile
+        //ArrayList<Profile> templist = new ArrayList<Profile>();
         loadProfile(USERFILE);
 
         if(profiles.size() == 0) {
+            Profile tempProfile = new Profile("Default","Default","Default");
+            profiles.add(tempProfile);
             //ArrayList<Profile> profiles = new ArrayList<Profile>();
-
+/*
             Intent intent = new Intent(MethodsController.this, CreateProfileActivity.class);
             startActivity(intent);
             Profile newProfile;
+            */
             //newProfile = new Profile("JIM username","phoneoneone phone","HELLO email");
            // profiles.add(newProfile);
 

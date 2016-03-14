@@ -11,13 +11,14 @@ import android.widget.Button;
 import android.widget.EditText;
 
 
-public class CreateProfileActivity extends AppCompatActivity {
+public class CreateProfileActivity extends MethodsController{
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_profile);
+
 
         final Button saveButton = (Button) findViewById(R.id.saveButton);
         final Button cancelButton = (Button) findViewById(R.id.cancelButton);
@@ -37,16 +38,17 @@ public class CreateProfileActivity extends AppCompatActivity {
 
                     //saveInFile(USERFILE, profiles);
                     newProfile= new Profile(newUsername.getText().toString(),newEmail.getText().toString(),newPhone.getText().toString());
-/*
+                    newProfile.setDefaultUser(Boolean.FALSE);
+                    profiles.remove(0);
                     profiles.add(newProfile);
                     saveInFile(USERFILE, profiles);
                     currentProfile = profiles.get(0);
-                    loadSessions(SESSIONSFILE);
+                    //loadSessions(SESSIONSFILE);
                     setResult(RESULT_OK);
-                   */
-                    Intent intent = new Intent(CreateProfileActivity.this, MyProfileActivity.class);
-                    startActivity(intent);
-                    //finish();
+
+                    //Intent intent = new Intent(CreateProfileActivity.this, MyProfileActivity.class);
+                    //startActivity(intent);
+                    finish();
 
                 }
             }
@@ -55,7 +57,7 @@ public class CreateProfileActivity extends AppCompatActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // finish();
+                finish();
 
             }
         });
