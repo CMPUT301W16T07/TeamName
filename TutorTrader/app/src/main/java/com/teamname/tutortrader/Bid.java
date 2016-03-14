@@ -9,7 +9,7 @@ import java.util.UUID;
  * which must then be added to a session to
  * be meaningful.
  */
-public class    Bid {
+public class Bid {
 
     private UUID bidID; // unique identifying ID
     private UUID bidder; // a user ID
@@ -51,5 +51,10 @@ public class    Bid {
         } else {
             throw new InvalidStatusException();
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Amount: " + amount + " Status: " + status;
     }
 }

@@ -12,9 +12,6 @@ import android.widget.EditText;
 
 public class EditProfileActivity extends MethodsController {
 
-    final EditText newUsername = (EditText) findViewById(R.id.editUsername);
-    final EditText newEmail = (EditText) findViewById(R.id.editEmail);
-    final EditText newPhone = (EditText) findViewById(R.id.editPhone);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +19,10 @@ public class EditProfileActivity extends MethodsController {
         setContentView(R.layout.edit_profile);
         Button saveButton = (Button) findViewById(R.id.saveButton);
         Button cancelButton = (Button) findViewById(R.id.cancelButton);
+
+        final EditText newUsername = (EditText) findViewById(R.id.editUsername);
+        final EditText newEmail = (EditText) findViewById(R.id.editEmail);
+        final EditText newPhone = (EditText) findViewById(R.id.editPhone);
 
         newUsername.setText(currentProfile.getName());
         newEmail.setText(currentProfile.getEmail());
@@ -34,14 +35,18 @@ public class EditProfileActivity extends MethodsController {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean valid = verifyFields();
+                boolean valid = verifyFields(newUsername, newEmail, newPhone);
                 if (valid) {
                     currentProfile.setName(newUsername.getText().toString());
                     currentProfile.setEmail(newEmail.getText().toString());
                     currentProfile.setPhone(newPhone.getText().toString());
-                    saveProfile(currentProfile);
+                    int index = profiles.indexOf(currentProfile);
+                    profiles.remove(index);
+                    profiles.add(index, currentProfile);
+                    saveInFile(USERFILE, profiles);
                     setResult(RESULT_OK);
-                    finish();
+                    Intent intent = new Intent(EditProfileActivity.this, MyProfileActivity.class);
+                    startActivity(intent);
                 }
             }
         });
@@ -55,8 +60,7 @@ public class EditProfileActivity extends MethodsController {
         });
 
     }
-
-    public boolean verifyFields () {
+    public boolean verifyFields (EditText newUsername, EditText newEmail, EditText newPhone) {
         //Boolean validFields = false;
 
         if ((!newUsername.getText().toString().equals("")) && (!newEmail.getText().toString().equals("")) && (!newPhone.getText().toString().equals(""))) {

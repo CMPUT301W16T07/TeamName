@@ -22,6 +22,7 @@ import java.io.OutputStreamWriter;
 import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * Created by iali1 on 3/8/16.
@@ -48,22 +49,20 @@ public class MethodsController extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //currentProfile = new Profile("test username","test phone","test email");
-        //saveProfile(currentProfile);
+
         //Load current profile
+        //ArrayList<Profile> templist = new ArrayList<Profile>();
         loadProfile(USERFILE);
 
-        //loadSessions(SESSIONSFILE);
         if(profiles.size() == 0) {
+            Profile tempProfile = new Profile("Default","Default","Default");
+            profiles.add(tempProfile);
             //ArrayList<Profile> profiles = new ArrayList<Profile>();
 
             //Intent intent = new Intent(MethodsController.this, CreateProfileActivity.class);
-            //startActivity(intent);
-            Profile newProfile;
-            newProfile = new Profile("JIM username","phoneoneone phone","HELLO email");
-            profiles.add(newProfile);
+           // startActivity(intent);
 
-            saveInFile(USERFILE, profiles);
+
         }
         currentProfile = profiles.get(0);
         loadSessions(SESSIONSFILE);
@@ -185,10 +184,15 @@ public class MethodsController extends AppCompatActivity {
             // Took from https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/com/google/gson/Gson.html 01-2016-19
             Type listType = new TypeToken<ArrayList<Session>>() {}.getType();
             sessions = gson.fromJson(in, listType);
-            for (int i =0; i < sessions.size();i++){
+            int size = sessions.size();
+            UUID currentProfileID = currentProfile.getProfileID();
+            for (int i = 0; i < size; i++){
                 //TODO: we need to properly save and load profiles so the proper ProfileID is saved and not randomly generated each time we use the app
-                if (currentProfile.getProfileID().compareTo(sessions.get(i).tutor.getProfileID())==0) {
+                UUID tutorProfileID = sessions.get(i).tutor.getProfileID();
+                if (currentProfileID.compareTo(tutorProfileID) == 0) {
                     sessionsOfInterest.add(sessions.get(i));
+
+
                 }
             }
 
@@ -199,6 +203,34 @@ public class MethodsController extends AppCompatActivity {
 
         }
     }
+
+    /**
+     * loadCurrentBids loads all bids from the sessions array that were made
+     * by the current user.
+     */
+    public void loadCurrentBids () {
+
+        int size = sessions.size(); // size of sessions
+        UUID currentProfileID = currentProfile.getProfileID(); // current profileID
+
+        // cycle through sessions
+        for (int i = 0; i < size; i++){
+            ArrayList<Bid> sessionBids = sessions.get(i).getBids();
+            int sizeBids = sessionBids.size(); // size of that bids array
+
+            // cycle through those bids
+            for (int j = 0; j < sizeBids; j++) {
+
+                // compare bidder with current profileID
+                if (currentProfileID.compareTo(sessionBids.get(j).getBidder()) == 0) {
+
+                    // and add to bids array if it's a match
+                    bids.add(sessionBids.get(j));
+                }
+            }
+        }
+    }
+
     /*public void loadFromFile(String fileName){
         //TODO: Implement this
     }*/

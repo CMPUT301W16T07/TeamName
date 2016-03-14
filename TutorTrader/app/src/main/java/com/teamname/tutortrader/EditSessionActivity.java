@@ -38,10 +38,16 @@ public class EditSessionActivity extends MethodsController {
             @Override
             public void onClick(View v) {
                 boolean valid;
+                EditText subjectEdit = (EditText) findViewById(R.id.subjectEdit);
+                EditText descriptionEdit = (EditText) findViewById(R.id.descriptionEdit);
                 valid = verifyFields();
                 if (valid) {
                     // TODO: implement Tutor
-                    //Session newSession = new Session(subjectEdit.getText().toString(),descriptionEdit.getText().toString(),tutor);
+                    sessions.remove(sessionsOfInterest.get(index_r));
+                    sessionsOfInterest.remove(index_r);
+                    Session newSession = new Session(subjectEdit.getText().toString(),descriptionEdit.getText().toString(),currentProfile);
+                    sessions.add(newSession);
+                    saveInFile(SESSIONSFILE, sessions);
                     Intent intent = new Intent(EditSessionActivity.this, MySessionsActivity.class);
                     startActivity(intent);
                 }

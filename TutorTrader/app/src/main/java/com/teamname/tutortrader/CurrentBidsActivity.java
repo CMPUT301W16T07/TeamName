@@ -4,10 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.UUID;
 import java.util.logging.MemoryHandler;
 
 /**
@@ -15,9 +18,8 @@ import java.util.logging.MemoryHandler;
  */
 public class CurrentBidsActivity extends MethodsController {
 
-    private Profile profile; // the current user's profile
     private ListView currentBidsList; // view to display the current bids
-    private CurrentBidsAdapter adapter; // current bids adapter
+    private ArrayAdapter<Bid> adapter; // current bids adapter
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,5 +34,25 @@ public class CurrentBidsActivity extends MethodsController {
         btn_availableSession = (Button) findViewById(R.id.availibleSessions);
         btn_availableSession.setOnClickListener(btnClickListener);
 
+        // populates the list of all bids
+        currentBidsList = (ListView) findViewById(R.id.currentBidsList);
+        currentBidsList.setBackgroundResource(R.drawable.apple_righ);
+        loadSessions(SESSIONSFILE);
+        loadCurrentBids(); // reload the global bids array
+        ArrayList<Bid> bidsCopy = bids;
+        adapter = new ArrayAdapter<>(this,
+                R.layout.list_colour, bids);
+        currentBidsList.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        currentBidsList = (ListView) findViewById(R.id.currentBidsList);
+        loadSessions(SESSIONSFILE);
+        loadCurrentBids(); // reload the global bids array
+        currentBidsList.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 }

@@ -6,7 +6,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="All Sessions"
+        android:text="My Sessions"
         android:id="@+id/allSessionsButton" />
 
     <TextView
