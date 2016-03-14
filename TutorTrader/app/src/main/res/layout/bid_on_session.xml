@@ -85,6 +85,7 @@
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:id="@+id/bidtext"
+        android:inputType="numberDecimal"
         android:layout_alignParentBottom="true"
         android:hint="Enter your bid here: " />
 

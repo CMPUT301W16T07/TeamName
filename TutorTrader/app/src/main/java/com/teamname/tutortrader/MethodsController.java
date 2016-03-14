@@ -49,25 +49,22 @@ public class MethodsController extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //currentProfile = new Profile("test username","test phone","test email");
-        //saveProfile(currentProfile);
+
         //Load current profile
+        //ArrayList<Profile> templist = new ArrayList<Profile>();
         loadProfile(USERFILE);
 
-        //loadSessions(SESSIONSFILE);
         if(profiles.size() == 0) {
+            Profile tempProfile = new Profile("Default","Default","Default");
+            profiles.add(tempProfile);
             //ArrayList<Profile> profiles = new ArrayList<Profile>();
 
             //Intent intent = new Intent(MethodsController.this, CreateProfileActivity.class);
-            //startActivity(intent);
-            Profile newProfile;
-            newProfile = new Profile("Guest User","Guest phone","Guest email");
-            profiles.add(newProfile);
-            currentProfile = profiles.get(0);
-            saveInFile(USERFILE, profiles);
-        } else {
-            currentProfile = profiles.get(0);
+           // startActivity(intent);
+
+
         }
+        currentProfile = profiles.get(0);
         loadSessions(SESSIONSFILE);
     }
 
@@ -206,6 +203,34 @@ public class MethodsController extends AppCompatActivity {
 
         }
     }
+
+    /**
+     * loadCurrentBids loads all bids from the sessions array that were made
+     * by the current user.
+     */
+    public void loadCurrentBids () {
+
+        int size = sessions.size(); // size of sessions
+        UUID currentProfileID = currentProfile.getProfileID(); // current profileID
+
+        // cycle through sessions
+        for (int i = 0; i < size; i++){
+            ArrayList<Bid> sessionBids = sessions.get(i).getBids();
+            int sizeBids = sessionBids.size(); // size of that bids array
+
+            // cycle through those bids
+            for (int j = 0; j < sizeBids; j++) {
+
+                // compare bidder with current profileID
+                if (currentProfileID.compareTo(sessionBids.get(j).getBidder()) == 0) {
+
+                    // and add to bids array if it's a match
+                    bids.add(sessionBids.get(j));
+                }
+            }
+        }
+    }
+
     /*public void loadFromFile(String fileName){
         //TODO: Implement this
     }*/

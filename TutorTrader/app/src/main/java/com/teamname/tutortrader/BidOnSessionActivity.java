@@ -13,9 +13,9 @@ import java.util.UUID;
 /**
  * Created by abrosda on 3/14/16.
  */
-public class
-        BidOnSessionActivity extends MethodsController {
+public class BidOnSessionActivity extends MethodsController {
 
+    Session selectedSession;
 
     /**
      * Loads the selected session from the list and displays the information
@@ -35,7 +35,7 @@ public class
         String index_receive = intent.getStringExtra("index");
         int index = Integer.parseInt(index_receive);
         loadSessions(SESSIONSFILE);
-        Session selectedSession = sessions.get(index);
+        selectedSession = sessions.get(index);
         initializeFields(index);
 
 
@@ -56,7 +56,8 @@ public class
             @Override
             public void onClick(View v) {
 
-                float bidvalue = 0;
+                float bidvalue;
+
                 try {
                     EditText bidtext = ((EditText) findViewById(R.id.bidtext));
                     /**
@@ -65,7 +66,8 @@ public class
                     bidvalue = Float.valueOf(bidtext.getText().toString());
                     UUID id = currentProfile.getProfileID();
                     Bid newbid = new Bid(id, bidvalue);
-                    //selectedSession.addBid(newbid);
+                    selectedSession.addBid(newbid);
+                    saveInFile(SESSIONSFILE, sessions);
                     Intent intent = new Intent(BidOnSessionActivity.this, AvailableSessionsActivity.class);
                     startActivity(intent);
                 } catch (Exception err) {
@@ -96,8 +98,6 @@ public class
         TextView bodyEmail = (TextView) findViewById(R.id.bodyEmailB);
         TextView bodyPhone = (TextView) findViewById(R.id.bodyPhoneB);
         TextView bodyStatus = (TextView) findViewById(R.id.bodyStatusB);
-
-        Session currentSession = sessions.get(index);
 
         subjectText.setText(sessions.get(index).getTitle());
         titleBody.setText("Title: "+ sessions.get(index).getTitle());

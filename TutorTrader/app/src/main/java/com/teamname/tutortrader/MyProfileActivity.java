@@ -24,7 +24,11 @@ public class MyProfileActivity extends MethodsController {
         btn_availableSession = (Button) findViewById(R.id.availibleSessions);
         btn_availableSession.setOnClickListener(btnClickListener);
 
-
+        if (currentProfile.isDefaultUser()){
+            //create new profile
+            Intent intent = new Intent(MyProfileActivity.this, CreateProfileActivity.class);
+            startActivity(intent);
+        }
 
         //get textviews
         TextView displayUsername = (TextView) findViewById(R.id.username);

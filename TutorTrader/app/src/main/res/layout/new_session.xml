@@ -32,7 +32,7 @@
         android:hint="Description" />
 
     <Button
-        android:layout_width="157dp"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Save"
         android:id="@+id/saveButton"
@@ -40,7 +40,7 @@
         android:layout_weight="0.19" />
 
     <Button
-        android:layout_width="157dp"
+        android:layout_width="fill_parent"
         android:layout_height="94dp"
         android:text="Cancel"
         android:id="@+id/cancelAddSession"

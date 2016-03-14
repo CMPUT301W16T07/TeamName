@@ -52,4 +52,9 @@ public class Bid {
             throw new InvalidStatusException();
         }
     }
+
+    @Override
+    public String toString() {
+        return "Amount: " + amount + " Status: " + status;
+    }
 }
