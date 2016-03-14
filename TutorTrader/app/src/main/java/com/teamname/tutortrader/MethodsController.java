@@ -26,6 +26,10 @@ import java.util.UUID;
 
 /**
  * Created by iali1 on 3/8/16.
+ *
+ * The main controller for TutorTrader. Contains important
+ * functions that need to be used by all other activities.
+ * Also initializes the main data structures of the app.
  */
 
 public class MethodsController extends AppCompatActivity {

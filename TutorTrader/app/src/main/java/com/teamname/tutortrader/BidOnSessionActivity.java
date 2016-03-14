@@ -12,6 +12,8 @@ import java.util.UUID;
 
 /**
  * Created by abrosda on 3/14/16.
+ *
+ * The activity for bidding on existing, available sessions.
  */
 public class BidOnSessionActivity extends MethodsController {
 
