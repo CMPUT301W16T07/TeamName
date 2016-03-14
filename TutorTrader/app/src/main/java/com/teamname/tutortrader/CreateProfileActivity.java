@@ -33,22 +33,19 @@ public class CreateProfileActivity extends MethodsController{
                 boolean valid = verifyFields();
                 if (valid) {
                     Profile newProfile;
-                    //newProfile = new Profile("JIM username","phoneoneone phone","HELLO email");
-                    //profiles.add(newProfile);
 
-                    //saveInFile(USERFILE, profiles);
                     newProfile= new Profile(newUsername.getText().toString(),newEmail.getText().toString(),newPhone.getText().toString());
                     newProfile.setDefaultUser(Boolean.FALSE);
+
                     profiles.remove(0);
                     profiles.add(newProfile);
                     saveInFile(USERFILE, profiles);
                     currentProfile = profiles.get(0);
-                    //loadSessions(SESSIONSFILE);
-                    setResult(RESULT_OK);
 
-                    //Intent intent = new Intent(CreateProfileActivity.this, MyProfileActivity.class);
-                    //startActivity(intent);
-                    finish();
+                    setResult(RESULT_OK);
+                    Intent intent = new Intent(CreateProfileActivity.this, MyProfileActivity.class);
+                    startActivity(intent);
+
 
                 }
             }

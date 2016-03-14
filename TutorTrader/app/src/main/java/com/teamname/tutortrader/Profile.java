@@ -29,7 +29,7 @@ public class Profile {
         this.defaultUser = defaultUser;
     }
 
-    public Profile(String name, String phone, String email){
+    public Profile(String name, String email, String phone){
         this.name = name;
         this.phone = phone;
         this.email = email;
