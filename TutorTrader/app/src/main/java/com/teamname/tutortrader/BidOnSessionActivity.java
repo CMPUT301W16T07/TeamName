@@ -64,8 +64,8 @@ public class BidOnSessionActivity extends MethodsController {
                      * taken from http://stackoverflow.com/questions/4229710/string-from-edittext-to-float
                      */
                     bidvalue = Float.valueOf(bidtext.getText().toString());
-                    UUID id = currentProfile.getProfileID();
-                    Bid newbid = new Bid(id, bidvalue);
+                    UUID profileID = currentProfile.getProfileID();
+                    Bid newbid = new Bid(selectedSession.getSessionID(), selectedSession.getTitle(), profileID, bidvalue);
                     selectedSession.addBid(newbid);
                     saveInFile(SESSIONSFILE, sessions);
                     Intent intent = new Intent(BidOnSessionActivity.this, AvailableSessionsActivity.class);
