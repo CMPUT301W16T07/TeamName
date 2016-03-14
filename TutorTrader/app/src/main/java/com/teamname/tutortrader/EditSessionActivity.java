@@ -74,8 +74,9 @@ public class EditSessionActivity extends MethodsController {
     public void initializeFields(int index) {
         EditText subjectEdit = (EditText) findViewById(R.id.subjectEdit);
         EditText descriptionEdit = (EditText) findViewById(R.id.descriptionEdit);
-        subjectEdit.setText(sessions.get(index).getTitle());
-        descriptionEdit.setText(sessions.get(index).getDescription());
+
+        subjectEdit.setText(sessionsOfInterest.get(index).getTitle());
+        descriptionEdit.setText(sessionsOfInterest.get(index).getDescription());
 
     }
 }
