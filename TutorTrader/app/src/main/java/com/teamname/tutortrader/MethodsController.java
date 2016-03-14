@@ -61,7 +61,7 @@ public class MethodsController extends AppCompatActivity {
             //Intent intent = new Intent(MethodsController.this, CreateProfileActivity.class);
             //startActivity(intent);
             Profile newProfile;
-            newProfile = new Profile("JIM username","phoneoneone phone","HELLO email");
+            newProfile = new Profile("Guest User","Guest phone","Guest email");
             profiles.add(newProfile);
             currentProfile = profiles.get(0);
             saveInFile(USERFILE, profiles);
