@@ -45,7 +45,8 @@ public class EditProfileActivity extends MethodsController {
                     profiles.add(index, currentProfile);
                     saveInFile(USERFILE, profiles);
                     setResult(RESULT_OK);
-                    finish();
+                    Intent intent = new Intent(EditProfileActivity.this, MyProfileActivity.class);
+                    startActivity(intent);
                 }
             }
         });
