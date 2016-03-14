@@ -48,23 +48,42 @@ public class MethodsController extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //currentProfile = new Profile("test username","test phone","test email");
+        //saveProfile(currentProfile);
+        //Load current profile
+        loadProfile(USERFILE);
+
+        //loadSessions(SESSIONSFILE);
+        if(profiles.size() == 0) {
+            //ArrayList<Profile> profiles = new ArrayList<Profile>();
+
+            //Intent intent = new Intent(MethodsController.this, CreateProfileActivity.class);
+            //startActivity(intent);
+            Profile newProfile;
+            newProfile = new Profile("JIM username","phoneoneone phone","HELLO email");
+            profiles.add(newProfile);
+
+            saveInFile(USERFILE, profiles);
+        }
+        currentProfile = profiles.get(0);
         loadSessions(SESSIONSFILE);
     }
 
     protected MethodsController(){
-        //Load current profile
-        loadProfile(USERFILE);
+        /*loadProfile(USERFILE);
+
         //loadSessions(SESSIONSFILE);
         if(currentProfile == null) {
             //ArrayList<Profile> profiles = new ArrayList<Profile>();
             Intent intent = new Intent(MethodsController.this, CreateProfileActivity.class);
             startActivity(intent);
             //currentProfile = new Profile("test username","test phone","test email");
-            profiles.add(currentProfile);
-            saveProfile(currentProfile);
-        }
-
+            //profiles.add(currentProfile);
+            //saveProfile(currentProfile);
+        }*/
     }
+
+
     /**
      * This method is used so whenever a person clicks one of the buttons at the top of the screen
      * we can switch to that screen
@@ -135,13 +154,15 @@ public class MethodsController extends AppCompatActivity {
             BufferedReader in = new BufferedReader(new InputStreamReader(fis));
             Gson gson = new Gson();
             // Took from https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/com/google/gson/Gson.html 01-2016-19
-            Type profileType = new TypeToken<Profile>() {
-            }.getType();
-            currentProfile = gson.fromJson(in, profileType);
+            Type listType = new TypeToken<ArrayList<Profile>>() {}.getType();
+            // Took from https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/com/google/gson/Gson.html 01-2016-19
+            profiles = gson.fromJson(in, listType);
 
-        }catch(Exception e){
+        }catch(FileNotFoundException e){
             //TODO Auto-generated catch block
-            currentProfile = null;
+            //currentProfile = new Profile("test username","test phone","test email");
+            //saveProfile(currentProfile);
+            profiles = new ArrayList<Profile>();
         }
     }
 
@@ -158,12 +179,11 @@ public class MethodsController extends AppCompatActivity {
         //allSessions = new ArrayList<>();
         sessionsOfInterest = new ArrayList<Session>();
         try {
-            FileInputStream fis = openFileInput(SESSIONSFILE);
+            FileInputStream fis = openFileInput(filename);
             BufferedReader in = new BufferedReader(new InputStreamReader(fis));
             Gson gson = new Gson();
             // Took from https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/com/google/gson/Gson.html 01-2016-19
-            Type listType = new TypeToken<ArrayList<Session>>() {
-            }.getType();
+            Type listType = new TypeToken<ArrayList<Session>>() {}.getType();
             sessions = gson.fromJson(in, listType);
             for (int i =0; i < sessions.size();i++){
                 //TODO: we need to properly save and load profiles so the proper ProfileID is saved and not randomly generated each time we use the app

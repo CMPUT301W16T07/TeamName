@@ -47,7 +47,7 @@ public class AvailableSessionsActivity extends MethodsController {
 
         //populates the list of all sessions
         oldSessions = (ListView) findViewById(R.id.sessionList);
-        loadSessions(SESSIONSFILE);
+        //loadSessions(SESSIONSFILE);
         adapter = new ArrayAdapter<>(this,
                 R.layout.session_list_item, sessions);
         oldSessions.setAdapter(adapter);

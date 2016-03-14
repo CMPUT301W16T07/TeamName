@@ -23,8 +23,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class MySessionsActivity extends MethodsController {
-    final MethodsController instance = MethodsController.getInstance();
-    final Profile currentProfile = instance.getCurrentProfile();
+    //final MethodsController instance = MethodsController.getInstance();
+    //final Profile currentProfile = instance.getCurrentProfile();
 
     private ListView oldSessionsList;
 
