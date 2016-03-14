@@ -13,7 +13,8 @@ import java.util.UUID;
 /**
  * Created by abrosda on 3/14/16.
  */
-public class BidOnSessionActivity extends MethodsController {
+public class
+        BidOnSessionActivity extends MethodsController {
 
 
     /**
