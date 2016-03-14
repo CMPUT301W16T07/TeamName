@@ -75,6 +75,6 @@ public class EditSessionActivity extends MethodsController {
 
 
         subjectEdit.setText(sessionsOfInterest.get(index).getTitle());
-        descriptionEdit.setText( sessionsOfInterest.get(index).getDescription());
+        descriptionEdit.setText(sessionsOfInterest.get(index).getDescription());
     }
 }
