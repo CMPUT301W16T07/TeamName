@@ -56,6 +56,13 @@ public class AvailableSessionsActivity extends MethodsController {
         oldSessions = (ListView) findViewById(R.id.sessionList);
         oldSessions.setBackgroundResource(R.drawable.apple_righ);
         loadSessions(SESSIONSFILE);
+        // available sessions will only contain available sessions that are not booked
+        /*ArrayList<Session> availableSessions = new ArrayList<>();
+        for (int i=0;i<sessions.size();i++) {
+            if (!sessions.get(i).getStatus().equals("booked")) {
+                availableSessions.add(sessions.get(i));
+            }
+        }*/
         adapter = new ArrayAdapter<>(this,
                 R.layout.list_colour, sessions);
         oldSessions.setAdapter(adapter);

@@ -49,11 +49,11 @@ public class Bid {
     }
 
     // set status if status is valid
-    public void setStatus(String status) throws InvalidStatusException {
+    public void setStatus(String status) {//throws InvalidStatusException {
         if ((status == "pending")|| (status == "accepted") || (status == "declined")) {
             this.status = status;
         } else {
-            throw new InvalidStatusException();
+           // throw new InvalidStatusException();
         }
     }
 

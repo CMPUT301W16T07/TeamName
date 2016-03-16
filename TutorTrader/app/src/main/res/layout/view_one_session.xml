@@ -83,6 +83,12 @@
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:text="View Bids"
+        android:id="@+id/viewBidsButton" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:text="Edit"
         android:id="@+id/editButton" />
 
@@ -91,4 +97,5 @@
         android:layout_height="wrap_content"
         android:text="Delete"
         android:id="@+id/deleteButton" />
+
 </LinearLayout>
