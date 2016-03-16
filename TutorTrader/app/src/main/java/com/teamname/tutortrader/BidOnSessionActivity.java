@@ -67,7 +67,7 @@ public class BidOnSessionActivity extends MethodsController {
                      */
                     bidvalue = Float.valueOf(bidtext.getText().toString());
                     UUID profileID = currentProfile.getProfileID();
-                    Bid newbid = new Bid(selectedSession.getSessionID(), selectedSession.getTitle(), profileID, bidvalue);
+                    Bid newbid = new Bid(selectedSession.getSessionID(), profileID, bidvalue);
                     selectedSession.addBid(newbid);
                     saveInFile(SESSIONSFILE, sessions);
                     Intent intent = new Intent(BidOnSessionActivity.this, AvailableSessionsActivity.class);

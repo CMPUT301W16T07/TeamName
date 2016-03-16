@@ -22,7 +22,7 @@ import java.util.logging.MemoryHandler;
 public class CurrentBidsActivity extends MethodsController {
 
     private ListView currentBidsList; // view to display the current bids
-    private ArrayAdapter<Bid> adapter; // current bids adapter
+    private CurrentBidsAdapter adapter; // current bids adapter
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +42,7 @@ public class CurrentBidsActivity extends MethodsController {
         currentBidsList.setBackgroundResource(R.drawable.apple_righ);
         loadSessions(SESSIONSFILE);
         loadCurrentBids(); // reload the global bids array
-        adapter = new ArrayAdapter<>(this,
-                R.layout.list_colour, bids);
+        adapter = new CurrentBidsAdapter(this, bids);
         currentBidsList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
