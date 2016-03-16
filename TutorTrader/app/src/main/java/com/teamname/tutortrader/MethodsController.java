@@ -1,6 +1,8 @@
 package com.teamname.tutortrader;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -233,6 +235,40 @@ public class MethodsController extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    /**
+     * Checks if the user is logged in. An alert give them the option to go back to avalible sessions
+     * or Log in, calling the MyProfile to create a profile
+     */
+    public void verifyLogin(){
+
+        if (currentProfile.isDefaultUser()) {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(MethodsController.this);
+            builder.setMessage("You must log in")
+                    //.setCancelable(false)
+                    .setPositiveButton("Not Now", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // fire an intent go to your next activity
+                            //TODO: implement the delete process
+                            Intent intent = new Intent(MethodsController.this, AvailableSessionsActivity.class);
+                            startActivity(intent);
+                        }
+                    })
+                    .setNegativeButton("Create Profile", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+
+                            Intent intent = new Intent(MethodsController.this, MyProfileActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+
+            AlertDialog alert = builder.create();
+            alert.show();
+
+        }
+
     }
 
     /*public void loadFromFile(String fileName){

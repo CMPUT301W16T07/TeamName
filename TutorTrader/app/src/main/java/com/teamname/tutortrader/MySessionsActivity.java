@@ -54,31 +54,9 @@ public class MySessionsActivity extends MethodsController {
         //load from file to fill screen with sessions pertaining to the user
         // load through file or through elastic search?
 
-        // this makes sure there is a user logged in.
-        if (currentProfile ==null) {
-            /*Intent intent = new Intent(MySessionsActivity.this, AvailableSessionsActivity.class);
-            startActivity(intent);*/
-            AlertDialog.Builder builder = new AlertDialog.Builder(MySessionsActivity.this);
-            builder.setMessage("You must log in")
-                    .setCancelable(false)
-                    .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            // fire an intent go to your next activity
-                            //TODO: implement the delete process
-                            Intent intent = new Intent(MySessionsActivity.this, AvailableSessionsActivity.class);
-                            startActivity(intent);
-                        }
-                    });
-                    /*.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                        }*/
+        verifyLogin();
 
-            AlertDialog alert = builder.create();
-            alert.show();
-            /*Intent intent = new Intent(MySessionsActivity.this, AvailableSessionsActivity.class);
-            startActivity(intent);*/
-        }
+
         loadSessions(SESSIONSFILE);
         adapter = new ArrayAdapter<>(this,
           R.layout.list_colour,sessionsOfInterest);

@@ -71,11 +71,11 @@ public class Session {
         return status;
     }
 
-    public void setStatus(String status) throws InvalidStatusException {
+    public void setStatus(String status) {//} throws InvalidStatusException {
         if ((status == "available")|| (status == "bidded") || (status == "booked")) {
             this.status = status;
         } else {
-            throw new InvalidStatusException();
+            //throw new InvalidStatusException();
         }
     }
 
