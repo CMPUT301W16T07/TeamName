@@ -31,9 +31,9 @@ public class ViewBidsActivity extends MethodsController {
         // populates the list of all bids
         allBidsList = (ListView) findViewById(R.id.bidsListView);
         loadSessions(SESSIONSFILE);
-
-        adapter = new ArrayAdapter<>(this,
-                R.layout.list_colour, sessionsOfInterest.get(index_r).getBids());
+        adapter = new CurrentBidsAdapter(this, sessionsOfInterest.get(index_r).getBids());
+        //adapter = new ArrayAdapter<>(this,
+        //        R.layout.list_colour, sessionsOfInterest.get(index_r).getBids());
         allBidsList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
