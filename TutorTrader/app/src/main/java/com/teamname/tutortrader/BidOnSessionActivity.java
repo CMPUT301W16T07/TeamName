@@ -18,6 +18,7 @@ import java.util.UUID;
 public class BidOnSessionActivity extends MethodsController {
 
     Session selectedSession;
+    Integer selectedSessionIndex;
 
     /**
      * Loads the selected session from the list and displays the information
@@ -37,8 +38,9 @@ public class BidOnSessionActivity extends MethodsController {
         String index_receive = intent.getStringExtra("index");
         int index = Integer.parseInt(index_receive);
         loadSessions(SESSIONSFILE);
-        selectedSession = sessions.get(index);
-        initializeFields(index);
+        selectedSessionIndex = sessions.indexOf(availableSessions.get(index));
+        selectedSession = sessions.get(selectedSessionIndex);
+        initializeFields(selectedSessionIndex);
 
 
 

@@ -43,8 +43,10 @@ public class MethodsController extends AppCompatActivity {
     protected Profile currentProfile;
 
     protected ArrayList<Session> sessions = new ArrayList<Session>();
+    protected ArrayList<Session> availableSessions = new ArrayList<Session>();
     protected ArrayList<Profile> profiles = new ArrayList<Profile>();
     protected ArrayList<Bid> bids = new ArrayList<Bid>();
+
 
     protected Button btn_availableSession, btn_myProfile, btn_CurrentBids, btn_mySessions;
     protected ArrayList<Session> sessionsOfInterest = new ArrayList<Session>(); //this creates a list of sessions
@@ -183,6 +185,7 @@ public class MethodsController extends AppCompatActivity {
         //ArrayList<Session> allSessions;
         //allSessions = new ArrayList<>();
         sessionsOfInterest = new ArrayList<Session>();
+        availableSessions = new ArrayList<>();
         try {
             FileInputStream fis = openFileInput(filename);
             BufferedReader in = new BufferedReader(new InputStreamReader(fis));
@@ -198,6 +201,9 @@ public class MethodsController extends AppCompatActivity {
                 if (currentProfileID.compareTo(tutorProfileID) == 0) {
                     sessionsOfInterest.add(sessions.get(i));
 
+                }
+                if (sessions.get(i).getStatus().equals("available")) {
+                    availableSessions.add(sessions.get(i));
 
                 }
             }
