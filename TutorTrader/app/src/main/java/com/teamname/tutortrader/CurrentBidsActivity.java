@@ -45,5 +45,22 @@ public class CurrentBidsActivity extends MethodsController {
         adapter = new CurrentBidsAdapter(this, bids);
         currentBidsList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
+        Button clearDeclinedBidsButton = (Button) findViewById(R.id.clearDeclinedBidsButton);
+        clearDeclinedBidsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadCurrentBids();
+                // cycle through those bids
+                for (int i = 0; i < bids.size(); i++) {
+                    // weed out declined bids
+                    if (bids.get(i).getStatus().equals("declined")) {
+                        bids.remove(i);
+                    }
+                }
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
+
 }

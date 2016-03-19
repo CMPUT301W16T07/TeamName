@@ -48,7 +48,7 @@ public class ViewBidsActivity extends MethodsController {
 
         allBidsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ViewBidsActivity.this);
                 final Integer positionCopy = position;
                 final Bid currentBid = sessionsOfInterest.get(index_r).getBids().get(position);
@@ -64,33 +64,72 @@ public class ViewBidsActivity extends MethodsController {
 
                     AlertDialog alert = builderNO.create();
                     alert.show();
-                }  else {
+                } else {
                     builder.setMessage("Accept Bid for $" + currentBid.getAmount() + "?")
                             .setCancelable(false)
                             .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     Integer index = sessions.indexOf(sessionsOfInterest.get(index_r));
                                     sessions.get(index).setStatus("booked");
-                                    sessions.get(index).getBids().get(positionCopy).setStatus("accepted");
-                                    sessions.get(index).getBids().clear();
-                                    sessions.get(index).getBids().add(currentBid);
-                                    
+
+                                    notifyBidders(positionCopy, index);
+                                    //sessions.get(index).getBids().clear();
+                                    //sessions.get(index).getBids().add(currentBid);
                                     //TODO: notify bidder on acceptance
                                     saveInFile(SESSIONSFILE, sessions);
                                     adapter.notifyDataSetChanged();
                                 }
                             })
-                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     dialog.cancel();
+                                }
+                            })
+                                    // Difference here is that the sessions status remains available
+                            .setNegativeButton("Decline", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    Integer index = sessions.indexOf(sessionsOfInterest.get(index_r));
+                                    sessions.get(index).getBids().get(positionCopy).setStatus("declined");
+                                    Bid tempObject = sessions.get(index).getBids().get(positionCopy);
+                                    sessions.get(index).getBids().remove(tempObject);
+
+                                    //TODO: notify bidder on decline
+                                    saveInFile(SESSIONSFILE, sessions);
+                                    adapter.notifyDataSetChanged();
                                 }
                             });
                     AlertDialog alert = builder.create();
                     alert.show();
-                 }
+                }
             }
         });
 
 
+    }
+
+
+    // CURRENTLY NOTIFYING IS NOT WORKING. INDEXING ISSUES
+    /**
+     * notifyBidders will notify all bidders who were declined, and remove those bids from the sessions
+     * bids. It will then notify the successful bidder and keep it in the list.
+     * //@param bidsList the list of bids for the session of interest
+     * @param indexOfAcceptedBid the index of the accepted bid within a sessions bids
+     * @param sessionIndex the index of the session of interest in the list of all sessions.
+     */
+    private void notifyBidders(Integer indexOfAcceptedBid, Integer sessionIndex) {
+        //sessions.get(sessionIndex).getBids().size()
+        for (int i = 0; i < sessions.get(sessionIndex).getBids().size();i++) {
+            if (i==indexOfAcceptedBid) {
+                sessions.get(sessionIndex).getBids().get(i).setStatus("accepted");
+                //TODO: notify winning bidder
+            } else {
+                // TODO: alert bidder that it has been declined
+                sessions.get(sessionIndex).getBids().get(i).setStatus("declined"); // probably dont need this line
+                Bid tempObject = sessions.get(sessionIndex).getBids().get(i);
+                sessions.get(sessionIndex).getBids().remove(tempObject);
+
+            }
+        }
+        saveInFile(SESSIONSFILE, sessions);
     }
 }
