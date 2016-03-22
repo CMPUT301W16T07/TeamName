@@ -47,8 +47,9 @@ public class Bid {
     }
 
     // set status if status is valid
+    //fixed issue: == used .equals() instead
     public void setStatus(String status) {//throws InvalidStatusException {
-        if ((status == "pending")|| (status == "accepted") || (status == "declined")) {
+        if ((status.equals("pending"))|| (status.equals("accepted")) || (status.equals("declined"))) {
             this.status = status;
         } else {
            // throw new InvalidStatusException();
