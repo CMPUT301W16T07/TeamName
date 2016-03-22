@@ -1,17 +1,9 @@
 package com.teamname.tutortrader;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.UUID;
-import java.util.logging.MemoryHandler;
 
 /**
  * Created by MJ Alba on 2016-03-08.

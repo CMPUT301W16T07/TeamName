@@ -3,8 +3,6 @@ package com.teamname.tutortrader;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 
 import java.util.ArrayList;

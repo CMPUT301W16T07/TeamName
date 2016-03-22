@@ -31,7 +31,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:id="@+id/editUsername"
-            android:hint="Enter New Username"/>
+            android:hint="Enter Username"/>
     </LinearLayout>
 
     <LinearLayout
@@ -50,7 +50,8 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:id="@+id/editEmail"
-            android:hint="Enter New Email" />
+            android:inputType="textWebEmailAddress"
+            android:hint="Enter Email" />
     </LinearLayout>
 
     <LinearLayout
@@ -68,8 +69,9 @@
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:inputType="phone"
             android:id="@+id/editPhone"
-            android:hint="Enter New PhoneNumber" />
+            android:hint="Enter Phone Number" />
     </LinearLayout>
 
     <Button

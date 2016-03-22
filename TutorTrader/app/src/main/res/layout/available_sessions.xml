@@ -48,11 +48,11 @@
             android:layout_toEndOf="@+id/currentBids" />
 
     </RelativeLayout>
-
+    <!-- changed layout_height to 0dp for better performance -->
     <ListView
         android:layout_width="wrap_content"
         android:id="@+id/sessionList"
-        android:layout_height="285dp"
+        android:layout_height="0dp"
         android:layout_gravity="left"
         android:layout_weight="1.04">
     </ListView>

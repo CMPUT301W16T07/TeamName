@@ -24,6 +24,9 @@
         <activity android:name=".BidOnSessionActivity" />
         <activity android:name=".MyProfileActivity" />
         <activity android:name=".EditSessionActivity" />
+
+        <!-- added methods controller as an activity to be sagfe -->
+        <activity android:name=".MethodsController"/>
         <activity
             android:name=".EditProfileActivity"
             android:label="@string/title_activity_edit_profile"></activity>
