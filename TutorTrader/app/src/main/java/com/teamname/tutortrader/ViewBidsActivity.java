@@ -14,11 +14,13 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 public class ViewBidsActivity extends MethodsController {
-    private ListView allBidsList;
+
     private ArrayAdapter<Bid> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ListView allBidsList;
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_bids);
         Intent intent = getIntent();
