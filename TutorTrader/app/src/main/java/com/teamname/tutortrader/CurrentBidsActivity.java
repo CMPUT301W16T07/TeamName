@@ -13,11 +13,13 @@ import android.widget.ListView;
  */
 public class CurrentBidsActivity extends MethodsController {
 
-    private ListView currentBidsList; // view to display the current bids
+
     private CurrentBidsAdapter adapter; // current bids adapter
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ListView currentBidsList; // view to display the current bids
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.current_bids);
         btn_CurrentBids = (Button) findViewById(R.id.currentBids);
