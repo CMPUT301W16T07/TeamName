@@ -72,7 +72,7 @@ public class ViewBidsActivity extends MethodsController {
                                     Integer index = sessions.indexOf(sessionsOfInterest.get(index_r));
                                     sessions.get(index).setStatus("booked");
 
-                                    notifyBidders(positionCopy, index);
+                                    notifyBidders(currentBid, index);
                                     //sessions.get(index).getBids().clear();
                                     //sessions.get(index).getBids().add(currentBid);
                                     //TODO: notify bidder on acceptance
@@ -113,23 +113,29 @@ public class ViewBidsActivity extends MethodsController {
      * notifyBidders will notify all bidders who were declined, and remove those bids from the sessions
      * bids. It will then notify the successful bidder and keep it in the list.
      * //@param bidsList the list of bids for the session of interest
-     * @param indexOfAcceptedBid the index of the accepted bid within a sessions bids
+     * @param currentBid the bid object of the accepted bid within a sessions bids
      * @param sessionIndex the index of the session of interest in the list of all sessions.
      */
-    private void notifyBidders(Integer indexOfAcceptedBid, Integer sessionIndex) {
+    private void notifyBidders(Bid currentBid, Integer sessionIndex) {
         //sessions.get(sessionIndex).getBids().size()
+
+        Bid acceptedBid = currentBid;
+        acceptedBid.setStatus("accepted");
+        sessions.get(sessionIndex).declineAllBids();
         for (int i = 0; i < sessions.get(sessionIndex).getBids().size();i++) {
-            if (i==indexOfAcceptedBid) {
+            if (i==sessions.get(sessionIndex).getBids().indexOf(currentBid)) {
                 sessions.get(sessionIndex).getBids().get(i).setStatus("accepted");
+                acceptedBid = sessions.get(sessionIndex).getBids().get(i);
                 //TODO: notify winning bidder
             } else {
                 // TODO: alert bidder that it has been declined
                 sessions.get(sessionIndex).getBids().get(i).setStatus("declined"); // probably dont need this line
-                Bid tempObject = sessions.get(sessionIndex).getBids().get(i);
-                sessions.get(sessionIndex).getBids().remove(tempObject);
+               // sessions.get(sessionIndex).getBids().remove(sessions.get(sessionIndex).getBids().get(i));
 
             }
         }
+        sessions.get(sessionIndex).getBids().clear();
+        sessions.get(sessionIndex).getBids().add(acceptedBid);
         saveInFile(SESSIONSFILE, sessions);
     }
 }

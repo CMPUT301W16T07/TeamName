@@ -79,6 +79,12 @@ public class Session {
         }
     }
 
+    public void declineAllBids () {
+        for (int i=0; i< bids.size(); i++) {
+            bids.get(i).setStatus("declined");
+        }
+    }
+
     @Override
     public String toString() {
         return "Title: " + title + "\nDescription: " + description ;
