@@ -4,46 +4,8 @@ android:orientation="vertical" android:layout_width="match_parent"
 android:layout_height="match_parent"
     android:weightSum="1">
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-        <Button
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="@string/MyProfileButton"
-            android:id="@+id/myProfile"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/mySessions" />
-
-        <Button
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="@string/CurrentBidsButton"
-            android:id="@+id/currentBids"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/availibleSessions" />
-
-
-        <Button
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="@string/AvailableSessionsButton"
-            android:id="@+id/availibleSessions"
-            android:layout_alignBottom="@+id/currentBids"
-            android:layout_alignParentStart="true" />
-
-        <Button
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="@string/MySessionsButton"
-            android:id="@+id/mySessions"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/currentBids" />
-
-
-
-    </RelativeLayout>
+    <!-- Menubar -->
+    <include layout="@layout/menubar"/>
 
     <ListView
         android:layout_width="wrap_content"

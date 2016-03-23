@@ -22,7 +22,7 @@ public class MyProfileActivity extends MethodsController {
         btn_myProfile.setOnClickListener(btnClickListener);
         btn_mySessions = (Button) findViewById(R.id.mySessions);
         btn_mySessions.setOnClickListener(btnClickListener);
-        btn_availableSession = (Button) findViewById(R.id.availibleSessions);
+        btn_availableSession = (Button) findViewById(R.id.availableSessions);
         btn_availableSession.setOnClickListener(btnClickListener);
 
         if (currentProfile.isDefaultUser()){
