@@ -12,7 +12,7 @@ import android.widget.EditText;
  *
  * The activity for adding new tutor sessions as a user.
  */
-public class AddSessionActivity extends MethodsController {
+public class AddSessionActivity extends MethodsController  {
 
     //final MethodsController instance = MethodsController.getInstance();
     //final Profile currentProfile = instance.getCurrentProfile();
@@ -42,6 +42,7 @@ public class AddSessionActivity extends MethodsController {
                     // TODO: implement Tutor
                     Session newSession = new Session(subjectEdit.getText().toString(),descriptionEdit.getText().toString(),currentProfile);
                     sessions.add(newSession);
+                    ElasticSessionController.addSession(newSession);
                     saveInFile(SESSIONSFILE, sessions);
                     Intent intent = new Intent(AddSessionActivity.this, MySessionsActivity.class);
                     startActivity(intent);

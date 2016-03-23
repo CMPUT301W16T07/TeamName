@@ -56,6 +56,7 @@ public class AvailableSessionsActivity extends MethodsController {
         oldSessions = (ListView) findViewById(R.id.sessionList);
         oldSessions.setBackgroundResource(R.drawable.apple_righ);
         loadSessions(SESSIONSFILE);
+       // ElasticSessionController.getLatestSessions();
         // available sessions will only contain available sessions that are not booked
         /*ArrayList<Session> availableSessions = new ArrayList<>();
         for (int i=0;i<sessions.size();i++) {
@@ -123,6 +124,7 @@ public class AvailableSessionsActivity extends MethodsController {
     @Override
     protected void onStart() {
         super.onStart();
+        //ElasticSessionController.getLatestSessions();
         loadFromFile(SESSIONSFILE);
         //adapter = new ArrayAdapter<Session>(this, R.layout.session_list_item);
         oldSessions = (ListView) findViewById(R.id.sessionList);
