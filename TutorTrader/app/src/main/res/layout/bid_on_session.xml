@@ -10,7 +10,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="All Sessions"
+        android:text="@string/AvailableSessionsButton"
         android:id="@+id/allSessionsButton" />
     <Button
         android:layout_width="wrap_content"
@@ -26,14 +26,12 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/subjectTextB"
-        android:layout_gravity="center_horizontal"
-        android:text="TEXT" />
+        android:layout_gravity="center_horizontal" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Title"
         android:id="@+id/titleBodyB" />
 
     <Space
@@ -44,7 +42,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Description Text"
         android:id="@+id/descriptionBodyB" />
 
     <Space
@@ -55,7 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Posted By:"
+        android:text="@string/PostedByField"
         android:id="@+id/postedByBodyB" />
 
     <Space
@@ -66,7 +63,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Email: Text"
         android:id="@+id/bodyEmailB" />
 
     <Space
@@ -77,7 +73,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Phone: Text"
         android:id="@+id/bodyPhoneB" />
 
     <Space
@@ -88,7 +83,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Status: "
+        android:text="@string/StatusField"
         android:id="@+id/bodyStatusB" />
 
     <EditText
@@ -97,12 +92,12 @@
         android:id="@+id/bidtext"
         android:inputType="numberDecimal"
         android:layout_alignParentBottom="true"
-        android:hint="Enter your bid here (Dollars per hour): " />
+        android:hint="@string/EnterBidField" />
 
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Bid"
+        android:text="@string/BidButton"
         android:id="@+id/bidButton" />
 
 </LinearLayout>

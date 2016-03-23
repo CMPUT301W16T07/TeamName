@@ -10,13 +10,13 @@
     <Button
         android:layout_width="114dp"
         android:layout_height="wrap_content"
-        android:text="Session"
+        android:text="@string/SessionField"
         android:id="@+id/sessionButton" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:text="Bids On My Sessions"
+        android:text="@string/BidsOnMySessionsField"
         android:id="@+id/bidsOnMySessionsText" />
 
     <ListView

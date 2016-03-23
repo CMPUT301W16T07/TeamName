@@ -48,7 +48,7 @@ public class AvailableSessionsActivity extends MethodsController {
         btn_myProfile.setOnClickListener(btnClickListener);
         btn_mySessions = (Button) findViewById(R.id.mySessions);
         btn_mySessions.setOnClickListener(btnClickListener);
-        btn_availableSession = (Button) findViewById(R.id.availibleSessions);
+        btn_availableSession = (Button) findViewById(R.id.availableSessions);
         btn_availableSession.setOnClickListener(btnClickListener);
 
 
@@ -63,6 +63,7 @@ public class AvailableSessionsActivity extends MethodsController {
                 availableSessions.add(sessions.get(i));
             }
         }*/
+        Notify();
         adapter = new ArrayAdapter<>(this,
                 R.layout.list_colour, availableSessions);
         oldSessions.setAdapter(adapter);
@@ -98,12 +99,12 @@ public class AvailableSessionsActivity extends MethodsController {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_tutor_trade, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.menu_tutor_trade, menu);
+//        return true;
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
