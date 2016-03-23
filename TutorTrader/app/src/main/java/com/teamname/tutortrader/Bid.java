@@ -13,15 +13,17 @@ public class Bid {
 
     private UUID bidID; // unique identifying ID
     private UUID bidder; // a user ID
-    private UUID sessionID; // a session ID
+
     private Float amount; // in dollars per hour
     private String status; // pending, accepted, declined, etc.
 
     // initialize Bids by passing a session ID, bidder ID, and amount
     public Bid(UUID session, UUID bidder, Float amount) {
+        UUID sessionID; // a session ID
+
         this.bidID = UUID.randomUUID();
         this.bidder = bidder;
-        this.sessionID = session;
+        sessionID = session;
         this.amount = amount;
         this.status = "pending";
     }

@@ -24,7 +24,7 @@ public class BidOnSessionActivity extends MethodsController {
      * Loads the selected session from the list and displays the information
      * User can put an amount in the bid then hit the bid button
      * this should save the bid into the list of bids on the session
-     * @param savedInstanceState
+     * @param savedInstanceState this is the saved instance
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {

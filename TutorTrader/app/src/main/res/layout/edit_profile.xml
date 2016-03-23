@@ -49,6 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:inputType="textWebEmailAddress"
             android:id="@+id/editEmail"
             android:hint="Enter New Email" />
     </LinearLayout>
@@ -68,8 +69,9 @@
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:inputType="phone"
             android:id="@+id/editPhone"
-            android:hint="Enter New PhoneNumber" />
+            android:hint="Enter New Phone Number" />
     </LinearLayout>
 
     <Button
