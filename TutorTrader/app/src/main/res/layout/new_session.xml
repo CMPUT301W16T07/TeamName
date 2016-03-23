@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add New Session"
+        android:text="@string/AddSessionField"
         android:id="@+id/AddNewSession"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.06"
@@ -22,19 +22,19 @@
         android:id="@+id/subjectEdit"
         android:layout_alignParentBottom="true"
         android:layout_toStartOf="@+id/searchButton"
-        android:hint="Subject" />
+        android:hint="@string/SubjectField" />
     <EditText
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:id="@+id/descriptionEdit"
         android:layout_alignParentBottom="true"
         android:layout_toStartOf="@+id/searchButton"
-        android:hint="Description" />
+        android:hint="@string/DescriptionField" />
 
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Save"
+        android:text="@string/SaveButton"
         android:id="@+id/saveButton"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.19" />
@@ -42,7 +42,7 @@
     <Button
         android:layout_width="fill_parent"
         android:layout_height="94dp"
-        android:text="Cancel"
+        android:text="@string/CancelButton"
         android:id="@+id/cancelAddSession"
         android:layout_gravity="center_horizontal" />
 
