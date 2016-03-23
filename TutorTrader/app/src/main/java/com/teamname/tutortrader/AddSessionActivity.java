@@ -2,10 +2,14 @@ package com.teamname.tutortrader;
 
 // getting rid of unused imports
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 /**
  * Created by taylorarnett on 2016-03-01.
@@ -16,6 +20,10 @@ public class AddSessionActivity extends MethodsController {
 
     //final MethodsController instance = MethodsController.getInstance();
     //final Profile currentProfile = instance.getCurrentProfile();
+
+    static final int REQUEST_IMAGE_CAPTURE = 1234;
+    private Bitmap thumbnail;
+    private ImageView newImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +37,16 @@ public class AddSessionActivity extends MethodsController {
                 startActivity(intent);
             }
         });
+        newImage = (ImageView)findViewById(R.id.newImage);
+        Button takePhotoButton = (Button) findViewById(R.id.takePhotoButton);
+        takePhotoButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view){
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (intent.resolveActivity(getPackageManager()) != null){
+                    startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+                }
+            }
+        });
 
         Button saveButton = (Button) findViewById(R.id.saveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -40,7 +58,9 @@ public class AddSessionActivity extends MethodsController {
                     EditText subjectEdit = (EditText) findViewById(R.id.subjectEdit);
                     EditText descriptionEdit = (EditText) findViewById(R.id.descriptionEdit);
                     // TODO: implement Tutor
-                    Session newSession = new Session(subjectEdit.getText().toString(),descriptionEdit.getText().toString(),currentProfile);
+
+                    Session newSession = new Session(subjectEdit.getText().toString(),descriptionEdit.getText().toString(),currentProfile, thumbnail);
+                    newSession.addThumbnail(thumbnail);
                     sessions.add(newSession);
                     saveInFile(SESSIONSFILE, sessions);
                     Intent intent = new Intent(AddSessionActivity.this, MySessionsActivity.class);
@@ -48,6 +68,8 @@ public class AddSessionActivity extends MethodsController {
                 }
             }
         });
+
+
 
     }
 
@@ -64,5 +86,15 @@ public class AddSessionActivity extends MethodsController {
             return true;
         }
         return false;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK){
+
+            Bundle extras = data .getExtras();
+            thumbnail = (Bitmap)extras.get("data");
+            newImage.setImageBitmap(thumbnail);
+        }
     }
 }

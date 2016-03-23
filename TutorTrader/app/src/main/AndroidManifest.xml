@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.teamname.tutortrader">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
+    <!-- New! -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -26,14 +31,15 @@
         <activity android:name=".EditSessionActivity" />
 
         <!-- added methods controller as an activity to be sagfe -->
-        <activity android:name=".MethodsController"/>
+        <activity android:name=".MethodsController" />
         <activity
             android:name=".EditProfileActivity"
-            android:label="@string/title_activity_edit_profile"></activity>
+            android:label="@string/title_activity_edit_profile" />
         <activity
             android:name=".CreateProfileActivity"
-            android:label="@string/title_activity_create_profile"></activity>
-        <activity android:name=".ViewBidsActivity"></activity>
+            android:label="@string/title_activity_create_profile" />
+        <activity android:name=".ViewBidsActivity" />
+        <activity android:name=".ViewImageActivity"></activity>
     </application>
 
 </manifest>

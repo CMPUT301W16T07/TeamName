@@ -35,7 +35,7 @@ public class BidOnSessionActivity extends MethodsController {
             The index of the entry that was clicked in the list of entries displayed on the main
             screen is passed through the intent. Here is where we access it
         */
-        String index_receive = intent.getStringExtra("index");
+        final String index_receive = intent.getStringExtra("index");
         int index = Integer.parseInt(index_receive);
         loadSessions(SESSIONSFILE);
         selectedSessionIndex = sessions.indexOf(availableSessions.get(index));
@@ -51,6 +51,17 @@ public class BidOnSessionActivity extends MethodsController {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(BidOnSessionActivity.this, AvailableSessionsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button viewImageButton = (Button) findViewById(R.id.viewImageButton);
+        viewImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BidOnSessionActivity.this, ViewImageActivity.class);
+                // TODO: must pass the index so view image activity can return to proper bidonsession
+                intent.putExtra("index", String.valueOf(selectedSessionIndex));
                 startActivity(intent);
             }
         });

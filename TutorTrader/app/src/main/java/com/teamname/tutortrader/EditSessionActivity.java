@@ -1,6 +1,7 @@
 package com.teamname.tutortrader;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,7 +14,7 @@ import android.widget.EditText;
  * that they previously created.
  */
 public class EditSessionActivity extends MethodsController {
-
+Bitmap thumbnail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +25,7 @@ public class EditSessionActivity extends MethodsController {
         final int index_r = Integer.parseInt(index_receive);
         initializeFields(index_r);
 
+        thumbnail = sessions.get(index_r).getThumbnail();
         Button cancelEditSession = (Button) findViewById(R.id.cancelEditSession);
         cancelEditSession.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,7 +47,7 @@ public class EditSessionActivity extends MethodsController {
                     // TODO: implement Tutor
                     sessions.remove(sessionsOfInterest.get(index_r));
                     sessionsOfInterest.remove(index_r);
-                    Session newSession = new Session(subjectEdit.getText().toString(),descriptionEdit.getText().toString(),currentProfile);
+                    Session newSession = new Session(subjectEdit.getText().toString(),descriptionEdit.getText().toString(),currentProfile,thumbnail);
                     sessions.add(newSession);
                     saveInFile(SESSIONSFILE, sessions);
                     Intent intent = new Intent(EditSessionActivity.this, MySessionsActivity.class);

@@ -3,9 +3,11 @@ package com.teamname.tutortrader;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -62,7 +64,7 @@ public class ViewOneSessionActivity extends MethodsController {
                             public void onClick(DialogInterface dialog, int id) {
                                 sessions.remove(sessionsOfInterest.get(index_r));
                                 sessionsOfInterest.remove(index_r);
-                                saveInFile(SESSIONSFILE,sessions);
+                                saveInFile(SESSIONSFILE, sessions);
                                 Intent intent = new Intent(ViewOneSessionActivity.this, MySessionsActivity.class);
                                 startActivity(intent);
                             }
@@ -94,7 +96,6 @@ public class ViewOneSessionActivity extends MethodsController {
      * @param index the index of the session in the sessions arraylist is passed in.
      */
     public void initializeFields(int index) {
-        TextView subjectText = (TextView) findViewById(R.id.subjectText);
         TextView titleBody = (TextView) findViewById(R.id.titleBody);
         TextView descriptionBody = (TextView) findViewById(R.id.descriptionBody);
         TextView postedByBody = (TextView) findViewById(R.id.postedByBody);
@@ -102,7 +103,9 @@ public class ViewOneSessionActivity extends MethodsController {
         TextView bodyPhone = (TextView) findViewById(R.id.bodyPhone);
         TextView bodyStatus = (TextView) findViewById(R.id.bodyStatus);
 
-        subjectText.setText(sessionsOfInterest.get(index).getTitle());
+        ImageView sessionImage = (ImageView) findViewById(R.id.sessionImage);
+
+        sessionImage.setImageBitmap(sessionsOfInterest.get(index).getThumbnail());
         titleBody.setText("Title: "+ sessionsOfInterest.get(index).getTitle());
         descriptionBody.setText("Description: "+sessionsOfInterest.get(index).getDescription());
         postedByBody.setText("Posted By: "+sessionsOfInterest.get(index).tutor.getName());
