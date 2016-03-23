@@ -63,6 +63,7 @@ public class AvailableSessionsActivity extends MethodsController {
                 availableSessions.add(sessions.get(i));
             }
         }*/
+        Notify();
         adapter = new ArrayAdapter<>(this,
                 R.layout.list_colour, availableSessions);
         oldSessions.setAdapter(adapter);
