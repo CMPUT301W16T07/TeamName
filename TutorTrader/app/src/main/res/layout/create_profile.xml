@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:id="@+id/EditTitle"
-        android:text="Create New Profile"
+        android:text="@string/CreateProfileField"
         android:textSize="30sp"/>
     <LinearLayout
         android:layout_height="wrap_content"
@@ -24,14 +24,14 @@
             android:layout_width="wrap_content"
             android:layout_weight="0"
             android:textSize="25sp"
-            android:text="Username: "
+            android:text="@string/UsernameField"
             android:id="@+id/UsernameText"/>
         <EditText
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:id="@+id/editUsername"
-            android:hint="Enter New Username"/>
+            android:hint="@string/NewUsernameField"/>
     </LinearLayout>
 
     <LinearLayout
@@ -43,14 +43,14 @@
             android:layout_width="wrap_content"
             android:layout_weight="0"
             android:textSize="25sp"
-            android:text="Email: "
+            android:text="@string/EmailField"
             android:id="@+id/EmailText"/>
         <EditText
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:id="@+id/editEmail"
-            android:hint="Enter New Email" />
+            android:hint="@string/NewEmailField" />
     </LinearLayout>
 
     <LinearLayout
@@ -62,27 +62,27 @@
             android:layout_width="wrap_content"
             android:layout_weight="0"
             android:textSize="25sp"
-            android:text="Phone: "
+            android:text="@string/PhoneField"
             android:id="@+id/PhoneText"/>
         <EditText
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:id="@+id/editPhone"
-            android:hint="Enter New PhoneNumber" />
+            android:hint="@string/NewPhoneField" />
     </LinearLayout>
 
     <Button
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:id="@+id/saveButton"
-        android:text="Save"
+        android:text="@string/SaveButton"
         />
     <Button
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:id="@+id/cancelButton"
-        android:text="Cancel"
+        android:text="@string/CancelButton"
         />
 
 
