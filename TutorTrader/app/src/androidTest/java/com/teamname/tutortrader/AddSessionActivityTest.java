@@ -3,14 +3,15 @@ package com.teamname.tutortrader;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 
 import java.util.ArrayList;
 
 /**
- * Created by abrosda on 3/14/16.
+ * This will test the addSessionActivity by adding a new activity and see that it has been
+ * created
+ *
+ * @see AddSessionActivity for more details about what it does
  */
 public class AddSessionActivityTest extends ActivityInstrumentationTestCase2 {
 

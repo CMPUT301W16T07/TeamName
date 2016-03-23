@@ -39,26 +39,26 @@ public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCa
     public void testViewSessions() {
         AvailableSessionsActivity tta = (AvailableSessionsActivity) getActivity();
         assertNotNull(activity.findViewById(R.id.mySessions));
-        ((Button) activity.findViewById(R.id.mySessions)).performClick();
+        (activity.findViewById(R.id.mySessions)).performClick();
         MySessionsActivity msa = (MySessionsActivity) getActivity();
         ArrayList<Session> sessions = new ArrayList<Session>();
         Profile profile = new Profile("Name", "Phone", "Email");
-        Session session = new Session("Math", "Tutor for linear Algebra for all university levels", profile);\
-        Session session2 = new Session("Stats", "Tutor for Stats 252 and 141");
+        Session session = new Session("Math", "Tutor for linear Algebra for all university levels", profile);
+        Session session2 = new Session("Stats", "Tutor for Stats 252 and 141", profile);
         assertNotNull(activity.findViewById(R.id.currentBids));
-        ((Button) activity.findViewById(R.id.currentBids)).performClick();
-        ((Button) activity.findViewById(R.id.availibleSessions)).performClick();
+        ( activity.findViewById(R.id.currentBids)).performClick();
+        (activity.findViewById(R.id.availibleSessions)).performClick();
         sessions.add(session);
-        session2.add(session2);
+        sessions.add(session2);
 
 
         // To test that two sessions show up
         assertEquals(sessions.size(), 2);
 
         assertTrue("There is the math session",
-                session.get(0).getTitle() == "Math");
+                sessions.get(0).getTitle().equals("Math"));
         assertTrue("There is the stats session",
-                sessions.get(0).getTitle() == "Stats");
+                sessions.get(0).getTitle().equals("Stats"));
     }
 }
 
@@ -248,3 +248,4 @@ public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCa
 
     }
 }
+*/

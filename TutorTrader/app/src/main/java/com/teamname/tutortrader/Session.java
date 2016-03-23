@@ -71,8 +71,9 @@ public class Session {
         return status;
     }
 
+    //fixed issue: == used .equals() instead
     public void setStatus(String status) {//} throws InvalidStatusException {
-        if ((status == "available")|| (status == "bidded") || (status == "booked")) {
+        if ((status.equals("available"))|| (status.equals("bidded"))|| (status.equals("booked"))) {
             this.status = status;
         } else {
             //throw new InvalidStatusException();

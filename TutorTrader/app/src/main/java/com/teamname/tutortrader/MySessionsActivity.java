@@ -1,26 +1,12 @@
 package com.teamname.tutortrader;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 
 /**
  * Created by MJ Alba on 2016-03-08.
@@ -32,13 +18,16 @@ public class MySessionsActivity extends MethodsController {
     //final MethodsController instance = MethodsController.getInstance();
     //final Profile currentProfile = instance.getCurrentProfile();
 
-    private ListView oldSessionsList;
 
-    // inspired by lonelyTwitter code
-    private ArrayAdapter<Session> adapter;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ListView oldSessionsList;
+        // inspired by lonelyTwitter code
+        ArrayAdapter<Session> adapter;
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_sessions);
         oldSessionsList = (ListView) findViewById(R.id.sessionList);
