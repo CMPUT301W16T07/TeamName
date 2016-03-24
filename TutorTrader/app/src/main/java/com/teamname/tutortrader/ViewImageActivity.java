@@ -22,10 +22,11 @@ public class ViewImageActivity extends MethodsController {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ViewImageActivity.this, BidOnSessionActivity.class);
+                finish();
+                /*Intent intent = new Intent(ViewImageActivity.this, BidOnSessionActivity.class);
                 int properIndex = sessionsOfInterest.indexOf(sessions.get(index));
                 intent.putExtra("index", String.valueOf(properIndex));
-                startActivity(intent);
+                startActivity(intent);*/
             }
         });
         TextView sessionTitle = (TextView) findViewById(R.id.sessionTitle);

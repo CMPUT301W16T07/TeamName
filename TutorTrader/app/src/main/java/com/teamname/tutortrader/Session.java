@@ -118,4 +118,8 @@ public class Session {
         }
         return thumbnail;
     }
+
+    public void setThumbnail(Bitmap thumbnail) {
+        this.thumbnail = thumbnail;
+    }
 }

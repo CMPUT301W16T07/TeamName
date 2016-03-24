@@ -7,11 +7,13 @@ import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -55,6 +57,10 @@ public class MethodsController extends AppCompatActivity {
     //protected ArrayList<Session> allSessions = new ArrayList<>();
 
     private static final MethodsController instance = new MethodsController();
+
+    static final int REQUEST_IMAGE_CAPTURE = 1234;
+    protected Bitmap thumbnail;
+    protected ImageView newImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -325,6 +331,16 @@ public class MethodsController extends AppCompatActivity {
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         mNotificationManager.notify(1, mBuilder.build());
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK){
+
+            Bundle extras = data .getExtras();
+            thumbnail = (Bitmap)extras.get("data");
+            newImage.setImageBitmap(thumbnail);
+            saveInFile(SESSIONSFILE, sessions); //might not need this here
+        }
     }
 
 }

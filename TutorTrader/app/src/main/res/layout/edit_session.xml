@@ -20,30 +20,52 @@
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:id="@+id/subjectEdit"
-        android:layout_alignParentBottom="true"
-        android:layout_toStartOf="@+id/searchButton"
         android:hint="@string/SubjectField" />
     <EditText
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:id="@+id/descriptionEdit"
-        android:layout_alignParentBottom="true"
-        android:layout_toStartOf="@+id/searchButton"
         android:hint="@string/DescriptionField" />
 
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editImageView"
+        android:layout_weight="0.75" />
+
+    <RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
     <Button
-        android:layout_width="157dp"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="New Photo"
+        android:id="@+id/newPhotoButton"
+        android:layout_weight="0.06"/>
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Delete Photo"
+        android:id="@+id/deletePhotoButton"
+        android:layout_weight="0.06"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/newPhotoButton"
+        android:layout_toEndOf="@+id/newPhotoButton" />
+
+</RelativeLayout>
+    <Button
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/SaveButton"
         android:id="@+id/saveButton"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.19" />
+        android:layout_weight="0.06" />
 
     <Button
-        android:layout_width="157dp"
-        android:layout_height="94dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:text="@string/CancelButton"
         android:id="@+id/cancelEditSession"
-        android:layout_gravity="center_horizontal" />
+        android:layout_weight="0.06" />
 
 </LinearLayout>

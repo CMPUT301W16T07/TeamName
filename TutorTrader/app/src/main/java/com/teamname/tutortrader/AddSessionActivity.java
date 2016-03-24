@@ -21,9 +21,6 @@ public class AddSessionActivity extends MethodsController {
     //final MethodsController instance = MethodsController.getInstance();
     //final Profile currentProfile = instance.getCurrentProfile();
 
-    static final int REQUEST_IMAGE_CAPTURE = 1234;
-    private Bitmap thumbnail;
-    private ImageView newImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
