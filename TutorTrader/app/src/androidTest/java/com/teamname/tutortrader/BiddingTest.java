@@ -18,6 +18,9 @@ public class BiddingTest extends ActivityInstrumentationTestCase2 {
     public BiddingTest() {
         super(BidOnSessionActivity.class);
     }
+    Activity activity = getActivity();
+
+
 
     /** USECASE 5 - BidSession
      *  acceptBid() accepts some bid
@@ -40,7 +43,8 @@ public class BiddingTest extends ActivityInstrumentationTestCase2 {
     /** USECASE 05.01.01 = BidForSession
      * Testing if a session's status is changed to pending after a valid bid is added.
      * Test if bid has been added to bids array.
-     */
+     * */
+
     public void testBidForSessionValid() {
         BidOnSessionActivity msa = (BidOnSessionActivity)getActivity();
         Bitmap.Config conf = Bitmap.Config.ARGB_8888;
