@@ -1,8 +1,55 @@
 <resources>
     <string name="app_name">TutorTrader</string>
     <string name="action_settings">Settings</string>
-    <string name="Availible">Availible Sessions</string>
+    <string name="Availible">Available Sessions</string>
     <string name="title_activity_edit_profile">EditProfileActivity</string>
 
+    <!-- Menu Buttons -->
+    <string name="MySessionsButton">My Sessions</string>
+    <string name="AvailableSessionsButton">Available Sessions</string>
+    <string name="CurrentBidsButton">Current Bids</string>
+    <string name="MyProfileButton">My Profile</string>
+
+    <!-- Session Fields -->
+    <string name="SessionField">Session</string>
+    <string name="AddSessionField">Add New Session</string>
+    <string name="EditSessionField">Edit Session</string>
+    <string name="AddTutorSession">Add Tutor Session</string>
+
+    <!-- Profile Fields -->
+    <string name="CreateProfileField">Create New Profile</string>
+    <string name="UsernameField">Username: </string>
+    <string name="EmailField">Email: </string>
+    <string name="PhoneField">Phone: </string>
+
+    <!-- Edit Profile Fields -->
+    <string name="EditProfileField">EditProfile</string>
+    <string name="NewUsernameField">Enter New Username</string>
+    <string name="NewEmailField">Enter New Email</string>
+    <string name="NewPhoneField">Enter New Phone</string>
+
+    <!-- Miscellaneous Fields -->
+    <string name="StatusField">Status: </string>
+    <string name="DescriptionField">Description</string>
+    <string name="SubjectField">Subject</string>
+    <string name="PostedByField">Posted By: </string>
+    <string name="SearchKeywordsHint">Enter keywords here</string>
+
+    <!-- Miscellaneous Buttons -->
+    <string name="SaveButton">Save</string>
+    <string name="EditButton">Edit</string>
+    <string name="CancelButton">Cancel</string>
+    <string name="DeleteButton">Delete</string>
+    <string name="SearchButton">Search</string>
+
+    <!-- Bid Fields/Buttons -->
+    <string name="BidButton">Bid</string>
+    <string name="ViewBidsField">View Bids</string>
+    <string name="EnterBidField">Enter your bid here (in dollars per hour): </string>
+    <string name="BidsOnMySessionsField">Bids On My Sessions</string>
+    <string name="ClearDeclinedBidsField">Clear Declined Bids</string>
+
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_create_profile">CreateProfileActivity</string>
+    <string name="upcomingSessions">Upcoming Sessions</string>
 </resources>

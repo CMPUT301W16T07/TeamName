@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -36,6 +35,18 @@ public class CurrentBidsAdapter extends ArrayAdapter<Bid> {
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View currentBidView = inflater.inflate(R.layout.current_bids_list_item, parent, false);
+
+        TextView sessionView = (TextView) currentBidView.findViewById(R.id.sessionTitle);
+        TextView amountView = (TextView) currentBidView.findViewById(R.id.amount);
+        TextView statusView = (TextView) currentBidView.findViewById(R.id.status);
+
+        String sessionString = "TEST SESSION <i>by TEST TUTOR</i>";
+        String amountString = "Bid: <b>$" + arrayList.get(index).getAmount() + "</b> per hour.";
+        String statusString = "Bid Status: <b>" + arrayList.get(index).getStatus() + "</b>.";
+
+        sessionView.setText(Html.fromHtml(sessionString));
+        amountView.setText(Html.fromHtml(amountString));
+        statusView.setText(Html.fromHtml(statusString));
 
         return currentBidView;
     }

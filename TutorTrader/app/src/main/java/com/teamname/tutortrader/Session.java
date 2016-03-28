@@ -1,5 +1,10 @@
 package com.teamname.tutortrader;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -20,14 +25,17 @@ public class Session {
     private String status;
     private UUID sessionID;
     private ArrayList<Bid> bids;
+    protected transient Bitmap thumbnail;
+    protected String thumbnailBase64;
 
-    public Session(String title, String description, Profile tutor) {
+    public Session(String title, String description, Profile tutor, Bitmap thumbnail) {
         this.title = title;
         this.description = description;
         this.status = "available";
         this.tutor = tutor;
         this.sessionID = UUID.randomUUID();
         this.bids = new ArrayList<Bid>();
+        this.thumbnail = thumbnail;
 
     }
 
@@ -71,16 +79,47 @@ public class Session {
         return status;
     }
 
-    public void setStatus(String status) throws InvalidStatusException {
-        if ((status == "available")|| (status == "bidded") || (status == "booked")) {
+    //fixed issue: == used .equals() instead
+    public void setStatus(String status) {//} throws InvalidStatusException {
+        if ((status.equals("available"))|| (status.equals("bidded"))|| (status.equals("booked"))) {
             this.status = status;
         } else {
-            throw new InvalidStatusException();
+            //throw new InvalidStatusException();
+        }
+    }
+
+    public void declineAllBids () {
+        for (int i=0; i< bids.size(); i++) {
+            bids.get(i).setStatus("declined");
         }
     }
 
     @Override
     public String toString() {
-        return "Title: " + title + " Description: " + description;
+        return "Title: " + title + "\nDescription: " + description ;
+    }
+
+    public void addThumbnail(Bitmap newThumbnail){
+        if (newThumbnail != null) {
+            thumbnail = newThumbnail;
+
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            newThumbnail.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+
+            byte[] b = byteArrayOutputStream.toByteArray();
+            thumbnailBase64 = Base64.encodeToString(b, Base64.DEFAULT);
+        }
+    }
+
+    public Bitmap getThumbnail(){
+        if (thumbnail == null && thumbnailBase64 != null){
+            byte[] decodeString = Base64.decode(thumbnailBase64, Base64.DEFAULT);
+            thumbnail = BitmapFactory.decodeByteArray(decodeString, 0, decodeString.length);
+        }
+        return thumbnail;
+    }
+
+    public void setThumbnail(Bitmap thumbnail) {
+        this.thumbnail = thumbnail;
     }
 }

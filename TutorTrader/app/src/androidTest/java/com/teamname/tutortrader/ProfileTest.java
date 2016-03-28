@@ -27,7 +27,6 @@ public class ProfileTest extends ActivityInstrumentationTestCase2 {
     }
 
 
-
     public void testEditEmail() {
         Profile user = new Profile("john","123456","poop");
         user.setEmail("randomemail@gmail.ca");
@@ -42,21 +41,4 @@ public class ProfileTest extends ActivityInstrumentationTestCase2 {
     }
 
 
-
-    /**
-     *  added by abrosda
-     *  US 03.03.01
-     * As a user, I want to, when a username is presented for a thing, retrieve and show its contact information.
-     */
-
-    /*
-    public void testShowUser() {
-        TutorTradeAcitivity tta = (TutorTradeAcitivity)getActivity();
-        User user = new User;
-        session = createSession("Math", "Tutor for highschool math classes.");
-        session.setUser(user);
-        assertTrue(session.getuser(), user );
-
-    }
-    */
 }

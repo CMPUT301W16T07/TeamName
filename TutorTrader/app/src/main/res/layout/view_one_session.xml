@@ -6,7 +6,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="All Sessions"
+        android:text="@string/MySessionsButton"
         android:id="@+id/allSessionsButton" />
 
     <TextView
@@ -14,14 +14,13 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/subjectText"
-        android:layout_gravity="center_horizontal"
-        android:text="TEXT" />
+        android:text="@string/SubjectField"
+        android:layout_gravity="center_horizontal" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Title"
         android:id="@+id/titleBody" />
 
     <Space
@@ -32,8 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Description Text"
-        android:id="@+id/bodyDescription" />
+        android:id="@+id/descriptionBody" />
 
     <Space
         android:layout_width="match_parent"
@@ -43,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Posted By:"
+        android:text="@string/PostedByField"
         android:id="@+id/postedByBody" />
 
     <Space
@@ -53,8 +51,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/EmailField"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Email: Text"
         android:id="@+id/bodyEmail" />
 
     <Space
@@ -65,34 +63,54 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Phone: Text"
+        android:text="@string/PhoneField"
         android:id="@+id/bodyPhone" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="30dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Status: "
+        android:text="@string/StatusField"
         android:id="@+id/bodyStatus"
         android:layout_gravity="center_horizontal" />
 
-    <Space
-        android:layout_width="wrap_content"
-        android:layout_height="105dp" />
-
-    <Button
+    <ImageView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Edit"
+        android:id="@+id/sessionImage"
+        android:layout_weight=".75" />
+
+    <RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <Button
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:text="@string/ViewBidsField"
+        android:id="@+id/viewBidsButton" />
+
+
+    <Button
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_alignWithParentIfMissing="false"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/viewBidsButton"
+        android:layout_toEndOf="@+id/viewBidsButton"
+        android:text="@string/EditButton"
         android:id="@+id/editButton" />
 
+
     <Button
-        android:layout_width="fill_parent"
+        android:layout_width="125dp"
         android:layout_height="wrap_content"
-        android:text="Delete"
-        android:id="@+id/deleteButton" />
+        android:text="@string/DeleteButton"
+        android:id="@+id/deleteButton"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/editButton"
+        android:layout_toEndOf="@+id/editButton" />
+</RelativeLayout>
+
+
+
 </LinearLayout>

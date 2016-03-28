@@ -4,11 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
 /**
  * Created by ALI on 2016-03-09.
+ *
+ * The activity that allows a user to view their profile.
  */
 public class MyProfileActivity extends MethodsController {
     @Override
@@ -21,10 +22,14 @@ public class MyProfileActivity extends MethodsController {
         btn_myProfile.setOnClickListener(btnClickListener);
         btn_mySessions = (Button) findViewById(R.id.mySessions);
         btn_mySessions.setOnClickListener(btnClickListener);
-        btn_availableSession = (Button) findViewById(R.id.availibleSessions);
+        btn_availableSession = (Button) findViewById(R.id.availableSessions);
         btn_availableSession.setOnClickListener(btnClickListener);
 
-
+        if (currentProfile.isDefaultUser()){
+            //create new profile
+            Intent intent = new Intent(MyProfileActivity.this, CreateProfileActivity.class);
+            startActivity(intent);
+        }
 
         //get textviews
         TextView displayUsername = (TextView) findViewById(R.id.username);
