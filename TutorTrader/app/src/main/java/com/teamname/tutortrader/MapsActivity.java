@@ -2,6 +2,7 @@ package com.teamname.tutortrader;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -17,6 +18,13 @@ public class MapsActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
+
+        /**
+         * developers.google.com
+         * @param point
+         */
+         mMap.setOnMapLongClickListener(this);
+
     }
 
     @Override
@@ -62,4 +70,14 @@ public class MapsActivity extends FragmentActivity {
     private void setUpMap() {
         mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
     }
+
+
+    @Override
+    public void onMapLongClick(LatLng point){
+        mMap.addMarker(new MarkerOptions().position(point).title(point.toString()));
+
+        Toast.makeText(getApplicationContext(), "New marker added:" + point.toString(), Toast.LENGTH_LONG).show();
+
+    }
+
 }
