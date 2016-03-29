@@ -66,10 +66,14 @@ public class AvailableSessionsActivity extends MethodsController {
         //Notify is the notification!
         Notify();
 
-        adapter = new ArrayAdapter<>(this,
-                R.layout.list_colour, availableSessions);
+        adapter = new AvailableSessionsAdapter(this, sessions);
         oldSessions.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
+//        adapter = new ArrayAdapter<>(this,
+//                R.layout.list_colour, availableSessions);
+//        oldSessions.setAdapter(adapter);
+//        adapter.notifyDataSetChanged();
 
 
 
