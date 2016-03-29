@@ -25,22 +25,22 @@ public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCa
     EditText descriptionInput;
     EditText searchInput;
 
-    public AvailableSessionsActivityTest(Class activityClass) {
-        super(activityClass);
+    public AvailableSessionsActivityTest() {
+        super(AvailableSessionsActivity.class);
     }
 
-}
+
     /**
      * Testing UseCase 01.02.01 - ViewSessions
      * "As an owner, I want to view a list of all my sessions, and their descriptions and statuses."
      * <p/>
      * To test, we create 2 new sessions and then we leave the MySessions view, and return
      * to the view to see if the sessions persist.
-     *
+     */
     public void testViewSessions() {
         AvailableSessionsActivity tta = (AvailableSessionsActivity) getActivity();
-        assertNotNull(activity.findViewById(R.id.mySessions));
-        (activity.findViewById(R.id.mySessions)).performClick();
+        assertNotNull(tta.findViewById(R.id.mySessions));
+        (tta.findViewById(R.id.mySessions)).performClick();
         MySessionsActivity msa = (MySessionsActivity) getActivity();
         ArrayList<Session> sessions = new ArrayList<Session>();
         Bitmap.Config conf = Bitmap.Config.ARGB_8888;
@@ -49,9 +49,9 @@ public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCa
         Profile profile = new Profile("Name", "Phone", "Email");
         Session session = new Session("Math", "Tutor for linear Algebra for all university levels", profile);
         Session session2 = new Session("Stats", "Tutor for Stats 252 and 141", profile);
-        //assertNotNull(activity.findViewById(R.id.currentBids));
-        //(activity.findViewById(R.id.currentBids)).performClick();
-        //(activity.findViewById(R.id.availableSessions)).performClick();
+        assertNotNull(tta.findViewById(R.id.currentBids));
+        (tta.findViewById(R.id.currentBids)).performClick();
+        (tta.findViewById(R.id.availableSessions)).performClick();
 
         sessions.add(session);
         sessions.add(session2);
