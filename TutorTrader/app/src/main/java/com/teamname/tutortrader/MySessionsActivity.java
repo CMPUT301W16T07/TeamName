@@ -46,6 +46,7 @@ public class MySessionsActivity extends MethodsController {
         verifyLogin();
 
 
+
         loadSessions(SESSIONSFILE);
         adapter = new ArrayAdapter<>(this,
           R.layout.list_colour,sessionsOfInterest);

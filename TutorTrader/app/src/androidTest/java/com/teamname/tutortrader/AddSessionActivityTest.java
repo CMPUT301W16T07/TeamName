@@ -2,6 +2,7 @@ package com.teamname.tutortrader;
 
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.graphics.Bitmap;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.EditText;
 
@@ -46,7 +47,6 @@ public class AddSessionActivityTest extends ActivityInstrumentationTestCase2 {
         ArrayList<Session> sessions = new ArrayList<Session>();
         sessions.add(session);
         assertEquals(sessions.get(0), session);
-
         assertEquals("this is the title we expected", session.getTitle(), "Math");
         assertEquals("this is the description we expected", session.getDescription(),
                 "Tutor for linear Algebra for all university levels");

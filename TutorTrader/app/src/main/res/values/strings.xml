@@ -48,7 +48,7 @@
     <string name="EnterBidField">Enter your bid here (in dollars per hour): </string>
     <string name="BidsOnMySessionsField">Bids On My Sessions</string>
     <string name="ClearDeclinedBidsField">Clear Declined Bids</string>
-
+    <string name="upcomingSessions">Upcoming Sessions</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_create_profile">CreateProfileActivity</string>
 </resources>
