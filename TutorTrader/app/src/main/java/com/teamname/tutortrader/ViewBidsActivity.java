@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class ViewBidsActivity extends MethodsController {
 
@@ -27,22 +28,26 @@ public class ViewBidsActivity extends MethodsController {
         */
         final String index_receive = intent.getStringExtra("index");
         final int index_r = Integer.parseInt(index_receive);
+
         // populates the list of all bids
         allBidsList = (ListView) findViewById(R.id.bidsListView);
         allBidsList.setBackgroundResource(R.drawable.black_chalkboard);
         loadSessions(SESSIONSFILE);
-        adapter = new CurrentBidsAdapter(this, sessionsOfInterest.get(index_r).getBids());
-        //adapter = new ArrayAdapter<>(this,
-        //        R.layout.list_colour, sessionsOfInterest.get(index_r).getBids());
+        adapter = new CurrentBidsOnMySessionsAdapter(this, sessionsOfInterest.get(index_r).getBids());
         allBidsList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
+        // set appropriate button and header text
+        TextView displaySessionButtonTitle = (TextView) findViewById(R.id.sessionButton);
+        TextView displaySessionHeaderTitle = (TextView) findViewById(R.id.bidsOnMySessionsText);
+        displaySessionButtonTitle.setText("Return to " + sessionsOfInterest.get(index_r).getTitle());
+        displaySessionHeaderTitle.setText("Viewing Bids on " + sessionsOfInterest.get(index_r).getTitle());
 
         final Button sessionButton = (Button) findViewById(R.id.sessionButton);
         sessionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ViewBidsActivity.this, MySessionsActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
 

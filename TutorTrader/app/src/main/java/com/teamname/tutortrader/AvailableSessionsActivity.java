@@ -3,13 +3,13 @@ package com.teamname.tutortrader;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -51,6 +51,9 @@ public class AvailableSessionsActivity extends MethodsController {
         btn_availableSession = (Button) findViewById(R.id.availableSessions);
         btn_availableSession.setOnClickListener(btnClickListener);
 
+        // set activity title
+        TextView activityTitle = (TextView) findViewById(R.id.activityTitle);
+        activityTitle.setText(R.string.AvailableSessionsButton);
 
         //populates the list of all sessions
         oldSessions = (ListView) findViewById(R.id.sessionList);

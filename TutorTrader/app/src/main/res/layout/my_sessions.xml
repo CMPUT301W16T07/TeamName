@@ -6,6 +6,7 @@ android:layout_height="match_parent"
 
     <!-- Menubar -->
     <include layout="@layout/menubar"/>
+    <include layout="@layout/headerbar"/>
 
     <ListView
         android:layout_width="wrap_content"

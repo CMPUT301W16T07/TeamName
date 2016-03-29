@@ -16,6 +16,8 @@ public class Profile {
     private String name = null;
     private String phone;
     private String email;
+    private ArrayList<Double> tutorRatings; // an array of all tutor ratings
+    private ArrayList<Double> studentRatings; // an array of all student ratings
     private boolean defaultUser = Boolean.TRUE;
 
     //private static final Profile instance = new Profile();
@@ -74,5 +76,21 @@ public class Profile {
      */
     public ArrayList<Bid> getCurrentBids() {
         return new ArrayList<>();
+    }
+
+    /**
+     * Returns the average of all tutor ratings for this user - i.e.,
+     * their actual tutor rating.
+     */
+    public Double getTutorRating() {
+        return 1.0;
+    }
+
+    /**
+     * Returns the average of all student ratings for this user - i.e.,
+     * their actual student rating.
+     */
+    public Double getStudentRating() {
+        return 1.0;
     }
 }

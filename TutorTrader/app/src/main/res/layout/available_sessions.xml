@@ -11,6 +11,7 @@
 
     <!-- Menubar -->
     <include layout="@layout/menubar"/>
+    <include layout="@layout/headerbar"/>
 
     <!-- changed layout_height to 0dp for better performance -->
     <ListView

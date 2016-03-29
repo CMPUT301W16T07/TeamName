@@ -3,43 +3,44 @@
     android:layout_height="wrap_content"
     android:background="@color/colorPrimaryDark">
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-        <Button
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="@string/MyProfileButton"
-            android:id="@+id/myProfile"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/mySessions" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="1dp"
+        android:orientation="horizontal">
 
         <Button
-            android:layout_width="100dp"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/CurrentBidsButton"
-            android:id="@+id/currentBids"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/availableSessions" />
-
-
-        <Button
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:textSize="12dp"
             android:text="@string/AvailableSessionsButton"
-            android:id="@+id/availableSessions"
-            android:layout_alignBottom="@+id/currentBids"
-            android:layout_alignParentStart="true" />
-        <!--android:background="@color/colorAccent"-->
+            android:id="@+id/availableSessions" />
 
         <Button
-            android:layout_width="100dp"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/MySessionsButton"
-            android:id="@+id/mySessions"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/currentBids" />
+            android:textSize="12dp"
+            android:text="@string/CurrentBidsButton"
+            android:id="@+id/currentBids" />
 
-    </RelativeLayout>
+        <Button
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12dp"
+            android:text="@string/MySessionsButton"
+            android:id="@+id/mySessions" />
+
+        <Button
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12dp"
+            android:text="@string/MyProfileButton"
+            android:id="@+id/myProfile" />
+
+    </LinearLayout>
 </FrameLayout>
