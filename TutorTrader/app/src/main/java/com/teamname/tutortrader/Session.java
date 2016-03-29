@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -27,8 +29,12 @@ public class Session {
     private ArrayList<Bid> bids;
     protected transient Bitmap thumbnail;
     protected String thumbnailBase64;
+    private LatLng location;
 
-    public Session(String title, String description, Profile tutor, Bitmap thumbnail) {
+
+
+
+    public Session(String title, String description, Profile tutor, Bitmap thumbnail,LatLng location) {
         this.title = title;
         this.description = description;
         this.status = "available";
@@ -36,6 +42,7 @@ public class Session {
         this.sessionID = UUID.randomUUID();
         this.bids = new ArrayList<Bid>();
         this.thumbnail = thumbnail;
+        this.location = location;
 
     }
 
@@ -88,6 +95,13 @@ public class Session {
         }
     }
 
+    public LatLng getLocation() {
+        return location;
+    }
+
+    public void setLocation(LatLng location) {
+        this.location = location;
+    }
     public void declineAllBids () {
         for (int i=0; i< bids.size(); i++) {
             bids.get(i).setStatus("declined");

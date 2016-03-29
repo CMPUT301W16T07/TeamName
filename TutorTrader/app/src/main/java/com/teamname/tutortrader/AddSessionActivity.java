@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.google.android.gms.maps.model.LatLng;
+
 /**
  * Created by taylorarnett on 2016-03-01.
  *
@@ -18,14 +20,14 @@ import android.widget.ImageView;
  */
 public class AddSessionActivity extends MethodsController {
 
-    //final MethodsController instance = MethodsController.getInstance();
-    //final Profile currentProfile = instance.getCurrentProfile();
+   private LatLng tempPoint;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_session);
+
         Button cancelAddSession = (Button) findViewById(R.id.cancelAddSession);
         cancelAddSession.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,13 +58,25 @@ public class AddSessionActivity extends MethodsController {
                     EditText descriptionEdit = (EditText) findViewById(R.id.descriptionEdit);
                     // TODO: implement Tutor
 
-                    Session newSession = new Session(subjectEdit.getText().toString(),descriptionEdit.getText().toString(),currentProfile, thumbnail);
+                    Session newSession = new Session(subjectEdit.getText().toString(),descriptionEdit.getText().toString(),currentProfile, thumbnail, tempPoint);
                     newSession.addThumbnail(thumbnail);
                     sessions.add(newSession);
                     saveInFile(SESSIONSFILE, sessions);
                     Intent intent = new Intent(AddSessionActivity.this, MySessionsActivity.class);
                     startActivity(intent);
                 }
+            }
+        });
+
+        Button LocationButton = (Button)findViewById(R.id.AddLocationButton);
+        LocationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddSessionActivity.this, MapsActivity.class);
+
+                startActivityForResult(intent, REQUEST_LOCATION);
+
+
             }
         });
 
@@ -93,5 +107,12 @@ public class AddSessionActivity extends MethodsController {
             thumbnail = (Bitmap)extras.get("data");
             newImage.setImageBitmap(thumbnail);
         }
+        if(requestCode == REQUEST_LOCATION && resultCode == RESULT_OK){
+            if(data.hasExtra("point")){
+                Bundle extras = data.getExtras();
+                tempPoint = (LatLng) extras.get("point");
+            }
+        }
     }
+
 }

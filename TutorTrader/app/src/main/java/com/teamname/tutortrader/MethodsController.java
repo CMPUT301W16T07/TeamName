@@ -57,7 +57,7 @@ public class MethodsController extends AppCompatActivity {
     //protected ArrayList<Session> allSessions = new ArrayList<>();
 
     private static final MethodsController instance = new MethodsController();
-
+    static final int REQUEST_LOCATION = 9999;
     static final int REQUEST_IMAGE_CAPTURE = 1234;
     protected Bitmap thumbnail;
     protected ImageView newImage;

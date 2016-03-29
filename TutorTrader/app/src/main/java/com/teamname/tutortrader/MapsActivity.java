@@ -1,5 +1,8 @@
 package com.teamname.tutortrader;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -23,7 +26,33 @@ public class MapsActivity extends FragmentActivity {
          * developers.google.com
          * @param point
          */
-         mMap.setOnMapLongClickListener(this);
+         mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+             @Override
+             public void onMapLongClick(LatLng latLng) {
+
+                 //Prompt user for confirmation of the selected point
+                 AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
+                 builder.setMessage("Use this point: " + latLng.toString())
+                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                             public void onClick(DialogInterface dialog, int id) {
+                                 // return to Create Session Activity
+                                 //TODO: Add point to bundle for data return
+
+                                 finish();
+                             }
+                         })
+                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                             public void onClick(DialogInterface dialog, int id) {
+                                //remove marker
+                                 //TODO: remove marker if uses does not want it.
+                             }
+                         });
+
+                 AlertDialog alert = builder.create();
+                 alert.show();
+
+             }
+         });
 
     }
 
@@ -71,7 +100,7 @@ public class MapsActivity extends FragmentActivity {
         mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
     }
 
-
+/*
     @Override
     public void onMapLongClick(LatLng point){
         mMap.addMarker(new MarkerOptions().position(point).title(point.toString()));
@@ -79,5 +108,6 @@ public class MapsActivity extends FragmentActivity {
         Toast.makeText(getApplicationContext(), "New marker added:" + point.toString(), Toast.LENGTH_LONG).show();
 
     }
+    */
 
 }
