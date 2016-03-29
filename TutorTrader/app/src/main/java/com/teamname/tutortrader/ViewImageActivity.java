@@ -15,7 +15,7 @@ public class ViewImageActivity extends MethodsController {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_image);
         Intent intent = getIntent();
-        final String index_receive = intent.getStringExtra("index");
+        String index_receive = intent.getStringExtra("index");
         index = Integer.parseInt(index_receive);
 
         Button backButton = (Button) findViewById(R.id.backButton);
