@@ -43,7 +43,9 @@ public class AddSessionActivityTest extends ActivityInstrumentationTestCase2 {
     public void testAddSessionValid() {
         AvailableSessionsActivity msa = (AvailableSessionsActivity)getActivity();
         Profile profile = new Profile("Name", "Phone", "Email");
-        Session session = new Session("Math", "Tutor for linear Algebra for all university levels",profile);
+        Bitmap.Config conf = Bitmap.Config.ARGB_8888;
+        Bitmap bm1 = Bitmap.createBitmap(1,2, conf);
+        Session session = new Session("Math", "Tutor for linear Algebra for all university levels",profile,bm1 );
         ArrayList<Session> sessions = new ArrayList<Session>();
         sessions.add(session);
         assertEquals(sessions.get(0), session);

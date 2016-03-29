@@ -7,6 +7,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 /**
  * Created by MJ Alba on 2016-03-08.
@@ -45,13 +46,20 @@ public class MySessionsActivity extends MethodsController {
 
         verifyLogin();
 
+        // set activity title
+        TextView activityTitle = (TextView) findViewById(R.id.activityTitle);
+        activityTitle.setText(R.string.MySessionsButton);
+
 
 
         loadSessions(SESSIONSFILE);
-        adapter = new ArrayAdapter<>(this,
-          R.layout.list_colour,sessionsOfInterest);
+        adapter = new AvailableSessionsAdapter(this, sessionsOfInterest);
         oldSessionsList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+//        adapter = new ArrayAdapter<>(this,
+//          R.layout.list_colour,sessionsOfInterest);
+//        oldSessionsList.setAdapter(adapter);
+//        adapter.notifyDataSetChanged();
 
         //Adding a new session
         Button addNewSession = (Button) findViewById(R.id.addNewSession);

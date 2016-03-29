@@ -25,6 +25,10 @@ public class MyProfileActivity extends MethodsController {
         btn_availableSession = (Button) findViewById(R.id.availableSessions);
         btn_availableSession.setOnClickListener(btnClickListener);
 
+        // set activity title
+        TextView activityTitle = (TextView) findViewById(R.id.activityTitle);
+        activityTitle.setText(R.string.MyProfileButton);
+
         if (currentProfile.isDefaultUser()){
             //create new profile
             Intent intent = new Intent(MyProfileActivity.this, CreateProfileActivity.class);
@@ -35,11 +39,15 @@ public class MyProfileActivity extends MethodsController {
         TextView displayUsername = (TextView) findViewById(R.id.username);
         TextView displayEmail = (TextView) findViewById(R.id.email);
         TextView displayPhone = (TextView) findViewById(R.id.phone);
+        TextView displayTutorRating = (TextView) findViewById(R.id.tutorRating);
+        TextView displayStudentRating = (TextView) findViewById(R.id.studentRating);
 
         //set textviews
         displayUsername.setText("Username: " + currentProfile.getName());
         displayEmail.setText("Email: " + currentProfile.getEmail());
         displayPhone.setText("Phone: " + currentProfile.getPhone());
+        displayTutorRating.setText("Tutor Rating: " + currentProfile.getTutorRating());
+        displayStudentRating.setText("Student Rating: " + currentProfile.getStudentRating());
 
         //set click listener for edit button
         Button editButton = (Button) findViewById(R.id.editProfile);

@@ -27,7 +27,6 @@ public class ProfileTest extends ActivityInstrumentationTestCase2 {
     }
 
 
-
     public void testEditEmail() {
         Profile user = new Profile("john","123456","poop");
         user.setEmail("randomemail@gmail.ca");

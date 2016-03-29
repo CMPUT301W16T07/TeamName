@@ -5,21 +5,28 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/sessionTitle"
+        android:id="@+id/amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:textSize="20sp"
-        android:textColor="#ffffff" />
+        android:textColor="#ffffff"/>
 
     <TextView
-        android:id="@+id/description"
+        android:id="@+id/status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:textStyle="italic"
-        android:textColor="#ffffff" />
+        android:textColor="#ffffff"/>
+
+    <TextView
+        android:id="@+id/rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="#ffffff"/>
 
 </LinearLayout>

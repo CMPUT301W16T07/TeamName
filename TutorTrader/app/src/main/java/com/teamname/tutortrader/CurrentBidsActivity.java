@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 /**
  * Created by MJ Alba on 2016-03-08.
@@ -30,6 +31,10 @@ public class CurrentBidsActivity extends MethodsController {
         btn_mySessions.setOnClickListener(btnClickListener);
         btn_availableSession = (Button) findViewById(R.id.availableSessions);
         btn_availableSession.setOnClickListener(btnClickListener);
+
+        // set activity title
+        TextView activityTitle = (TextView) findViewById(R.id.activityTitle);
+        activityTitle.setText(R.string.CurrentBidsButton);
 
         // populates the list of all bids
         currentBidsList = (ListView) findViewById(R.id.currentBidsList);

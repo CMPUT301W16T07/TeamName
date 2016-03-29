@@ -2,6 +2,7 @@ package com.teamname.tutortrader;
 
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.graphics.Bitmap;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -42,12 +43,16 @@ public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCa
         (activity.findViewById(R.id.mySessions)).performClick();
         MySessionsActivity msa = (MySessionsActivity) getActivity();
         ArrayList<Session> sessions = new ArrayList<Session>();
+        Bitmap.Config conf = Bitmap.Config.ARGB_8888;
+        Bitmap bm1 = Bitmap.createBitmap(1,2, conf);
+        Bitmap bm2 = Bitmap.createBitmap(1,2, conf);
         Profile profile = new Profile("Name", "Phone", "Email");
         Session session = new Session("Math", "Tutor for linear Algebra for all university levels", profile);
         Session session2 = new Session("Stats", "Tutor for Stats 252 and 141", profile);
         //assertNotNull(activity.findViewById(R.id.currentBids));
         //(activity.findViewById(R.id.currentBids)).performClick();
         //(activity.findViewById(R.id.availableSessions)).performClick();
+
         sessions.add(session);
         sessions.add(session2);
 
