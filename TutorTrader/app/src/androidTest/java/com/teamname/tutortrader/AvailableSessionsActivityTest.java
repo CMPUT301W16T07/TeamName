@@ -34,24 +34,18 @@ public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCa
      * Testing UseCase 01.02.01 - ViewSessions
      * "As an owner, I want to view a list of all my sessions, and their descriptions and statuses."
      * <p/>
-     * To test, we create 2 new sessions and then we leave the MySessions view, and return
-     * to the view to see if the sessions persist.
+     * To test, we add 2 new sessions and then we check if they are there
+     * We assume that sessions.add works @see AddSessionActivityTest
      */
     public void testViewSessions() {
         AvailableSessionsActivity tta = (AvailableSessionsActivity) getActivity();
         assertNotNull(tta.findViewById(R.id.mySessions));
-        (tta.findViewById(R.id.mySessions)).performClick();
-        MySessionsActivity msa = (MySessionsActivity) getActivity();
+
         ArrayList<Session> sessions = new ArrayList<Session>();
-        Bitmap.Config conf = Bitmap.Config.ARGB_8888;
-        Bitmap bm1 = Bitmap.createBitmap(1,2, conf);
-        Bitmap bm2 = Bitmap.createBitmap(1,2, conf);
         Profile profile = new Profile("Name", "Phone", "Email");
         Session session = new Session("Math", "Tutor for linear Algebra for all university levels", profile);
         Session session2 = new Session("Stats", "Tutor for Stats 252 and 141", profile);
-        assertNotNull(tta.findViewById(R.id.currentBids));
-        (tta.findViewById(R.id.currentBids)).performClick();
-        (tta.findViewById(R.id.availableSessions)).performClick();
+
 
         sessions.add(session);
         sessions.add(session2);
@@ -62,8 +56,16 @@ public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCa
 
         assertTrue("There is the math session",
                 sessions.get(0).getTitle().equals("Math"));
+        assertTrue("The descriptions is the same for the math session",
+                sessions.get(0).getDescription().equals("Tutor for linear Algebra for all university levels"));
+        assertTrue("The status is available", sessions.get(0).getStatus().equals("available"));
+
         assertTrue("There is the stats session",
-                sessions.get(0).getTitle().equals("Stats"));
+                sessions.get(1).getTitle().equals("Stats"));
+        assertTrue("The descriptions is the same for the stats session",
+                sessions.get(1).getDescription().equals("Tutor for Stats 252 and 141"));
+        assertTrue("The status is available", sessions.get(1).getStatus().equals("available"));
+
     }
 }
 
