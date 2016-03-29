@@ -8,6 +8,7 @@
 
     <!-- Menubar -->
     <include layout="@layout/menubar"/>
+    <include layout="@layout/headerbar"/>
 
     <TextView
         android:layout_width="match_parent"

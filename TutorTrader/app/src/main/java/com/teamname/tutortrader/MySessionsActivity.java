@@ -7,6 +7,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 /**
  * Created by MJ Alba on 2016-03-08.
@@ -44,6 +45,10 @@ public class MySessionsActivity extends MethodsController {
         // load through file or through elastic search?
 
         verifyLogin();
+
+        // set activity title
+        TextView activityTitle = (TextView) findViewById(R.id.activityTitle);
+        activityTitle.setText(R.string.MySessionsButton);
 
 
         loadSessions(SESSIONSFILE);
