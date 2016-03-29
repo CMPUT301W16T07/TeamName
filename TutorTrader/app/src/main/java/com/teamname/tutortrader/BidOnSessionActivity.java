@@ -38,9 +38,9 @@ public class BidOnSessionActivity extends MethodsController {
         final String index_receive = intent.getStringExtra("index");
         final int index = Integer.parseInt(index_receive);
         loadSessions(SESSIONSFILE);
-        //selectedSessionIndex = sessions.indexOf(availableSessions.get(index));
-        //selectedSession = sessions.get(selectedSessionIndex);
-        initializeFields(index);
+        selectedSessionIndex = sessions.indexOf(availableSessions.get(index));
+        selectedSession = sessions.get(selectedSessionIndex);
+        initializeFields(selectedSessionIndex);
 
 
         //super.onCreate(savedInstanceState);
@@ -60,7 +60,7 @@ public class BidOnSessionActivity extends MethodsController {
             public void onClick(View v) {
                 Intent intent = new Intent(BidOnSessionActivity.this, ViewImageActivity.class);
                 // TODO: must pass the index so view image activity can return to proper bidonsession
-                intent.putExtra("index", String.valueOf(index));
+                intent.putExtra("index", String.valueOf(selectedSessionIndex));
                 startActivity(intent);
             }
         });

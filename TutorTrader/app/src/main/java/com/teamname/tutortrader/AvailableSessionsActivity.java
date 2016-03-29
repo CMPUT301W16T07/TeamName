@@ -69,7 +69,8 @@ public class AvailableSessionsActivity extends MethodsController {
         //Notify is the notification!
         Notify();
 
-        adapter = new AvailableSessionsAdapter(this, sessions);
+        //adapter = new AvailableSessionsAdapter(this, sessions);
+        adapter = new AvailableSessionsAdapter(this, availableSessions);
         oldSessions.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
