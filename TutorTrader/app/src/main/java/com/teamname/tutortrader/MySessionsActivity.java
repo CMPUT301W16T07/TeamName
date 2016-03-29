@@ -47,10 +47,13 @@ public class MySessionsActivity extends MethodsController {
 
 
         loadSessions(SESSIONSFILE);
-        adapter = new ArrayAdapter<>(this,
-          R.layout.list_colour,sessionsOfInterest);
+        adapter = new AvailableSessionsAdapter(this, sessionsOfInterest);
         oldSessionsList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+//        adapter = new ArrayAdapter<>(this,
+//          R.layout.list_colour,sessionsOfInterest);
+//        oldSessionsList.setAdapter(adapter);
+//        adapter.notifyDataSetChanged();
 
         //Adding a new session
         Button addNewSession = (Button) findViewById(R.id.addNewSession);

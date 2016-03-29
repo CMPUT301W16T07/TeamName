@@ -110,6 +110,7 @@ public class BidOnSessionActivity extends MethodsController {
         TextView titleBody = (TextView) findViewById(R.id.titleBodyB);
         TextView descriptionBody = (TextView) findViewById(R.id.descriptionBodyB);
         TextView postedByBody = (TextView) findViewById(R.id.postedByBodyB);
+        TextView tutorRatingBody = (TextView) findViewById(R.id.tutorRatingB);
         TextView bodyEmail = (TextView) findViewById(R.id.bodyEmailB);
         TextView bodyPhone = (TextView) findViewById(R.id.bodyPhoneB);
         TextView bodyStatus = (TextView) findViewById(R.id.bodyStatusB);
@@ -118,8 +119,9 @@ public class BidOnSessionActivity extends MethodsController {
         titleBody.setText("Title: "+ sessions.get(index).getTitle());
         descriptionBody.setText("Description: "+sessions.get(index).getDescription());
         postedByBody.setText("Posted By: "+sessions.get(index).tutor.getName());
+        tutorRatingBody.setText("Tutor Rating: "+sessions.get(index).tutor.getTutorRating());
         bodyEmail.setText("Email: " + sessions.get(index).tutor.getEmail());
-        bodyPhone.setText("Phone" +sessions.get(index).tutor.getPhone());
+        bodyPhone.setText("Phone: " +sessions.get(index).tutor.getPhone());
         bodyStatus.setText("Status: "+sessions.get(index).getStatus());
 
 
