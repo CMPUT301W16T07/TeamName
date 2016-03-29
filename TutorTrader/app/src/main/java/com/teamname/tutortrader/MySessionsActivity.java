@@ -51,6 +51,7 @@ public class MySessionsActivity extends MethodsController {
         activityTitle.setText(R.string.MySessionsButton);
 
 
+
         loadSessions(SESSIONSFILE);
         adapter = new AvailableSessionsAdapter(this, sessionsOfInterest);
         oldSessionsList.setAdapter(adapter);
