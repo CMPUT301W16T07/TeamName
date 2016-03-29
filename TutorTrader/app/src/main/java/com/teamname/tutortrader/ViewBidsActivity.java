@@ -29,6 +29,7 @@ public class ViewBidsActivity extends MethodsController {
         final int index_r = Integer.parseInt(index_receive);
         // populates the list of all bids
         allBidsList = (ListView) findViewById(R.id.bidsListView);
+        allBidsList.setBackgroundResource(R.drawable.black_chalkboard);
         loadSessions(SESSIONSFILE);
         adapter = new CurrentBidsAdapter(this, sessionsOfInterest.get(index_r).getBids());
         //adapter = new ArrayAdapter<>(this,
@@ -70,7 +71,7 @@ public class ViewBidsActivity extends MethodsController {
                                 public void onClick(DialogInterface dialog, int id) {
                                     Integer index = sessions.indexOf(sessionsOfInterest.get(index_r));
                                     sessions.get(index).setStatus("booked");
-
+                                    availableSessions.remove(index);
                                     notifyBidders(currentBid, index);
                                     //sessions.get(index).getBids().clear();
                                     //sessions.get(index).getBids().add(currentBid);

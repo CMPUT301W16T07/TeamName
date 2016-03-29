@@ -47,8 +47,9 @@ public class MySessionsActivity extends MethodsController {
 
 
         loadSessions(SESSIONSFILE);
-        adapter = new ArrayAdapter<>(this,
-          R.layout.list_colour,sessionsOfInterest);
+       // adapter = new ArrayAdapter<>(this,
+         // R.layout.list_colour,sessionsOfInterest);
+        adapter = new MySessionsAdapter(this, sessions);
         oldSessionsList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
