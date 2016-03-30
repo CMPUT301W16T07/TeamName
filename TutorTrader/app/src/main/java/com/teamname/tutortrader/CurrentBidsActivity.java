@@ -39,7 +39,8 @@ public class CurrentBidsActivity extends MethodsController {
         // populates the list of all bids
         currentBidsList = (ListView) findViewById(R.id.currentBidsList);
         currentBidsList.setBackgroundResource(R.drawable.apple_righ);
-        loadSessions(SESSIONSFILE);
+        //loadSessions(SESSIONSFILE);
+
         loadCurrentBids(); // reload the global bids array
         adapter = new CurrentBidsAdapter(this, bids);
         currentBidsList.setAdapter(adapter);

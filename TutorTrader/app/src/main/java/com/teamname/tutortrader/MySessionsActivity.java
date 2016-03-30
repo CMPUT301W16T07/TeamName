@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.concurrent.ExecutionException;
+
 /**
  * Created by MJ Alba on 2016-03-08.
  *
@@ -50,9 +52,16 @@ public class MySessionsActivity extends MethodsController {
         TextView activityTitle = (TextView) findViewById(R.id.activityTitle);
         activityTitle.setText(R.string.MySessionsButton);
 
-
-
-        loadSessions(SESSIONSFILE);
+        ElasticSessionController.GetSessionsTask getSessionsTask = new ElasticSessionController.GetSessionsTask();
+        getSessionsTask.execute("ProfileID",currentProfile.getProfileID().toString());
+        try {
+            sessionsOfInterest = getSessionsTask.get();
+        } catch (InterruptedException e){
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        //loadSessions(SESSIONSFILE);
         adapter = new AvailableSessionsAdapter(this, sessionsOfInterest);
         oldSessionsList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -83,7 +92,7 @@ public class MySessionsActivity extends MethodsController {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MySessionsActivity.this, ViewOneSessionActivity.class);
-                String index = String.valueOf(position);
+                Session session = sessionsOfInterest.get(position);
                 // http://stackoverflow.com/questions/2091465/how-do-i-pass-data-between-activities-on-android
                 intent.putExtra("index", index);
                 startActivity(intent);

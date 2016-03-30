@@ -39,7 +39,7 @@ public class ElasticSessionController {
             verifyClient();
 
             // Base arraylist to hold sessions
-            ArrayList<Session> sessions = new ArrayList<Session>();
+            ArrayList<Session> newsessions = new ArrayList<Session>();
 
             /**
              * Adapted from lab 11 lonelytwitter code to fit our needs
@@ -47,26 +47,25 @@ public class ElasticSessionController {
             // The following gets the top "10000" sessions
             String search_string;
             if (params[0] == "") {
-                search_string = "{\"from\":0,\"size\":10000, \"sort\": {\"date\": {\"order\": \"desc\"}}}";
+                search_string = "{\"from\":0,\"size\":10000,\"query\":{\"match\":{\"status\":\"available\" }}}";
             } else {
                 // The following gets the top 10000 sessions matching the string passed in
-                search_string = "{\"from\":0,\"size\":10000,\"query\":{\"match\":{\"description\":\"" + params[0] + "\"}}, \"sort\": {\"date\": {\"order\": \"desc\"}}}";
+                search_string = "{\"from\":0,\"size\":10000,\"query\":{\"match\":{\"" + params[0] + "\":\"" + params[1] + "\"}}}";
             }
-            Search search = new Search.Builder("")
+            Search search = new Search.Builder(search_string)
                     .addIndex("cmput301w16t07")
                     .addType("session")
                     .build();
             try {
                 SearchResult execute = client.execute(search);
                 if (execute.isSucceeded()) {
-                    List<Session> newsessions = execute.getSourceAsObjectList(Session.class);
-                    sessions.addAll(newsessions);
+                    List<Session> searchedsessions = execute.getSourceAsObjectList(Session.class);
                     Log.e("TEST", "Searching");
                 }
             } catch (IOException e) {
                 throw new RuntimeException();
             }
-            return sessions;
+            return newsessions;
         }
     }
 

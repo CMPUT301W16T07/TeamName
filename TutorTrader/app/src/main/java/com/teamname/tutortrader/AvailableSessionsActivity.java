@@ -93,7 +93,7 @@ public class AvailableSessionsActivity extends MethodsController {
                     setResult(RESULT_OK);
                     String searchstring = query.getText().toString();
                 ElasticSessionController.GetSessionsTask getSessionsTask = new ElasticSessionController.GetSessionsTask();
-                getSessionsTask.execute(searchstring);
+                getSessionsTask.execute("title", searchstring);
                 try {
                     availableSessions = getSessionsTask.get();
                 } catch (InterruptedException e){

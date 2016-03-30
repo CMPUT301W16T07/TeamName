@@ -58,9 +58,10 @@ public class AddSessionActivity extends MethodsController  {
 
                     Session newSession = new Session(subjectEdit.getText().toString(),descriptionEdit.getText().toString(),currentProfile, thumbnail);
                     newSession.addThumbnail(thumbnail);
-                    sessions.add(newSession);
+                    //sessions.add(newSession);
                     ElasticSessionController.AddSessionTask addSessionTask = new ElasticSessionController.AddSessionTask();
                     addSessionTask.execute(newSession);
+                    sessions.add(newSession);
                     saveInFile(SESSIONSFILE, sessions);
                     Intent intent = new Intent(AddSessionActivity.this, MySessionsActivity.class);
                     startActivity(intent);
