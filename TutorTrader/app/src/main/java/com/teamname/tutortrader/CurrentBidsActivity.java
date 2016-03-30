@@ -7,8 +7,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 /**
- * Created by MJ Alba on 2016-03-08.
- *
  * The activity that shows a list of a current users bids
  * on OTHER users' sessions.
  */

@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 /**
- * Created by taylorarnett on 2016-03-01.
- *
  * Holds information for individual tutor sessions.
  */
 

@@ -3,7 +3,6 @@ package com.teamname.tutortrader;
 import java.util.UUID;
 
 /**
- * Created by taylorarnett on 2016-03-01.
  *
  * Stores information about individual bids
  * which must then be added to a session to

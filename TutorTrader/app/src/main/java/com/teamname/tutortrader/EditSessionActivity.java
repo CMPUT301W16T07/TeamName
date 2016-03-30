@@ -10,8 +10,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 /**
- * Created by ALI on 2016-03-07.
- *
  * The activity that allows a user to edit a session
  * that they previously created.
  */

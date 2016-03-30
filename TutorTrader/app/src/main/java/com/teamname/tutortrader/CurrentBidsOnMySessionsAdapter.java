@@ -11,8 +11,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
- * Created by MJ Alba on 2016-03-08.
- *
  * This class represents a Current Bid (on My Sessions) as a list item. Its purpose is
  * to display Current Bids as list items according to the markup defined by
  * current_bids_on_my_sessions_list_item.xml.
