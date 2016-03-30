@@ -3,13 +3,16 @@ package com.teamname.tutortrader;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends FragmentActivity {
@@ -21,18 +24,27 @@ public class MapsActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
+        mMap.setMyLocationEnabled(true);
+        mMap.getUiSettings().setMyLocationButtonEnabled(true);
+        centerOnCurrentLocation();
 
         /**
          * developers.google.com
          * @param point
          */
          mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+
+
              @Override
              public void onMapLongClick(LatLng latLng) {
+                 mMap.addMarker(new MarkerOptions()
+                                    .position(latLng)
+                                    .title("Session Location"));
+
 
                  //Prompt user for confirmation of the selected point
                  AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
-                 builder.setMessage("Use this point: " + latLng.toString())
+                 builder.setMessage("Use this point: \n" + latLng.toString())
                          .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                              public void onClick(DialogInterface dialog, int id) {
                                  // return to Create Session Activity
@@ -109,5 +121,18 @@ public class MapsActivity extends FragmentActivity {
 
     }
     */
+
+    /**
+     * centers map on current location
+     *
+     * code based off of: http://stackoverflow.com/questions/18425141/android-google-maps-api-v2-zoom-to-current-location
+     */
+    public void centerOnCurrentLocation(){
+        Location currentLocation = mMap.getMyLocation();
+        if (currentLocation != null) {
+            LatLng currentPoint = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentPoint, 11));
+        }
+    }
 
 }
