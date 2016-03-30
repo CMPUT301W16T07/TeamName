@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.google.android.gms.maps.model.LatLng;
+
 /**
  * Created by ALI on 2016-03-07.
  *
@@ -18,6 +20,7 @@ import android.widget.ImageView;
 public class EditSessionActivity extends MethodsController {
 //Bitmap thumbnail;
     Integer sessions_index;
+    private LatLng tempPoint;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,13 +80,25 @@ public class EditSessionActivity extends MethodsController {
                     // TODO: implement Tutor
                     sessions.remove(sessionsOfInterest.get(index_r));
                     sessionsOfInterest.remove(index_r);
-                    Session newSession = new Session(subjectEdit.getText().toString(),descriptionEdit.getText().toString(),currentProfile,thumbnail);
+                    Session newSession = new Session(subjectEdit.getText().toString(),descriptionEdit.getText().toString(),currentProfile,thumbnail,tempPoint);
                     newSession.addThumbnail(thumbnail); //must add this line to properly attach image
                     sessions.add(newSession);
                     saveInFile(SESSIONSFILE, sessions);
                     Intent intent = new Intent(EditSessionActivity.this, MySessionsActivity.class);
                     startActivity(intent);
                 }
+            }
+        });
+
+        Button LocationButton = (Button)findViewById(R.id.AddLocationButton);
+        LocationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(EditSessionActivity.this, MapsActivity.class);
+
+                startActivityForResult(intent, REQUEST_LOCATION);
+
+
             }
         });
     }
@@ -130,6 +145,13 @@ public class EditSessionActivity extends MethodsController {
             sessions.get(sessions_index).addThumbnail(thumbnail);
             saveInFile(SESSIONSFILE, sessions);
             newImage.setImageBitmap(sessions.get(sessions_index).getThumbnail());
+        }
+
+        if(requestCode == REQUEST_LOCATION && resultCode == RESULT_OK){
+            if(data.hasExtra("point")){
+                Bundle extras = data.getExtras();
+                tempPoint = (LatLng) extras.get("point");
+            }
         }
     }
 }

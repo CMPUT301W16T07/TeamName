@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_id": "crested-trilogy-125918",
+    "project_number": "199736967637",
+    "name": "My Project"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:199736967637:android:1c9ee3300a334713",
+        "client_id": "android:com.teamname.tutortrader",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "com.teamname.tutortrader",
+          "certificate_hash": []
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "199736967637-h8bp295kf2r86lbpsj9l848r4shgur4p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.teamname.tutortrader",
+            "certificate_hash": "BA668EE951F3DA44446994460AFE6AC40237C6C1"
+          }
+        },
+        {
+          "client_id": "199736967637-errekjih27lc5psbog4ajkst1491m671.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 1,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 2
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}
