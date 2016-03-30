@@ -41,7 +41,7 @@ public class MapsActivity extends FragmentActivity {
                                     .position(latLng)
                                     .title("Session Location"));
 
-
+                 //TODO: add a delay before prompt to actually see the marker.
                  //Prompt user for confirmation of the selected point
                  AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
                  builder.setMessage("Use this point: \n" + latLng.toString())
@@ -95,32 +95,10 @@ public class MapsActivity extends FragmentActivity {
             // Try to obtain the map from the SupportMapFragment.
             mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
                     .getMap();
-            // Check if we were successful in obtaining the map.
-            if (mMap != null) {
-                setUpMap();
-            }
+
         }
     }
 
-    /**
-     * This is where we can add markers or lines, add listeners or move the camera. In this case, we
-     * just add a marker near Africa.
-     * <p/>
-     * This should only be called once and when we are sure that {@link #mMap} is not null.
-     */
-    private void setUpMap() {
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
-    }
-
-/*
-    @Override
-    public void onMapLongClick(LatLng point){
-        mMap.addMarker(new MarkerOptions().position(point).title(point.toString()));
-
-        Toast.makeText(getApplicationContext(), "New marker added:" + point.toString(), Toast.LENGTH_LONG).show();
-
-    }
-    */
 
     /**
      * centers map on current location
