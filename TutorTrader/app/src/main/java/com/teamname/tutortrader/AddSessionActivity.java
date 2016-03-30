@@ -42,7 +42,8 @@ public class AddSessionActivity extends MethodsController  {
                     // TODO: implement Tutor
                     Session newSession = new Session(subjectEdit.getText().toString(),descriptionEdit.getText().toString(),currentProfile);
                     sessions.add(newSession);
-                    ElasticSessionController.addSession(newSession);
+                    ElasticSessionController.AddSessionTask addSessionTask = new ElasticSessionController.AddSessionTask();
+                    addSessionTask.execute(newSession);
                     saveInFile(SESSIONSFILE, sessions);
                     Intent intent = new Intent(AddSessionActivity.this, MySessionsActivity.class);
                     startActivity(intent);

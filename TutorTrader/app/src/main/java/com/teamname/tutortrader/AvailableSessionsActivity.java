@@ -20,6 +20,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by taylorarnett on 2016-03-01.
@@ -80,8 +81,20 @@ public class AvailableSessionsActivity extends MethodsController {
             public void onClick(View view) {
                     setResult(RESULT_OK);
                     String searchstring = query.getText().toString();
+                ElasticSessionController.GetSessionsTask getSessionsTask = new ElasticSessionController.GetSessionsTask();
+                getSessionsTask.execute(searchstring);
+                try {
+                    availableSessions = getSessionsTask.get();
+                } catch (InterruptedException e){
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+                adapter.notifyDataSetChanged();
+                }
 
-            }
+
+
         });
 
 
@@ -95,7 +108,6 @@ public class AvailableSessionsActivity extends MethodsController {
                 startActivity(intent);
             }
         });
-
 
     }
 
@@ -124,10 +136,20 @@ public class AvailableSessionsActivity extends MethodsController {
     @Override
     protected void onStart() {
         super.onStart();
-        //ElasticSessionController.getLatestSessions();
-        loadFromFile(SESSIONSFILE);
+        ElasticSessionController.GetSessionsTask loadTask = new ElasticSessionController.GetSessionsTask();
+        loadTask.execute("");
         //adapter = new ArrayAdapter<Session>(this, R.layout.session_list_item);
         oldSessions = (ListView) findViewById(R.id.sessionList);
+        try {
+            availableSessions.addAll(loadTask.get());
+        } catch (InterruptedException e){
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        //loadFromFile(SESSIONSFILE);
+        adapter =  new ArrayAdapter<>(this,
+                R.layout.list_colour, availableSessions);
         oldSessions.setAdapter(adapter);
         adapter.notifyDataSetChanged();
         //TODO: load list to contorller
