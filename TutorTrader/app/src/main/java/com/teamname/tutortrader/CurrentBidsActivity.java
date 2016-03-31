@@ -1,5 +1,6 @@
 package com.teamname.tutortrader;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -48,6 +49,8 @@ public class CurrentBidsActivity extends MethodsController {
             @Override
             public void onClick(View v) {
                 loadCurrentBids();
+                Intent intent = new Intent(CurrentBidsActivity.this, UpcomingSessionsActivity.class);
+                startActivity(intent);
                 // TODO: make it show all the bids that have been accepted
 
             }

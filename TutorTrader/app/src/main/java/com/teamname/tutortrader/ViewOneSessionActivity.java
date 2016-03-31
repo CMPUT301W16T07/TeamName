@@ -58,6 +58,7 @@ public class ViewOneSessionActivity extends MethodsController {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ViewOneSessionActivity.this);
                 builder.setMessage("Are you sure you would like to delete this session?")
                         .setCancelable(false)
+                        // This will delete the session of interest
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 sessions.remove(sessionsOfInterest.get(index_r));
