@@ -61,8 +61,9 @@ public class AddSessionActivity extends MethodsController  {
                     //sessions.add(newSession);
                     ElasticSessionController.AddSessionTask addSessionTask = new ElasticSessionController.AddSessionTask();
                     addSessionTask.execute(newSession);
-                    sessions.add(newSession);
-                    saveInFile(SESSIONSFILE, sessions);
+                    loadElasticSearch(); // load the newest addition
+                    //sessions.add(newSession);
+                    //saveInFile(SESSIONSFILE, sessions);
                     Intent intent = new Intent(AddSessionActivity.this, MySessionsActivity.class);
                     startActivity(intent);
                 }

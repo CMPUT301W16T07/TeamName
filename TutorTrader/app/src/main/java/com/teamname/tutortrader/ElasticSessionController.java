@@ -13,9 +13,15 @@ import org.apache.http.client.HttpClient;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+import javax.xml.transform.Result;
+
 import io.searchbox.client.JestResult;
+import io.searchbox.core.Delete;
+import io.searchbox.core.DeleteByQuery;
 import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
@@ -94,6 +100,58 @@ public class ElasticSessionController {
                     // TODO: Something more useful
                     e.printStackTrace();
                 }
+            }
+            return null;
+        }
+    }
+
+    /**
+     * must pass in a session's UUID
+     * from:https://github.com/CMPUT301W16T06/TechNoLogic/blob/master/src/app/src/main/java/ca/ualberta/cs/technologic/ElasticSearchComputer.java
+     */
+    public static class RemoveSessionTask extends AsyncTask<UUID, Void, Void> {
+
+        @Override
+        protected Void doInBackground(UUID... params) {
+            verifyClient();
+            ArrayList<Session> sessionToDelete = new ArrayList<>();
+            List<SearchResult.Hit<Map,Void>> hits = null;
+            String elasticSearchID;
+            String query = "{\"query\":{ \"match\" :{\"sessionID\":\"" + params[0] + "\"}}}";
+            Search search = new Search.Builder(query)
+                    .addIndex("cmput301w16t07")
+                    .addType("session")
+                    .build();
+
+            try {
+                SearchResult execute = client.execute(search);
+                if (execute.isSucceeded()) {
+                    List<Session> searchedSessions = execute.getSourceAsObjectList(Session.class);
+                    hits = execute.getHits(Map.class);
+                    sessionToDelete.addAll(searchedSessions);
+                    Log.e("TEST", "Searching for session to delete");
+                }
+            } catch (IOException e) {
+                throw new RuntimeException();
+            }
+
+
+            SearchResult.Hit hit = hits.get(0);
+            Map source = (Map)hit.source;
+            elasticSearchID = (String) source.get(JestResult.ES_METADATA_ID);
+            Delete delete = new Delete.Builder(elasticSearchID).index("cmput301w16t07").type("session").build();
+
+            try {
+                DocumentResult execute = client.execute(delete);
+                if (execute.isSucceeded()) {
+                } else {
+                    // TODO: Something more useful
+                    Log.e("TODO", "Our delete of session failed, oh no!");
+                }
+                return null;
+            } catch (IOException e) {
+                // TODO: Something more useful
+                e.printStackTrace();
             }
             return null;
         }

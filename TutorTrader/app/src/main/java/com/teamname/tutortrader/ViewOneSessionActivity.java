@@ -27,8 +27,10 @@ public class ViewOneSessionActivity extends MethodsController {
             The index of the entry that was clicked in the list of entries displayed on the main
             screen is passed through the intent. Here is where we access it
         */
-        final String index_receive = intent.getStringExtra("index");
-        final int index_r = Integer.parseInt(index_receive);
+        /*final String index_receive = intent.getStringExtra("index");
+        final int index_r = Integer.parseInt(index_receive);*/
+        final int index_r = intent.getIntExtra("index",0);
+        final String index_receive = String.valueOf(index_r);
         //loadSessions(SESSIONSFILE);
         loadElasticSearch();
         initializeFields(index_r);
@@ -63,9 +65,12 @@ public class ViewOneSessionActivity extends MethodsController {
                         .setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                sessions.remove(sessionsOfInterest.get(index_r));
-                                sessionsOfInterest.remove(index_r);
-                                saveInFile(SESSIONSFILE, sessions);
+                                //sessions.remove(sessionsOfInterest.get(index_r));
+                                //sessionsOfInterest.remove(index_r);
+                                //saveInFile(SESSIONSFILE, sessions);
+                                ElasticSessionController.RemoveSessionTask removeSessionTask = new ElasticSessionController.RemoveSessionTask();
+                                removeSessionTask.execute(sessionsOfInterest.get(index_r).getSessionID());
+                                loadElasticSearch();
                                 Intent intent = new Intent(ViewOneSessionActivity.this, MySessionsActivity.class);
                                 startActivity(intent);
                             }

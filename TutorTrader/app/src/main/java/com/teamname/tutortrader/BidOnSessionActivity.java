@@ -83,8 +83,12 @@ public class BidOnSessionActivity extends MethodsController {
                     Bid newbid = new Bid(selectedSession.getSessionID(), profileID, bidvalue);
                     selectedSession.addBid(newbid);
                     selectedSession.setStatus("Pending");
-                    //TODO: update Elastic Search
-                    saveInFile(SESSIONSFILE, sessions);
+
+                    //ElasticSessionController.AddSessionTask addSessionTask = new ElasticSessionController.AddSessionTask();
+                    //addSessionTask.execute(selectedSession);
+                    //TODO: update Elastic Search, we have the code to add session bt we need to remove session. Create a removeSessionTask.
+                    //saveInFile(SESSIONSFILE, sessions);
+                    updateElasticSearch(selectedSession); // to add the newest bid
                     Intent intent = new Intent(BidOnSessionActivity.this, AvailableSessionsActivity.class);
                     startActivity(intent);
                 } catch (Exception err) {

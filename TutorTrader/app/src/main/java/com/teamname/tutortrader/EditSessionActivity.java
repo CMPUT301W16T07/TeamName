@@ -74,13 +74,19 @@ public class EditSessionActivity extends MethodsController {
                 EditText descriptionEdit = (EditText) findViewById(R.id.descriptionEdit);
                 valid = verifyFields();
                 if (valid) {
-                    // TODO: implement Tutor
-                    sessions.remove(sessionsOfInterest.get(index_r));
-                    sessionsOfInterest.remove(index_r);
+                    // Remove old session
+                    ElasticSessionController.RemoveSessionTask removeSessionTask = new ElasticSessionController.RemoveSessionTask();
+                    removeSessionTask.execute(sessionsOfInterest.get(index_r).getSessionID());
+
+                    //sessions.remove(sessionsOfInterest.get(index_r));
+                    //sessionsOfInterest.remove(index_r);
                     Session newSession = new Session(subjectEdit.getText().toString(),descriptionEdit.getText().toString(),currentProfile,thumbnail);
                     newSession.addThumbnail(thumbnail); //must add this line to properly attach image
-                    sessions.add(newSession);
-                    saveInFile(SESSIONSFILE, sessions);
+                    //sessions.add(newSession);
+                    ElasticSessionController.AddSessionTask addSessionTask = new ElasticSessionController.AddSessionTask();
+                    addSessionTask.execute(newSession);
+                    loadElasticSearch(); // load the newest addition
+                    //saveInFile(SESSIONSFILE, sessions);
                     Intent intent = new Intent(EditSessionActivity.this, MySessionsActivity.class);
                     startActivity(intent);
                 }
@@ -128,7 +134,8 @@ public class EditSessionActivity extends MethodsController {
             Bundle extras = data .getExtras();
             thumbnail = (Bitmap)extras.get("data");
             sessions.get(sessions_index).addThumbnail(thumbnail);
-            saveInFile(SESSIONSFILE, sessions);
+            updateElasticSearch(sessions.get(sessions_index));
+            //saveInFile(SESSIONSFILE, sessions);
             newImage.setImageBitmap(sessions.get(sessions_index).getThumbnail());
         }
     }

@@ -332,9 +332,20 @@ public class MethodsController extends AppCompatActivity {
         //TODO: Implement this
     }
 
-    private Boolean updateDatabase(){
-        //TODO: not needed straight away so don't do this yet
-        return Boolean.FALSE;
+    /**
+     * updateElasticSearch will update a given session if information was added to it.
+     * It does this by removing the old session and adding the new one.
+     * @param session session object we wish to update
+     */
+    protected void updateElasticSearch(Session session){
+        // Remove old session that has information missing
+        ElasticSessionController.RemoveSessionTask removeSessionTask = new ElasticSessionController.RemoveSessionTask();
+        removeSessionTask.execute(session.getSessionID());
+
+        //add new session that has the information we want to add
+        ElasticSessionController.AddSessionTask addSessionTask = new ElasticSessionController.AddSessionTask();
+        addSessionTask.execute(session);
+        loadElasticSearch(); // load the newest addition
     }
 
     public static MethodsController getInstance(){
@@ -374,7 +385,8 @@ public class MethodsController extends AppCompatActivity {
             Bundle extras = data .getExtras();
             thumbnail = (Bitmap)extras.get("data");
             newImage.setImageBitmap(thumbnail);
-            saveInFile(SESSIONSFILE, sessions); //might not need this here
+            //saveInFile(SESSIONSFILE, sessions); //might not need this here
+
         }
     }
 
