@@ -27,7 +27,8 @@ public class UpcomingSessionsActivity extends MethodsController {
         ListView upcomingSessionsList = (ListView) findViewById(R.id.upcomingSessionsList);
         upcomingSessionsList.setBackgroundResource(R.drawable.apple_righ);
 
-        loadSessions(SESSIONSFILE);
+        //loadSessions(SESSIONSFILE);
+        loadElasticSearch();
         loadCurrentBids();
         // TODO: instead of displaying bids we need to display the session that the bid is for.
         ArrayList<Bid> acceptedBids = new ArrayList<>();
