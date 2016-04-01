@@ -8,6 +8,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ * This activity is launched from BidOnSessionActivity and allows
+ * a user to view the image associated with a given session.
+ * @see BidOnSessionActivity
+ */
 public class ViewImageActivity extends MethodsController {
     int index;
     @Override
@@ -32,7 +37,6 @@ public class ViewImageActivity extends MethodsController {
         TextView sessionTitle = (TextView) findViewById(R.id.sessionTitle);
         sessionTitle.setText(sessions.get(index).getTitle().toString());
         ImageView viewImage = (ImageView) findViewById(R.id.viewImage);
-
         viewImage.setImageBitmap(sessions.get(index).getThumbnail());
     }
 }

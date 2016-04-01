@@ -11,7 +11,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
- * Created by MJ Alba on 2016-03-29.
  *
  * This class represents an Available Session as a list item. Its purpose is
  * to display Available Sessions as list items according to the markup defined by

@@ -11,8 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
- * Created by MJ Alba on 2016-03-08.
- *
  * The activity that allows users to view information about a
  * single session that they've created.
  */
@@ -63,6 +61,7 @@ public class ViewOneSessionActivity extends MethodsController {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ViewOneSessionActivity.this);
                 builder.setMessage("Are you sure you would like to delete this session?")
                         .setCancelable(false)
+                        // This will delete the session of interest
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 //sessions.remove(sessionsOfInterest.get(index_r));

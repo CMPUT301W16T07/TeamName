@@ -3,7 +3,6 @@ package com.teamname.tutortrader;
 import java.util.UUID;
 
 /**
- * Created by taylorarnett on 2016-03-01.
  *
  * Stores information about individual bids
  * which must then be added to a session to
@@ -19,11 +18,11 @@ public class Bid {
 
     // initialize Bids by passing a session ID, bidder ID, and amount
     public Bid(UUID session, UUID bidder, Float amount) {
-        UUID sessionID; // a session ID
+        //UUID sessionID; // a session ID
 
         this.bidID = UUID.randomUUID();
         this.bidder = bidder;
-        sessionID = session;
+        //sessionID = session;
         this.amount = amount;
         this.status = "pending";
     }

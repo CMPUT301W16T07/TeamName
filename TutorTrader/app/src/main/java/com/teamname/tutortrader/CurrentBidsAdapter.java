@@ -11,8 +11,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
- * Created by MJ Alba on 2016-03-08.
- *
  * This class represents a Current Bid as a list item. Its purpose is
  * to display Current Bids as list items according to the markup defined by
  * current_bids_list_item.xml.

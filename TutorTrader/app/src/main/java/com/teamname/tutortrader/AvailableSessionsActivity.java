@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 /**
- * Created by taylorarnett on 2016-03-01.
  *
  * The activity for the list of all available sessions (the main
  * screen of the app).

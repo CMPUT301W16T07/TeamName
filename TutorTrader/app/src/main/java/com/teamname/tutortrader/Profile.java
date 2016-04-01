@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 /**
- * Created by taylorarnett on 2016-03-01.
- *
  * Stores all information about a user (their name, number,
  * email, etc).
  */

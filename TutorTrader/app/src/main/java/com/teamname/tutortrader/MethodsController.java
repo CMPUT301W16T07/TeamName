@@ -32,8 +32,6 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 /**
- * Created by iali1 on 3/8/16.
- *
  * The main controller for TutorTrader. Contains important
  * functions that need to be used by all other activities.
  * Also initializes the main data structures of the app.
@@ -51,11 +49,11 @@ public class MethodsController extends AppCompatActivity {
     protected ArrayList<Session> availableSessions = new ArrayList<Session>();
     protected ArrayList<Profile> profiles = new ArrayList<Profile>();
     protected ArrayList<Bid> bids = new ArrayList<Bid>();
-
+    protected ArrayList<Session> upcomingSessions = new ArrayList<>();
 
     protected Button btn_availableSession, btn_myProfile, btn_CurrentBids, btn_mySessions;
-    protected ArrayList<Session> sessionsOfInterest = new ArrayList<Session>(); //this creates a list of sessions
-    //protected ArrayList<Session> allSessions = new ArrayList<>();
+    // sessionsofInterest holds the sessions belonging to the currentProfile
+    protected ArrayList<Session> sessionsOfInterest = new ArrayList<Session>();
 
     private static final MethodsController instance = new MethodsController();
 
@@ -127,7 +125,7 @@ public class MethodsController extends AppCompatActivity {
     };
 
     /**
-     * saveinFile borrowed from lonelyTwitter.
+     * saveinFile borrowed from lonelyTwitter. Saves a list to a local file on the device.
      *
      * @param fileName specifies which file we are going to save to
      * @param list the arraylist we are saving to the file

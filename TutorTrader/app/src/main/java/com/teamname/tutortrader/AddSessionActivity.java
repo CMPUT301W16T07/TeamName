@@ -12,7 +12,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 /**
- * Created by taylorarnett on 2016-03-01.
  *
  * The activity for adding new tutor sessions as a user.
  */
