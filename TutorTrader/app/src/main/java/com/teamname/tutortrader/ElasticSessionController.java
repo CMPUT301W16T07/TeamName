@@ -39,7 +39,7 @@ public class ElasticSessionController {
             verifyClient();
 
             // Base arraylist to hold sessions
-            ArrayList<Session> newsessions = new ArrayList<Session>();
+            ArrayList<Session> newSessions = new ArrayList<Session>();
 
             /**
              * Adapted from lab 11 lonelytwitter code to fit our needs
@@ -47,7 +47,8 @@ public class ElasticSessionController {
             // The following gets the top "10000" sessions
             String search_string;
             if (params[0] == "") {
-                search_string = "{\"from\":0,\"size\":10000,\"query\":{\"match\":{\"status\":\"available\" }}}";
+                //search_string = "{\"from\":0,\"size\":10000,\"query\":{\"match\":{\"status\":\"available\" }}}";
+                search_string = "{\"from\" : 0, \"size\" : 10000}";//, \"query\":{\"match\":{\"status\":\"available\"}}}";
             } else {
                 // The following gets the top 10000 sessions matching the string passed in
                 search_string = "{\"from\":0,\"size\":10000,\"query\":{\"match\":{\"" + params[0] + "\":\"" + params[1] + "\"}}}";
@@ -59,13 +60,14 @@ public class ElasticSessionController {
             try {
                 SearchResult execute = client.execute(search);
                 if (execute.isSucceeded()) {
-                    List<Session> searchedsessions = execute.getSourceAsObjectList(Session.class);
+                    List<Session> searchedSessions = execute.getSourceAsObjectList(Session.class);
+                    newSessions.addAll(searchedSessions);
                     Log.e("TEST", "Searching");
                 }
             } catch (IOException e) {
                 throw new RuntimeException();
             }
-            return newsessions;
+            return newSessions;
         }
     }
 

@@ -29,7 +29,8 @@ public class ViewOneSessionActivity extends MethodsController {
         */
         final String index_receive = intent.getStringExtra("index");
         final int index_r = Integer.parseInt(index_receive);
-        loadSessions(SESSIONSFILE);
+        //loadSessions(SESSIONSFILE);
+        loadElasticSearch();
         initializeFields(index_r);
 
         Button allSessionsButton = (Button) findViewById(R.id.allSessionsButton);

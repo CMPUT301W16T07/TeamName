@@ -52,15 +52,17 @@ public class MySessionsActivity extends MethodsController {
         TextView activityTitle = (TextView) findViewById(R.id.activityTitle);
         activityTitle.setText(R.string.MySessionsButton);
 
-        ElasticSessionController.GetSessionsTask getSessionsTask = new ElasticSessionController.GetSessionsTask();
+        /*ElasticSessionController.GetSessionsTask getSessionsTask = new ElasticSessionController.GetSessionsTask();
         getSessionsTask.execute("ProfileID",currentProfile.getProfileID().toString());
         try {
             sessionsOfInterest = getSessionsTask.get();
-        } catch (InterruptedException e){
-            e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
-        }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
+
+        loadElasticSearch();
         //loadSessions(SESSIONSFILE);
         adapter = new AvailableSessionsAdapter(this, sessionsOfInterest);
         oldSessionsList.setAdapter(adapter);
@@ -94,7 +96,7 @@ public class MySessionsActivity extends MethodsController {
                 Intent intent = new Intent(MySessionsActivity.this, ViewOneSessionActivity.class);
                 Session session = sessionsOfInterest.get(position);
                 // http://stackoverflow.com/questions/2091465/how-do-i-pass-data-between-activities-on-android
-                intent.putExtra("index", index);
+                intent.putExtra("index", position);
                 startActivity(intent);
             }
         });

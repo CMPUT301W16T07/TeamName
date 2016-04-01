@@ -37,7 +37,8 @@ public class BidOnSessionActivity extends MethodsController {
         */
         final String index_receive = intent.getStringExtra("index");
         final int index = Integer.parseInt(index_receive);
-        loadSessions(SESSIONSFILE);
+        loadElasticSearch();
+        //loadSessions(SESSIONSFILE);
         selectedSessionIndex = sessions.indexOf(availableSessions.get(index));
         selectedSession = sessions.get(selectedSessionIndex);
         initializeFields(selectedSessionIndex);
@@ -82,6 +83,7 @@ public class BidOnSessionActivity extends MethodsController {
                     Bid newbid = new Bid(selectedSession.getSessionID(), profileID, bidvalue);
                     selectedSession.addBid(newbid);
                     selectedSession.setStatus("Pending");
+                    //TODO: update Elastic Search
                     saveInFile(SESSIONSFILE, sessions);
                     Intent intent = new Intent(BidOnSessionActivity.this, AvailableSessionsActivity.class);
                     startActivity(intent);

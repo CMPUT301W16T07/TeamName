@@ -59,9 +59,19 @@ public class AvailableSessionsActivity extends MethodsController {
         //populates the list of all sessions
         oldSessions = (ListView) findViewById(R.id.sessionList);
         oldSessions.setBackgroundResource(R.drawable.apple_righ);
-        loadSessions(SESSIONSFILE);
-       // ElasticSessionController.getLatestSessions();
-        // available sessions will only contain available sessions that are not booked
+        /*ElasticSessionController.GetSessionsTask getSessionsTask = new ElasticSessionController.GetSessionsTask();
+        getSessionsTask.execute("");
+        try {
+            availableSessions = getSessionsTask.get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
+        loadElasticSearch();
+        //loadSessions(SESSIONSFILE);
+        //ElasticSessionController.getLatestSessions();
+        //available sessions will only contain available sessions that are not booked
         /*ArrayList<Session> availableSessions = new ArrayList<>();
         for (int i=0;i<sessions.size();i++) {
             if (!sessions.get(i).getStatus().equals("booked")) {
@@ -147,18 +157,13 @@ public class AvailableSessionsActivity extends MethodsController {
     @Override
     protected void onStart() {
         super.onStart();
-        ElasticSessionController.GetSessionsTask loadTask = new ElasticSessionController.GetSessionsTask();
-        loadTask.execute("");
+        //ElasticSessionController.GetSessionsTask loadTask = new ElasticSessionController.GetSessionsTask();
+        //loadTask.execute("");
         //adapter = new ArrayAdapter<Session>(this, R.layout.session_list_item);
         oldSessions = (ListView) findViewById(R.id.sessionList);
-        try {
-            availableSessions.addAll(loadTask.get());
-        } catch (InterruptedException e){
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+
         //loadFromFile(SESSIONSFILE);
+        loadElasticSearch();
         adapter =  new ArrayAdapter<>(this,
                 R.layout.list_colour, availableSessions);
         oldSessions.setAdapter(adapter);

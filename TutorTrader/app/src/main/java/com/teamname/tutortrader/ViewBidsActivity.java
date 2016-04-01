@@ -32,7 +32,8 @@ public class ViewBidsActivity extends MethodsController {
         // populates the list of all bids
         allBidsList = (ListView) findViewById(R.id.bidsListView);
         allBidsList.setBackgroundResource(R.drawable.black_chalkboard);
-        loadSessions(SESSIONSFILE);
+        //loadSessions(SESSIONSFILE);
+        loadElasticSearch();
         adapter = new CurrentBidsOnMySessionsAdapter(this, sessionsOfInterest.get(index_r).getBids());
         allBidsList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
