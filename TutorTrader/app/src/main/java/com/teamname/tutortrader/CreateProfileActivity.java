@@ -41,6 +41,9 @@ public class CreateProfileActivity extends MethodsController{
                     profiles.remove(0);
                     profiles.add(newProfile);
                     saveInFile(USERFILE, profiles);
+                    ElasticSearchController.AddProfileTask addProfileTask = new ElasticSearchController.AddProfileTask();
+                    addProfileTask.execute(newProfile);
+                    loadElasticSearch(); // load the newest addition
                     currentProfile = profiles.get(0);
 
                     setResult(RESULT_OK);

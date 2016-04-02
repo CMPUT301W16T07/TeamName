@@ -14,6 +14,7 @@ public class MyProfileActivity extends MethodsController {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_profile);
+
         btn_CurrentBids = (Button) findViewById(R.id.currentBids);
         btn_CurrentBids.setOnClickListener(btnClickListener);
         btn_myProfile = (Button) findViewById(R.id.myProfile);
@@ -31,6 +32,10 @@ public class MyProfileActivity extends MethodsController {
             //create new profile
             Intent intent = new Intent(MyProfileActivity.this, CreateProfileActivity.class);
             startActivity(intent);
+        }
+
+        if (getProfile(currentProfile.getProfileID()) != null) {
+            setCurrentProfile(getProfile(currentProfile.getProfileID())); // in case ratings changed
         }
 
         //get textviews

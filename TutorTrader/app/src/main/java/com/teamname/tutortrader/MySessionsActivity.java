@@ -19,10 +19,6 @@ public class MySessionsActivity extends MethodsController {
     //final MethodsController instance = MethodsController.getInstance();
     //final Profile currentProfile = instance.getCurrentProfile();
 
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ListView oldSessionsList;
@@ -62,7 +58,7 @@ public class MySessionsActivity extends MethodsController {
 
         loadElasticSearch();
         //loadSessions(SESSIONSFILE);
-        adapter = new AvailableSessionsAdapter(this, sessionsOfInterest);
+        adapter = new MySessionsAdapter(this, sessionsOfInterest);
         oldSessionsList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 //        adapter = new ArrayAdapter<>(this,

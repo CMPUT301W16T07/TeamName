@@ -12,17 +12,17 @@ import java.util.ArrayList;
 
 /**
  *
- * This class represents an Available Session as a list item. Its purpose is
- * to display Available Sessions as list items according to the markup defined by
- * available_sessions_list_item.xml.
+ * This class represents a User's Session as a list item. Its purpose is
+ * to display MySessions as list items according to the markup defined by
+ * my_sessions_list.xml.
  */
-public class AvailableSessionsAdapter extends ArrayAdapter<Session> {
+public class MySessionsAdapter extends ArrayAdapter<Session> {
 
     private Context context;
     private ArrayList<Session> arrayList;
 
-    public AvailableSessionsAdapter(Context context, ArrayList<Session> arrayList) {
-        super(context, R.layout.available_sessions_list_item, arrayList);
+    public MySessionsAdapter(Context context, ArrayList<Session> arrayList) {
+        super(context, R.layout.my_sessions_list, arrayList);
         this.context = context;
         this.arrayList = arrayList;
     }
@@ -33,21 +33,24 @@ public class AvailableSessionsAdapter extends ArrayAdapter<Session> {
     public View getView(int index, View convert, ViewGroup parent) {
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View availableSessionsView = inflater.inflate(R.layout.available_sessions_list_item, parent, false);
+        View mySessionsView = inflater.inflate(R.layout.my_sessions_list, parent, false);
 
-        TextView sessionView = (TextView) availableSessionsView.findViewById(R.id.sessionTitle);
-        TextView descriptionView = (TextView) availableSessionsView.findViewById(R.id.description);
-        //TextView statusView = (TextView) availableSessionsView.findViewById(R.id.status);
+        TextView sessionView = (TextView) mySessionsView.findViewById(R.id.sessionTitle);
+        TextView descriptionView = (TextView) mySessionsView.findViewById(R.id.description);
+        TextView statusView = (TextView) mySessionsView.findViewById(R.id.status);
+        TextView bidView = (TextView) mySessionsView.findViewById(R.id.bids);
         Profile tutor = MethodsController.getProfile(arrayList.get(index).getTutorID());
 
         String sessionString = "<b>" + arrayList.get(index).getTitle() + "</b> <i>by "  + tutor.getName() + "</i>";
         String descriptionString = arrayList.get(index).getDescription();
-        //String statusString = "Bid Status: <b>" + arrayList.get(index).getStatus() + "</b>.";
+        String statusString = "Session Status: <b>" + arrayList.get(index).getStatus() + "</b>";
+        String bidString = "Pending Bids: <b>" + arrayList.get(index).getBidsCount() + "</b>";
 
         sessionView.setText(Html.fromHtml(sessionString));
         descriptionView.setText(Html.fromHtml(descriptionString));
-       // statusView.setText(Html.fromHtml(statusString));
+        statusView.setText(Html.fromHtml(statusString));
+        bidView.setText(Html.fromHtml(bidString));
 
-        return availableSessionsView;
+        return mySessionsView;
     }
 }

@@ -19,7 +19,9 @@
         android:id="@+id/sessionList"
         android:layout_height="0dp"
         android:layout_gravity="left"
-        android:layout_weight="1.04">
+        android:layout_weight="1.04"
+        android:divider="@null"
+        android:dividerHeight="0dp">
     </ListView>
 
     <RelativeLayout

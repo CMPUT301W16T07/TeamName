@@ -45,6 +45,7 @@ public class EditProfileActivity extends MethodsController {
                     profiles.remove(index);
                     profiles.add(index, currentProfile);
                     saveInFile(USERFILE, profiles);
+                    updateElasticSearchProfile(currentProfile); // update on Elastic Search
                     setResult(RESULT_OK);
                     Intent intent = new Intent(EditProfileActivity.this, MyProfileActivity.class);
                     startActivity(intent);
