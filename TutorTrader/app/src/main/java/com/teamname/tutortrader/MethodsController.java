@@ -137,7 +137,7 @@ public class MethodsController extends AppCompatActivity {
      */
     public void saveInFile(String fileName, ArrayList list){
         try {
-            FileOutputStream fos = openFileOutput(fileName,Context.MODE_PRIVATE);
+            FileOutputStream fos = openFileOutput(fileName, Context.MODE_PRIVATE);
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
             Gson gson = new Gson();
             gson.toJson(list, out);
@@ -221,22 +221,7 @@ public class MethodsController extends AppCompatActivity {
 
                 }
             }
-            //code to notify peeps of the bids
-            ArrayList<Profile> yourProfile = new ArrayList<Profile>();
-            ElasticSearchController.GetProfileTask getProfileTask = new ElasticSearchController.GetProfileTask();
-            getProfileTask.execute("ProfileID", currentProfileID.toString());
-            try{
-                yourProfile = getProfileTask.get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
-            if (yourProfile.get(0).isNewBid() == true) {
-                Notify();
-                yourProfile.get(0).setNewBid(false);
-            }
-            //end of notify
+
 
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
@@ -287,6 +272,22 @@ public class MethodsController extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        //code to notify peeps of the bids
+        for(int i = 0; i < allProfiles.size(); i++) {
+            if (allProfiles.get(i).getProfileID().compareTo(currentProfile.getProfileID()) == 0) {
+                if ( allProfiles.get(i).isNewBid() == true) {
+                    Notify();
+                    allProfiles.get(i).setNewBid(false);
+                    ElasticSearchController.RemoveProfileTask removeProfileTask = new ElasticSearchController.RemoveProfileTask();
+                    removeProfileTask.execute(currentProfile.getProfileID());
+                    ElasticSearchController.AddProfileTask addProfileTask = new ElasticSearchController.AddProfileTask();
+                    addProfileTask.execute(currentProfile);
+                }
+            }
+        }
+
+        //end of notify
 
     }
 
@@ -417,13 +418,15 @@ public class MethodsController extends AppCompatActivity {
     public void Notify() {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.icon_notification)
+                .setAutoCancel(true)
                 .setContentTitle("Tutor Trader")
-                .setContentText("You have a new notification");
+                .setContentText("Somebody has bid on one of your sessions!");
 
-        Intent resultIntent = new Intent(this, AvailableSessionsActivity.class);
+        Intent resultIntent = new Intent(this, MySessionsActivity.class);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-        stackBuilder.addParentStack(AvailableSessionsActivity.class);
+        stackBuilder.addParentStack(MySessionsActivity.class);
         stackBuilder.addNextIntent(resultIntent);
+
 
         PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -431,6 +434,7 @@ public class MethodsController extends AppCompatActivity {
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         mNotificationManager.notify(1, mBuilder.build());
+
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
