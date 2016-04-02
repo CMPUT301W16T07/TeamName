@@ -39,8 +39,9 @@ public class MySessionsAdapter extends ArrayAdapter<Session> {
         TextView descriptionView = (TextView) mySessionsView.findViewById(R.id.description);
         TextView statusView = (TextView) mySessionsView.findViewById(R.id.status);
         TextView bidView = (TextView) mySessionsView.findViewById(R.id.bids);
+        Profile tutor = MethodsController.getProfile(arrayList.get(index).getTutorID());
 
-        String sessionString = "<b>" + arrayList.get(index).getTitle() + "</b> <i>by "  + arrayList.get(index).tutor.getName() + "</i>";
+        String sessionString = "<b>" + arrayList.get(index).getTitle() + "</b> <i>by "  + tutor.getName() + "</i>";
         String descriptionString = arrayList.get(index).getDescription();
         String statusString = "Session Status: <b>" + arrayList.get(index).getStatus() + "</b>";
         String bidString = "Pending Bids: <b>" + arrayList.get(index).getBidsCount() + "</b>";

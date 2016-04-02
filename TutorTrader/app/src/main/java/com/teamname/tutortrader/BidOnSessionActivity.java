@@ -111,6 +111,8 @@ public class BidOnSessionActivity extends MethodsController {
      * @param index index of the session in the sessions arraylist is passed in.
      */
     public void initializeFields(int index) {
+        Profile tutor = getProfile(sessions.get(index).getTutorID());
+
         TextView subjectText = (TextView) findViewById(R.id.subjectTextB);
         TextView titleBody = (TextView) findViewById(R.id.titleBodyB);
         TextView descriptionBody = (TextView) findViewById(R.id.descriptionBodyB);
@@ -123,10 +125,10 @@ public class BidOnSessionActivity extends MethodsController {
         subjectText.setText(sessions.get(index).getTitle());
         titleBody.setText("Title: "+ sessions.get(index).getTitle());
         descriptionBody.setText("Description: "+sessions.get(index).getDescription());
-        postedByBody.setText("Posted By: "+sessions.get(index).tutor.getName());
-        tutorRatingBody.setText("Tutor Rating: "+sessions.get(index).tutor.getTutorRating());
-        bodyEmail.setText("Email: " + sessions.get(index).tutor.getEmail());
-        bodyPhone.setText("Phone: " +sessions.get(index).tutor.getPhone());
+        postedByBody.setText("Posted By: "+ tutor.getName());
+        tutorRatingBody.setText("Tutor Rating: "+ tutor.getTutorRating());
+        bodyEmail.setText("Email: " + tutor.getEmail());
+        bodyPhone.setText("Phone: " + tutor.getPhone());
         bodyStatus.setText("Status: "+sessions.get(index).getStatus());
 
 

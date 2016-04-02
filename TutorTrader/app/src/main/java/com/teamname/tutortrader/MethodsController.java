@@ -206,7 +206,8 @@ public class MethodsController extends AppCompatActivity {
             UUID currentProfileID = currentProfile.getProfileID();
             for (int i = 0; i < size; i++){
                 //TODO: we need to properly save and load profiles so the proper ProfileID is saved and not randomly generated each time we use the app
-                UUID tutorProfileID = sessions.get(i).tutor.getProfileID();
+
+                UUID tutorProfileID = sessions.get(i).getTutorID();
                 if (currentProfileID.compareTo(tutorProfileID) == 0) {
                     sessionsOfInterest.add(sessions.get(i));
 
@@ -252,7 +253,7 @@ public class MethodsController extends AppCompatActivity {
             UUID currentProfileID = currentProfile.getProfileID();
             for (int i = 0; i < size; i++){
                 //TODO: we need to properly save and load profiles so the proper ProfileID is saved and not randomly generated each time we use the app
-                UUID tutorProfileID = sessions.get(i).tutor.getProfileID();
+                UUID tutorProfileID = sessions.get(i).getTutorID();
                 if (currentProfileID.compareTo(tutorProfileID) == 0) {
                     sessionsOfInterest.add(sessions.get(i));
 
@@ -373,6 +374,12 @@ public class MethodsController extends AppCompatActivity {
         ElasticSearchController.AddProfileTask addProfileTask = new ElasticSearchController.AddProfileTask();
         addProfileTask.execute(profile);
         loadElasticSearch(); // load the newest addition
+
+        //make sure current profile proper
+        UUID currentUUID = currentProfile.getProfileID();
+        Profile newCurrent = getProfile(currentUUID);
+        currentProfile = newCurrent;
+        //TODO: maybe need to update the profiles array and save that to local file
     }
 
     public static MethodsController getInstance(){
@@ -422,7 +429,7 @@ public class MethodsController extends AppCompatActivity {
      * @param uuid the profile's UUID
      * @return the Profile object
      */
-    public Profile getProfile (UUID uuid) {
+    public static Profile getProfile (UUID uuid) {
         ArrayList <Profile> returnedProfile = new ArrayList<>();
         ElasticSearchController.GetProfileTask getProfileTask = new ElasticSearchController.GetProfileTask();
         getProfileTask.execute("ProfileID", uuid.toString());

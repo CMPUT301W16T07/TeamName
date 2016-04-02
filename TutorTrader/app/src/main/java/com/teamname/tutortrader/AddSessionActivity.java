@@ -54,7 +54,7 @@ public class AddSessionActivity extends MethodsController  {
                     EditText descriptionEdit = (EditText) findViewById(R.id.descriptionEdit);
                     // TODO: implement Tutor
 
-                    Session newSession = new Session(subjectEdit.getText().toString(),descriptionEdit.getText().toString(),currentProfile, thumbnail);
+                    Session newSession = new Session(subjectEdit.getText().toString(),descriptionEdit.getText().toString(),currentProfile.getProfileID(), thumbnail);
                     newSession.addThumbnail(thumbnail);
                     //sessions.add(newSession);
                     ElasticSearchController.AddSessionTask addSessionTask = new ElasticSearchController.AddSessionTask();
