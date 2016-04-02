@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.concurrent.ExecutionException;
+
 /**
  * The activity that allows users to view a list of all
  * the sessions they've created.
@@ -47,10 +49,19 @@ public class MySessionsActivity extends MethodsController {
         // set activity title
         TextView activityTitle = (TextView) findViewById(R.id.activityTitle);
         activityTitle.setText(R.string.MySessionsButton);
+        
+        /*ElasticSessionController.GetSessionsTask getSessionsTask = new ElasticSessionController.GetSessionsTask();
+        getSessionsTask.execute("ProfileID",currentProfile.getProfileID().toString());
+        try {
+            sessionsOfInterest = getSessionsTask.get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
 
-
-
-        loadSessions(SESSIONSFILE);
+        loadElasticSearch();
+        //loadSessions(SESSIONSFILE);
         adapter = new MySessionsAdapter(this, sessionsOfInterest);
         oldSessionsList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -81,9 +92,9 @@ public class MySessionsActivity extends MethodsController {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MySessionsActivity.this, ViewOneSessionActivity.class);
-                String index = String.valueOf(position);
+                Session session = sessionsOfInterest.get(position);
                 // http://stackoverflow.com/questions/2091465/how-do-i-pass-data-between-activities-on-android
-                intent.putExtra("index", index);
+                intent.putExtra("index", position);
                 startActivity(intent);
             }
         });

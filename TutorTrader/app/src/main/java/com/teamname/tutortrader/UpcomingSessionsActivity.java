@@ -27,7 +27,8 @@ public class UpcomingSessionsActivity extends MethodsController {
         ListView upcomingSessionsList = (ListView) findViewById(R.id.upcomingSessionsList);
         upcomingSessionsList.setBackgroundResource(R.drawable.apple_righ);
 
-        loadSessions(SESSIONSFILE);
+        //loadSessions(SESSIONSFILE);
+        loadElasticSearch();
         loadCurrentBids();
         // TODO: instead of displaying bids we need to display the session that the bid is for.
         ArrayList<Bid> acceptedBids = new ArrayList<>();
@@ -56,7 +57,7 @@ public class UpcomingSessionsActivity extends MethodsController {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //TODO: make a mock ViewOneSessionActivity that will give options to show close, reopen and rate
-                Intent intent = new Intent(UpcomingSessionsActivity.this, ViewOneSessionActivity.class);
+                Intent intent = new Intent(UpcomingSessionsActivity.this, ViewOneUpcomingSession.class);
                 String index = String.valueOf(position);
                 // http://stackoverflow.com/questions/2091465/how-do-i-pass-data-between-activities-on-android
                 intent.putExtra("index", index);

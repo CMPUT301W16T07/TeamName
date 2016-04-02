@@ -36,7 +36,8 @@ public class BidOnSessionActivity extends MethodsController {
         */
         final String index_receive = intent.getStringExtra("index");
         final int index = Integer.parseInt(index_receive);
-        loadSessions(SESSIONSFILE);
+        loadElasticSearch();
+        //loadSessions(SESSIONSFILE);
         selectedSessionIndex = sessions.indexOf(availableSessions.get(index));
         selectedSession = sessions.get(selectedSessionIndex);
         initializeFields(selectedSessionIndex);
@@ -81,7 +82,12 @@ public class BidOnSessionActivity extends MethodsController {
                     Bid newbid = new Bid(selectedSession.getSessionID(), profileID, bidvalue);
                     selectedSession.addBid(newbid);
                     selectedSession.setStatus("Pending");
-                    saveInFile(SESSIONSFILE, sessions);
+
+                    //ElasticSessionController.AddSessionTask addSessionTask = new ElasticSessionController.AddSessionTask();
+                    //addSessionTask.execute(selectedSession);
+                    //TODO: update Elastic Search, we have the code to add session bt we need to remove session. Create a removeSessionTask.
+                    //saveInFile(SESSIONSFILE, sessions);
+                    updateElasticSearch(selectedSession); // to add the newest bid
                     Intent intent = new Intent(BidOnSessionActivity.this, AvailableSessionsActivity.class);
                     startActivity(intent);
                 } catch (Exception err) {

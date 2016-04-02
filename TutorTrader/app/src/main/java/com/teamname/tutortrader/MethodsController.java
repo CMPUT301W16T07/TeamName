@@ -29,6 +29,7 @@ import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 /**
  * The main controller for TutorTrader. Contains important
@@ -79,7 +80,8 @@ public class MethodsController extends AppCompatActivity {
 
         }
         currentProfile = profiles.get(0);
-        loadSessions(SESSIONSFILE);
+        //loadSessions(SESSIONSFILE);
+        loadElasticSearch();
     }
 
     protected MethodsController(){
@@ -223,6 +225,39 @@ public class MethodsController extends AppCompatActivity {
     }
 
     /**
+     *
+     */
+    public void loadElasticSearch () {
+
+        sessionsOfInterest = new ArrayList<Session>();
+        availableSessions = new ArrayList<>();
+        ElasticSessionController.GetSessionsTask getSessionsTask = new ElasticSessionController.GetSessionsTask();
+        getSessionsTask.execute("");
+        try {
+            sessions = getSessionsTask.get();
+            int size = sessions.size();
+            UUID currentProfileID = currentProfile.getProfileID();
+            for (int i = 0; i < size; i++){
+                //TODO: we need to properly save and load profiles so the proper ProfileID is saved and not randomly generated each time we use the app
+                UUID tutorProfileID = sessions.get(i).tutor.getProfileID();
+                if (currentProfileID.compareTo(tutorProfileID) == 0) {
+                    sessionsOfInterest.add(sessions.get(i));
+
+                }
+                if (sessions.get(i).getStatus().equals("available")) {
+                    availableSessions.add(sessions.get(i));
+
+                }
+            }
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
      * loadCurrentBids loads all bids from the sessions array that were made
      * by the current user.
      */
@@ -295,9 +330,20 @@ public class MethodsController extends AppCompatActivity {
         //TODO: Implement this
     }
 
-    private Boolean updateDatabase(){
-        //TODO: not needed straight away so don't do this yet
-        return Boolean.FALSE;
+    /**
+     * updateElasticSearch will update a given session if information was added to it.
+     * It does this by removing the old session and adding the new one.
+     * @param session session object we wish to update
+     */
+    protected void updateElasticSearch(Session session){
+        // Remove old session that has information missing
+        ElasticSessionController.RemoveSessionTask removeSessionTask = new ElasticSessionController.RemoveSessionTask();
+        removeSessionTask.execute(session.getSessionID());
+
+        //add new session that has the information we want to add
+        ElasticSessionController.AddSessionTask addSessionTask = new ElasticSessionController.AddSessionTask();
+        addSessionTask.execute(session);
+        loadElasticSearch(); // load the newest addition
     }
 
     public static MethodsController getInstance(){
@@ -337,7 +383,8 @@ public class MethodsController extends AppCompatActivity {
             Bundle extras = data .getExtras();
             thumbnail = (Bitmap)extras.get("data");
             newImage.setImageBitmap(thumbnail);
-            saveInFile(SESSIONSFILE, sessions); //might not need this here
+            //saveInFile(SESSIONSFILE, sessions); //might not need this here
+
         }
     }
 

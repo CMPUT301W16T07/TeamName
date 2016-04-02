@@ -33,7 +33,8 @@ public class Profile {
         this.name = name;
         this.phone = phone;
         this.email = email;
-
+        this.tutorRatings = new ArrayList<>();
+        this.studentRatings = new ArrayList<>();
         //set
         this.ProfileID = UUID.randomUUID();
     }
@@ -81,7 +82,14 @@ public class Profile {
      * their actual tutor rating.
      */
     public Double getTutorRating() {
-        return 1.0;
+        Double sum = 0.0;
+        if (tutorRatings.size() > 0) {
+            // iterate through ratings to calculate average
+            for (int i = 0; i < tutorRatings.size(); i++) {
+                sum = sum + tutorRatings.get(i);
+            }
+        }
+        return sum;
     }
 
     /**
@@ -89,6 +97,21 @@ public class Profile {
      * their actual student rating.
      */
     public Double getStudentRating() {
-        return 1.0;
+        Double sum = 0.0; // 0.0 indicates that they havent been rated yet
+        if (studentRatings.size() > 0) {
+            // iterate through ratings to calculate average
+            for (int i = 0; i < studentRatings.size(); i++) {
+                sum = sum + studentRatings.get(i);
+            }
+        }
+        return sum;
+    }
+
+    public void addTutorRating (double rating) {
+        tutorRatings.add(rating);
+    }
+
+    public void addStudentRating (double rating) {
+        studentRatings.add(rating);
     }
 }

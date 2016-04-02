@@ -54,4 +54,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_create_profile">CreateProfileActivity</string>
     <string name="title_activity_upcoming_sessions">UpcomingSessionsActivity</string>
+    <string name="title_activity_view_one_upcoming_session">ViewOneUpcomingSession</string>
+    <string name="titleBody">Subject</string>
 </resources>

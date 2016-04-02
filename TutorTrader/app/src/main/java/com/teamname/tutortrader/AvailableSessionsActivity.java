@@ -20,6 +20,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 /**
  *
@@ -31,7 +32,7 @@ public class AvailableSessionsActivity extends MethodsController {
 
     private ListView oldSessions;
    // private ArrayList<Session> sessions = new ArrayList<Session>();
-    private ArrayAdapter<Session> adapter;
+    private ArrayAdapter adapter;
     protected EditText query;
 
 
@@ -57,8 +58,19 @@ public class AvailableSessionsActivity extends MethodsController {
         //populates the list of all sessions
         oldSessions = (ListView) findViewById(R.id.sessionList);
         oldSessions.setBackgroundResource(R.drawable.apple_righ);
-        loadSessions(SESSIONSFILE);
-        // available sessions will only contain available sessions that are not booked
+        /*ElasticSessionController.GetSessionsTask getSessionsTask = new ElasticSessionController.GetSessionsTask();
+        getSessionsTask.execute("");
+        try {
+            availableSessions = getSessionsTask.get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
+        loadElasticSearch();
+        //loadSessions(SESSIONSFILE);
+        //ElasticSessionController.getLatestSessions();
+        //available sessions will only contain available sessions that are not booked
         /*ArrayList<Session> availableSessions = new ArrayList<>();
         for (int i=0;i<sessions.size();i++) {
             if (!sessions.get(i).getStatus().equals("booked")) {
@@ -79,18 +91,69 @@ public class AvailableSessionsActivity extends MethodsController {
 //        adapter.notifyDataSetChanged();
 
 
-
-        // TODO implement seaching once elastic search is working
+        /**
+         * handles the search button press.
+         * When button is pressed takes whatever text is entered in the search field and
+         * querys elastic search for that text. Searches both titles and
+         * descriptions. It also does not add sessions twice if the search
+         * word is in the Title and description
+         */
         Button searchbutton = (Button) findViewById(R.id.searchButton);
         query = (EditText) findViewById(R.id.searchtext);
 
         searchbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    setResult(RESULT_OK);
-                    String searchstring = query.getText().toString();
+                setResult(RESULT_OK);
+                ArrayList<Session> searchedSessions = new ArrayList<Session>();
+                ArrayList<Session> tempsearchedSessions = new ArrayList<Session>();
+                String searchstring = query.getText().toString();
+                if (searchstring.length() != 0) {  //Check if they are searching anything
+                    ElasticSessionController.GetSessionsTask getSessionsTask = new ElasticSessionController.GetSessionsTask();
+                    getSessionsTask.execute("title", searchstring);
+                    try {
+                        searchedSessions = getSessionsTask.get();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    }
+                    ElasticSessionController.GetSessionsTask moreSessionsTask = new ElasticSessionController.GetSessionsTask();
+                    moreSessionsTask.execute("description", searchstring);
+                    try {
+                        tempsearchedSessions = (moreSessionsTask.get());
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    }
+                    if (searchedSessions.size() == 0) {
+                        searchedSessions.addAll(tempsearchedSessions);
+                    }
+                    for (int i = 0; i < tempsearchedSessions.size(); i++) {
+                        boolean in = false;
+                        for (int q = 0; q < searchedSessions.size(); q++) {
+                            if (tempsearchedSessions.get(i) == searchedSessions.get(q)) {
+                                in = true;
+                            }
+                            if (in = false) {
+                                searchedSessions.add(tempsearchedSessions.get(i));
+                            }
+                        }
+                    }
+                    adapter = new AvailableSessionsAdapter(AvailableSessionsActivity.this, searchedSessions);
+                    oldSessions.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    loadElasticSearch();
+                    adapter = new AvailableSessionsAdapter(AvailableSessionsActivity.this, availableSessions);
+                    oldSessions.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+
+                }
 
             }
+
         });
 
 
@@ -104,7 +167,6 @@ public class AvailableSessionsActivity extends MethodsController {
                 startActivity(intent);
             }
         });
-
 
     }
 
@@ -133,9 +195,14 @@ public class AvailableSessionsActivity extends MethodsController {
     @Override
     protected void onStart() {
         super.onStart();
-        loadFromFile(SESSIONSFILE);
+        //ElasticSessionController.GetSessionsTask loadTask = new ElasticSessionController.GetSessionsTask();
+        //loadTask.execute("");
         //adapter = new ArrayAdapter<Session>(this, R.layout.session_list_item);
         oldSessions = (ListView) findViewById(R.id.sessionList);
+
+        //loadFromFile(SESSIONSFILE);
+        loadElasticSearch();
+        adapter = new AvailableSessionsAdapter(this, availableSessions);
         oldSessions.setAdapter(adapter);
         adapter.notifyDataSetChanged();
         //TODO: load list to contorller
