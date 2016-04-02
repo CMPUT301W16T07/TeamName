@@ -49,7 +49,7 @@ public class MySessionsActivity extends MethodsController {
         // set activity title
         TextView activityTitle = (TextView) findViewById(R.id.activityTitle);
         activityTitle.setText(R.string.MySessionsButton);
-
+        
         /*ElasticSessionController.GetSessionsTask getSessionsTask = new ElasticSessionController.GetSessionsTask();
         getSessionsTask.execute("ProfileID",currentProfile.getProfileID().toString());
         try {
@@ -62,7 +62,7 @@ public class MySessionsActivity extends MethodsController {
 
         loadElasticSearch();
         //loadSessions(SESSIONSFILE);
-        adapter = new AvailableSessionsAdapter(this, sessionsOfInterest);
+        adapter = new MySessionsAdapter(this, sessionsOfInterest);
         oldSessionsList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 //        adapter = new ArrayAdapter<>(this,
