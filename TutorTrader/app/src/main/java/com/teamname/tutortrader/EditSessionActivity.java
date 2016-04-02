@@ -73,7 +73,7 @@ public class EditSessionActivity extends MethodsController {
                 valid = verifyFields();
                 if (valid) {
                     // Remove old session
-                    ElasticSessionController.RemoveSessionTask removeSessionTask = new ElasticSessionController.RemoveSessionTask();
+                    ElasticSearchController.RemoveSessionTask removeSessionTask = new ElasticSearchController.RemoveSessionTask();
                     removeSessionTask.execute(sessionsOfInterest.get(index_r).getSessionID());
 
                     //sessions.remove(sessionsOfInterest.get(index_r));
@@ -81,7 +81,7 @@ public class EditSessionActivity extends MethodsController {
                     Session newSession = new Session(subjectEdit.getText().toString(),descriptionEdit.getText().toString(),currentProfile,thumbnail);
                     newSession.addThumbnail(thumbnail); //must add this line to properly attach image
                     //sessions.add(newSession);
-                    ElasticSessionController.AddSessionTask addSessionTask = new ElasticSessionController.AddSessionTask();
+                    ElasticSearchController.AddSessionTask addSessionTask = new ElasticSearchController.AddSessionTask();
                     addSessionTask.execute(newSession);
                     loadElasticSearch(); // load the newest addition
                     //saveInFile(SESSIONSFILE, sessions);

@@ -38,7 +38,7 @@ import java.util.concurrent.ExecutionException;
  */
 
 public class MethodsController extends AppCompatActivity {
-    protected static final String SESSIONSFILE = "sessions.sav";
+    //protected static final String SESSIONSFILE = "sessions.sav";
     protected static final String USERFILE = "profile.sav";
     protected static final String BIDFILE = "bids.sav";
 
@@ -48,6 +48,7 @@ public class MethodsController extends AppCompatActivity {
     protected ArrayList<Session> sessions = new ArrayList<Session>();
     protected ArrayList<Session> availableSessions = new ArrayList<Session>();
     protected ArrayList<Profile> profiles = new ArrayList<Profile>();
+    protected ArrayList<Profile> allProfiles = new ArrayList<>();
     protected ArrayList<Bid> bids = new ArrayList<Bid>();
     protected ArrayList<Session> upcomingSessions = new ArrayList<>();
 
@@ -231,7 +232,7 @@ public class MethodsController extends AppCompatActivity {
 
         sessionsOfInterest = new ArrayList<Session>();
         availableSessions = new ArrayList<>();
-        ElasticSessionController.GetSessionsTask getSessionsTask = new ElasticSessionController.GetSessionsTask();
+        ElasticSearchController.GetSessionsTask getSessionsTask = new ElasticSearchController.GetSessionsTask();
         getSessionsTask.execute("");
         try {
             sessions = getSessionsTask.get();
@@ -337,11 +338,11 @@ public class MethodsController extends AppCompatActivity {
      */
     protected void updateElasticSearch(Session session){
         // Remove old session that has information missing
-        ElasticSessionController.RemoveSessionTask removeSessionTask = new ElasticSessionController.RemoveSessionTask();
+        ElasticSearchController.RemoveSessionTask removeSessionTask = new ElasticSearchController.RemoveSessionTask();
         removeSessionTask.execute(session.getSessionID());
 
         //add new session that has the information we want to add
-        ElasticSessionController.AddSessionTask addSessionTask = new ElasticSessionController.AddSessionTask();
+        ElasticSearchController.AddSessionTask addSessionTask = new ElasticSearchController.AddSessionTask();
         addSessionTask.execute(session);
         loadElasticSearch(); // load the newest addition
     }
@@ -387,5 +388,7 @@ public class MethodsController extends AppCompatActivity {
 
         }
     }
+
+    //TODO: make getProfile which takes a UUID and returns a list with the profile on it;
 
 }

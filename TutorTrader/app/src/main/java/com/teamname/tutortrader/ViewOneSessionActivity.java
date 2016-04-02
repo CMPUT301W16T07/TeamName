@@ -3,7 +3,6 @@ package com.teamname.tutortrader;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -67,7 +66,7 @@ public class ViewOneSessionActivity extends MethodsController {
                                 //sessions.remove(sessionsOfInterest.get(index_r));
                                 //sessionsOfInterest.remove(index_r);
                                 //saveInFile(SESSIONSFILE, sessions);
-                                ElasticSessionController.RemoveSessionTask removeSessionTask = new ElasticSessionController.RemoveSessionTask();
+                                ElasticSearchController.RemoveSessionTask removeSessionTask = new ElasticSearchController.RemoveSessionTask();
                                 removeSessionTask.execute(sessionsOfInterest.get(index_r).getSessionID());
                                 loadElasticSearch();
                                 Intent intent = new Intent(ViewOneSessionActivity.this, MySessionsActivity.class);

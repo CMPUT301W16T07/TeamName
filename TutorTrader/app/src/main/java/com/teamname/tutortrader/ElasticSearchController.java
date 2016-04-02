@@ -31,7 +31,7 @@ import io.searchbox.core.SearchResult;
  * Created by abrosda on 3/22/16.
  * From lonely twitter elastic search lab
  */
-public class ElasticSessionController {
+public class ElasticSearchController {
 
 
     private static JestDroidClient client;

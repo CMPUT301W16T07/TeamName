@@ -101,7 +101,7 @@ public class AvailableSessionsActivity extends MethodsController {
             public void onClick(View view) {
                     setResult(RESULT_OK);
                     String searchstring = query.getText().toString();
-                ElasticSessionController.GetSessionsTask getSessionsTask = new ElasticSessionController.GetSessionsTask();
+                ElasticSearchController.GetSessionsTask getSessionsTask = new ElasticSearchController.GetSessionsTask();
                 getSessionsTask.execute("title", searchstring);
                 try {
                     availableSessions = getSessionsTask.get();

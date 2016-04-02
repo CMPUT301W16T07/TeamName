@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.concurrent.ExecutionException;
+
 public class ViewOneUpcomingSession extends MethodsController {
 
     @Override
@@ -45,6 +47,7 @@ public class ViewOneUpcomingSession extends MethodsController {
                     builder.setTitle("Rate Tutor")
                             .setItems(items, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
+                                    //TODO: get the tutor's info then add rating to it
 
                                 }
                             });
