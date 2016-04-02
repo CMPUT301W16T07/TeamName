@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.graphics.Bitmap;
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.UiThreadTest;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.robotium.solo.Solo;
 
@@ -16,7 +18,7 @@ import java.util.ArrayList;
  *
  * @see AddSessionActivity for more details about what it does
  */
-public class AddSessionActivityTest extends ActivityInstrumentationTestCase2 {
+public class ActivitySessionActivityTest extends ActivityInstrumentationTestCase2 {
 
 
     Instrumentation instrumentation;
@@ -41,7 +43,7 @@ public class AddSessionActivityTest extends ActivityInstrumentationTestCase2 {
         solo.finishOpenedActivities();
         super.tearDown();
     }
-    public AddSessionActivityTest() {
+    public ActivitySessionActivityTest() {
         super(AvailableSessionsActivity.class);
     }
 
@@ -49,23 +51,19 @@ public class AddSessionActivityTest extends ActivityInstrumentationTestCase2 {
      * Testing "Things" Use Cases
      */
 
-    /**
-     * Testing UseCase 01.01.01 - AddSession
-     * "As an owner, I want to add a thing in my things, each denoted with a clear,
-     *  suitable description."
-     */
 
     /** USECASE 1 - AddSession
      *  createSession(title, description) fills in the input text field and
      *  clicks the 'save' button for the activity under test:
      */
-    public void testAddSessionValid() {
-        AvailableSessionsActivity msa = (AvailableSessionsActivity)getActivity();
-        Profile profile = new Profile("Name", "Phone", "Email");
+    public void testViewAvailable() {
+        Profile profile = new Profile("Test tutor", "test@test.test", "780-666-6666");
         Bitmap.Config conf = Bitmap.Config.ARGB_8888;
         Bitmap bm1 = Bitmap.createBitmap(1,2, conf);
         Session session = new Session("Math", "Tutor for linear Algebra for all university levels",profile.getProfileID(),bm1 );
 
+        ElasticSearchController.AddProfileTask profileTask = new ElasticSearchController.AddProfileTask();
+        profileTask.execute(profile);
         ElasticSearchController.AddSessionTask addSessionTask = new ElasticSearchController.AddSessionTask();
         addSessionTask.execute(session);
         solo.clickOnMenuItem("Available");
@@ -75,6 +73,26 @@ public class AddSessionActivityTest extends ActivityInstrumentationTestCase2 {
                 "Tutor for linear Algebra for all university levels");
     }
 
+    /**
+     * Testing UseCase 01.04.01 - ViewOneSession
+     * "As an owner, I want to view one of my things, its description and status."
+     * <p/>
+     * We will perform a click on list entry to bring us to the ViewOneSession view.
+     * From here we test to see that all the buttons are present, and all the TextViews are
+     * accurate
+     */
+    public void testViewOneSession() {
+        solo.assertCurrentActivity("right activity", AvailableSessionsActivity.class);
+
+        solo.clickOnText("Math");
+
+        assertTrue(solo.searchText("Math"));
+        assertTrue(solo.searchText("Tutor for linear Algebra for all university levels"));
+        assertTrue(solo.searchText("Test tutor"));
+        assertTrue(solo.searchText("780-666-6666"));
+        assertTrue(solo.searchText("test@test.test"));
+
+    }
 
 
 }

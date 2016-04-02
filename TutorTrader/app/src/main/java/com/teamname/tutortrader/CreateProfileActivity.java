@@ -47,8 +47,9 @@ public class CreateProfileActivity extends MethodsController{
                     currentProfile = profiles.get(0);
 
                     setResult(RESULT_OK);
-                    Intent intent = new Intent(CreateProfileActivity.this, MyProfileActivity.class);
-                    startActivity(intent);
+                    //Intent intent = new Intent(CreateProfileActivity.this, MyProfileActivity.class);
+                    //startActivity(intent);
+                    finish();
 
 
                 }

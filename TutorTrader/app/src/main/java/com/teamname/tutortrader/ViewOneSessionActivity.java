@@ -94,6 +94,35 @@ public class ViewOneSessionActivity extends MethodsController {
                 startActivity(intent);
             }
         });
+
+        Button repostButton = (Button) findViewById(R.id.repostButton);
+        repostButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ViewOneSessionActivity.this);
+                builder.setMessage("Reposting this session means all bids will be removed and the status will be set to available do you wish tp continue?")
+                .setCancelable(false)
+                        // This will repost the session of interest
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                sessionsOfInterest.get(index_r).declineAllBids();
+                                sessionsOfInterest.get(index_r).deleteAllBids();
+                                sessionsOfInterest.get(index_r).setStatus("available");
+                                updateElasticSearchSession(sessionsOfInterest.get(index_r));
+                                loadElasticSearch();
+                                Intent intent = new Intent(ViewOneSessionActivity.this, MySessionsActivity.class);
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
+        });
     }
 
     /**

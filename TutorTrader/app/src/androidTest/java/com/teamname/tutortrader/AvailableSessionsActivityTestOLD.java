@@ -1,31 +1,24 @@
 package com.teamname.tutortrader;
 
-import android.app.Activity;
-import android.app.Instrumentation;
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
-import android.test.ViewAsserts;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
+
 import com.robotium.solo.Solo;
 
 /**
  *
  * For tests dealing with sessions.
  */
-public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCase2<AvailableSessionsActivity> {
+public class AvailableSessionsActivityTestOLD extends ActivityInstrumentationTestCase2<AvailableSessionsActivity> {
 
     private Solo solo;
 
-    public AvailableSessionsActivityTest() {
+    public AvailableSessionsActivityTestOLD() {
         super(AvailableSessionsActivity.class);
     }
 
@@ -52,7 +45,7 @@ public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCa
      * <p/>
      * To test, we add 2 new sessions and then we check if they are there
      * We assume that sessions.add works
-     * @see AddSessionActivityTest
+     * @see ActivitySessionActivityTest
      */
 
     public void testViewSessions() throws Exception {

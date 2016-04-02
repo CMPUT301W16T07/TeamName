@@ -145,7 +145,8 @@ public class BidOnSessionActivity extends MethodsController {
      * @param selectedSession
      */
     public void checkForSelf(Session selectedSession) {
-        Profile tutor = getProfile(selectedSession.getSessionID());
+        Profile tutor = getProfile(selectedSession.getTutorID());
+        if (tutor == null) throw new AssertionError();
         if (tutor.getProfileID().equals(currentProfile.getProfileID())) {
             //Learned from http://developer.android.com/guide/topics/ui/notifiers/toasts.html
             Context context = getApplicationContext();

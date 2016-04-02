@@ -109,6 +109,9 @@ public class Session {
             bids.get(i).setStatus("declined");
         }
     }
+    public void deleteAllBids () {
+        bids.clear();
+    }
 
     @Override
     public String toString() {
