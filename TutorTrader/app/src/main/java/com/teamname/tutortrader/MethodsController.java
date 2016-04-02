@@ -221,7 +221,22 @@ public class MethodsController extends AppCompatActivity {
 
                 }
             }
-
+            //code to notify peeps of the bids
+            ArrayList<Profile> yourProfile = new ArrayList<Profile>();
+            ElasticSearchController.GetProfileTask getProfileTask = new ElasticSearchController.GetProfileTask();
+            getProfileTask.execute("ProfileID", currentProfileID.toString());
+            try{
+                yourProfile = getProfileTask.get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+            if (yourProfile.get(0).isNewBid() == true) {
+                Notify();
+                yourProfile.get(0).setNewBid(false);
+            }
+            //end of notify
 
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block

@@ -18,6 +18,16 @@ public class Profile {
     private ArrayList<Double> studentRatings; // an array of all student ratings
     private boolean defaultUser = Boolean.TRUE;
 
+    private boolean newBid = false;
+
+    public boolean isNewBid() {
+        return newBid;
+    }
+
+    public void setNewBid(boolean newBid) {
+        this.newBid = newBid;
+    }
+
     //private static final Profile instance = new Profile();
 
 

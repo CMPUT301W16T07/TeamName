@@ -85,6 +85,14 @@ public class BidOnSessionActivity extends MethodsController {
                     UUID profileID = currentProfile.getProfileID();
                     Bid newbid = new Bid(selectedSession.getSessionID(), profileID, bidvalue);
                     selectedSession.addBid(newbid);
+                    Profile owner = MethodsController.getProfile(selectedSession.getTutorID());
+                    owner.setNewBid(true);
+                    ElasticSearchController.RemoveProfileTask removeProfileTask = new ElasticSearchController.RemoveProfileTask();
+                    removeProfileTask.execute(owner.getProfileID());
+                    ElasticSearchController.AddProfileTask addProfileTask = new ElasticSearchController.AddProfileTask();
+                    addProfileTask.execute(owner);
+
+
 
                     //ElasticSessionController.AddSessionTask addSessionTask = new ElasticSessionController.AddSessionTask();
                     //addSessionTask.execute(selectedSession);
@@ -94,6 +102,7 @@ public class BidOnSessionActivity extends MethodsController {
                     updateElasticSearchSession(selectedSession); // to add the newest bid
                     Intent intent = new Intent(BidOnSessionActivity.this, AvailableSessionsActivity.class);
                     startActivity(intent);
+
                 } catch (Exception err) {
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(BidOnSessionActivity.this);
                     builder1.setMessage("Error invalid input, please use a numerical value");
