@@ -37,34 +37,18 @@ public class MySessionsActivity extends MethodsController {
         btn_mySessions.setOnClickListener(btnClickListener);
         btn_availableSession = (Button) findViewById(R.id.availableSessions);
         btn_availableSession.setOnClickListener(btnClickListener);
-        //load from file to fill screen with sessions pertaining to the user
-        // load through file or through elastic search?
 
+        // verify user is logged in
         verifyLogin();
 
         // set activity title
         TextView activityTitle = (TextView) findViewById(R.id.activityTitle);
         activityTitle.setText(R.string.MySessionsButton);
 
-        /*ElasticSessionController.GetSessionsTask getSessionsTask = new ElasticSessionController.GetSessionsTask();
-        getSessionsTask.execute("ProfileID",currentProfile.getProfileID().toString());
-        try {
-            sessionsOfInterest = getSessionsTask.get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }*/
-
         loadElasticSearch();
-        //loadSessions(SESSIONSFILE);
         adapter = new MySessionsAdapter(this, sessionsOfInterest);
         oldSessionsList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-//        adapter = new ArrayAdapter<>(this,
-//          R.layout.list_colour,sessionsOfInterest);
-//        oldSessionsList.setAdapter(adapter);
-//        adapter.notifyDataSetChanged();
 
         //Adding a new session
         Button addNewSession = (Button) findViewById(R.id.addNewSession);
