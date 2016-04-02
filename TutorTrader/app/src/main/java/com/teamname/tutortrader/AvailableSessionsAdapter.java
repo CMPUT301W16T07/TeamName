@@ -38,8 +38,9 @@ public class AvailableSessionsAdapter extends ArrayAdapter<Session> {
         TextView sessionView = (TextView) availableSessionsView.findViewById(R.id.sessionTitle);
         TextView descriptionView = (TextView) availableSessionsView.findViewById(R.id.description);
         //TextView statusView = (TextView) availableSessionsView.findViewById(R.id.status);
+        Profile tutor = MethodsController.getProfile(arrayList.get(index).getTutorID());
 
-        String sessionString = "<b>" + arrayList.get(index).getTitle() + "</b> <i>by "  + arrayList.get(index).tutor.getName() + "</i>";
+        String sessionString = "<b>" + arrayList.get(index).getTitle() + "</b> <i>by "  + tutor.getName() + "</i>";
         String descriptionString = arrayList.get(index).getDescription();
         //String statusString = "Bid Status: <b>" + arrayList.get(index).getStatus() + "</b>.";
 

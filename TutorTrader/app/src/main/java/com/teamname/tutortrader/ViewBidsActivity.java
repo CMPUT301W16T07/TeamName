@@ -78,7 +78,7 @@ public class ViewBidsActivity extends MethodsController {
                                     Integer index = sessions.indexOf(sessionsOfInterest.get(index_r));
                                     Session tempSession = sessions.get(index);
                                     tempSession.setStatus("booked");
-                                    updateElasticSearch(tempSession);
+                                    updateElasticSearchSession(tempSession);
                                     //availableSessions.remove(index);
                                     notifyBidders(currentBid, index);
                                     //saveInFile(SESSIONSFILE, sessions);
@@ -100,7 +100,7 @@ public class ViewBidsActivity extends MethodsController {
 
                                     //TODO: notify bidder on decline
                                     //saveInFile(SESSIONSFILE, sessions);
-                                    updateElasticSearch(sessions.get(index));
+                                    updateElasticSearchSession(sessions.get(index));
                                     adapter.notifyDataSetChanged();
                                 }
                             });
@@ -143,7 +143,7 @@ public class ViewBidsActivity extends MethodsController {
         }
         tempSession.getBids().clear();
         tempSession.getBids().add(acceptedBid);
-        updateElasticSearch(tempSession);
+        updateElasticSearchSession(tempSession);
         //saveInFile(SESSIONSFILE, sessions);
     }
 }

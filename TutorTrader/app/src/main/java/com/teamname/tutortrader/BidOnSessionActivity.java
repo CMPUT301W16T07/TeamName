@@ -52,8 +52,9 @@ public class BidOnSessionActivity extends MethodsController {
         backToAllButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BidOnSessionActivity.this, AvailableSessionsActivity.class);
-                startActivity(intent);
+                finish();
+                //Intent intent = new Intent(BidOnSessionActivity.this, AvailableSessionsActivity.class);
+                //startActivity(intent);
             }
         });
 
@@ -84,13 +85,13 @@ public class BidOnSessionActivity extends MethodsController {
                     UUID profileID = currentProfile.getProfileID();
                     Bid newbid = new Bid(selectedSession.getSessionID(), profileID, bidvalue);
                     selectedSession.addBid(newbid);
-                    selectedSession.setStatus("Pending");
 
                     //ElasticSessionController.AddSessionTask addSessionTask = new ElasticSessionController.AddSessionTask();
                     //addSessionTask.execute(selectedSession);
                     //TODO: update Elastic Search, we have the code to add session bt we need to remove session. Create a removeSessionTask.
                     //saveInFile(SESSIONSFILE, sessions);
-                    updateElasticSearch(selectedSession); // to add the newest bid
+
+                    updateElasticSearchSession(selectedSession); // to add the newest bid
                     Intent intent = new Intent(BidOnSessionActivity.this, AvailableSessionsActivity.class);
                     startActivity(intent);
                 } catch (Exception err) {
@@ -114,6 +115,8 @@ public class BidOnSessionActivity extends MethodsController {
      * @param index index of the session in the sessions arraylist is passed in.
      */
     public void initializeFields(int index) {
+        Profile tutor = getProfile(sessions.get(index).getTutorID());
+
         TextView subjectText = (TextView) findViewById(R.id.subjectTextB);
         TextView titleBody = (TextView) findViewById(R.id.titleBodyB);
         TextView descriptionBody = (TextView) findViewById(R.id.descriptionBodyB);
@@ -124,13 +127,15 @@ public class BidOnSessionActivity extends MethodsController {
         TextView bodyStatus = (TextView) findViewById(R.id.bodyStatusB);
 
         subjectText.setText(sessions.get(index).getTitle());
-        titleBody.setText("Title: " + sessions.get(index).getTitle());
-        descriptionBody.setText("Description: " + sessions.get(index).getDescription());
-        postedByBody.setText("Posted By: "+sessions.get(index).tutor.getName());
-        tutorRatingBody.setText("Tutor Rating: "+sessions.get(index).tutor.getTutorRating());
-        bodyEmail.setText("Email: " + sessions.get(index).tutor.getEmail());
-        bodyPhone.setText("Phone: " + sessions.get(index).tutor.getPhone());
-        bodyStatus.setText("Status: " + sessions.get(index).getStatus());
+
+        titleBody.setText("Title: "+ sessions.get(index).getTitle());
+        descriptionBody.setText("Description: "+sessions.get(index).getDescription());
+        postedByBody.setText("Posted By: "+ tutor.getName());
+        tutorRatingBody.setText("Tutor Rating: "+ tutor.getTutorRating());
+        bodyEmail.setText("Email: " + tutor.getEmail());
+        bodyPhone.setText("Phone: " + tutor.getPhone());
+        bodyStatus.setText("Status: "+sessions.get(index).getStatus());
+
 
 
     }
@@ -140,7 +145,8 @@ public class BidOnSessionActivity extends MethodsController {
      * @param selectedSession
      */
     public void checkForSelf(Session selectedSession) {
-        if (selectedSession.tutor.getProfileID().equals(currentProfile.getProfileID())) {
+        Profile tutor = getProfile(selectedSession.getSessionID());
+        if (tutor.getProfileID().equals(currentProfile.getProfileID())) {
             //Learned from http://developer.android.com/guide/topics/ui/notifiers/toasts.html
             Context context = getApplicationContext();
             CharSequence text = "You cannot bid on your own session!";
