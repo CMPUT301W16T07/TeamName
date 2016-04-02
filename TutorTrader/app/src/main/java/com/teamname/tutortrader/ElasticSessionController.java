@@ -68,7 +68,6 @@ public class ElasticSessionController {
                 if (execute.isSucceeded()) {
                     List<Session> searchedSessions = execute.getSourceAsObjectList(Session.class);
                     newSessions.addAll(searchedSessions);
-                    Log.e("TEST", "Searching");
                 }
             } catch (IOException e) {
                 throw new RuntimeException();
