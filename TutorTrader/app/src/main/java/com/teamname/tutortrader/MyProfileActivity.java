@@ -57,7 +57,7 @@ public class MyProfileActivity extends MethodsController {
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                checkConnectivity();
                Intent intent = new Intent(MyProfileActivity.this, EditProfileActivity.class );
                startActivity(intent);
 

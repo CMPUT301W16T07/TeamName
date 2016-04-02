@@ -8,12 +8,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -40,6 +43,7 @@ import java.util.concurrent.ExecutionException;
 public class MethodsController extends AppCompatActivity {
     //protected static final String SESSIONSFILE = "sessions.sav";
     protected static final String USERFILE = "profile.sav";
+    protected static final String OFFLINEFILE = "tempSession.sav";
     protected static final String BIDFILE = "bids.sav";
 
     //TODO:load user profile if it exists or make new one.
@@ -61,6 +65,7 @@ public class MethodsController extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1234;
     protected Bitmap thumbnail;
     protected ImageView newImage;
+    protected Boolean Connectivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +74,7 @@ public class MethodsController extends AppCompatActivity {
         //Load current profile
         //ArrayList<Profile> templist = new ArrayList<Profile>();
         loadProfile(USERFILE);
+        setConnectivity();
 
         if(profiles.size() == 0) {
             Profile tempProfile = new Profile("Default","Default","Default");
@@ -137,7 +143,7 @@ public class MethodsController extends AppCompatActivity {
      */
     public void saveInFile(String fileName, ArrayList list){
         try {
-            FileOutputStream fos = openFileOutput(fileName,Context.MODE_PRIVATE);
+            FileOutputStream fos = openFileOutput(fileName, Context.MODE_PRIVATE);
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
             Gson gson = new Gson();
             gson.toJson(list, out);
@@ -165,6 +171,28 @@ public class MethodsController extends AppCompatActivity {
             // TODO Auto-generated catch block
             //e.printStackTrace();
             throw new RuntimeException();
+        }
+    }
+
+    public ArrayList<Session> loadOffline(){
+        ArrayList<Session> temp = new ArrayList<Session>();
+        try{
+
+            FileInputStream fis = openFileInput(OFFLINEFILE);
+            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+            Gson gson = new Gson();
+            // Took from https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/com/google/gson/Gson.html 01-2016-19
+            Type listType = new TypeToken<ArrayList<Session>>() {}.getType();
+            // Took from https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/com/google/gson/Gson.html 01-2016-19
+            temp = gson.fromJson(in, listType);
+            return temp;
+
+        }catch(FileNotFoundException e){
+            //TODO Auto-generated catch block
+            //currentProfile = new Profile("test username","test phone","test email");
+            //saveProfile(currentProfile);
+            return temp;
+
         }
     }
 
@@ -476,5 +504,49 @@ public class MethodsController extends AppCompatActivity {
             return null;
         }
     }
+
+    /**
+     * http://stackoverflow.com/questions/5474089/how-to-check-currently-internet-connection-is-available-or-not-in-android
+     * retruns true if connected to internet
+     * @return
+     */
+    public void checkConnectivity(){
+
+        setConnectivity();
+        if(!Connectivity){
+            Toast.makeText(MethodsController.this, "No Internet! \n continuing in offline mode", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(MethodsController.this, MySessionsActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    public void setConnectivity(){
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            Connectivity = Boolean.TRUE;
+            //Upload offline save file
+            ArrayList<Session> toUpload = loadOffline();
+            if(toUpload.size() > 0 ) {
+                for (int i = 0; i < toUpload.size(); i++) {
+                    Session session = toUpload.get(i);
+                    ElasticSearchController.AddSessionTask addSessionTask = new ElasticSearchController.AddSessionTask();
+                    addSessionTask.execute(session);
+                    toUpload.remove(i);
+
+                }
+                saveInFile(OFFLINEFILE,toUpload);
+            }
+
+        }else{
+            Connectivity = Boolean.FALSE;
+        }
+
+
+
+    }
+
+
 
 }

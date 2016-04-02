@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
+
 /**
  *
  * The activity for adding new tutor sessions as a user.
@@ -57,8 +59,14 @@ public class AddSessionActivity extends MethodsController  {
                     Session newSession = new Session(subjectEdit.getText().toString(),descriptionEdit.getText().toString(),currentProfile.getProfileID(), thumbnail);
                     newSession.addThumbnail(thumbnail);
                     //sessions.add(newSession);
-                    ElasticSearchController.AddSessionTask addSessionTask = new ElasticSearchController.AddSessionTask();
-                    addSessionTask.execute(newSession);
+                    if (Connectivity) {
+                        ElasticSearchController.AddSessionTask addSessionTask = new ElasticSearchController.AddSessionTask();
+                        addSessionTask.execute(newSession);
+                    }else{
+                         ArrayList<Session> tempSessions = loadOffline();
+                        tempSessions.add(newSession);
+                        saveInFile(OFFLINEFILE, tempSessions);
+                    }
                     loadElasticSearch(); // load the newest addition
                     //sessions.add(newSession);
                     //saveInFile(SESSIONSFILE, sessions);
