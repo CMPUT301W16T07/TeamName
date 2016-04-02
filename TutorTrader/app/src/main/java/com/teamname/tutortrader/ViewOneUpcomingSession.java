@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 public class ViewOneUpcomingSession extends MethodsController {
@@ -47,6 +48,8 @@ public class ViewOneUpcomingSession extends MethodsController {
                     builder.setTitle("Rate Tutor")
                             .setItems(items, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
+                                    //UUID tutorsID = sessionsOfInterest.get(index_r).tutor
+
                                     //TODO: get the tutor's info then add rating to it
 
                                 }

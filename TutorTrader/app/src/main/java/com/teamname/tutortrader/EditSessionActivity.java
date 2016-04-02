@@ -132,7 +132,7 @@ public class EditSessionActivity extends MethodsController {
             Bundle extras = data .getExtras();
             thumbnail = (Bitmap)extras.get("data");
             sessions.get(sessions_index).addThumbnail(thumbnail);
-            updateElasticSearch(sessions.get(sessions_index));
+            updateElasticSearchSession(sessions.get(sessions_index));
             //saveInFile(SESSIONSFILE, sessions);
             newImage.setImageBitmap(sessions.get(sessions_index).getThumbnail());
         }
