@@ -111,15 +111,19 @@ public class MethodsController extends AppCompatActivity {
             if (v.getId() == R.id.myProfile) {
                 Intent intent = new Intent(MethodsController.this, MyProfileActivity.class);
                 startActivity(intent);
+                finish();
             } else if (v.getId() == R.id.availableSessions) {
                 Intent intent = new Intent(MethodsController.this, AvailableSessionsActivity.class);
                 startActivity(intent);
+                finish();
             } else if (v.getId() == R.id.currentBids) {
                 Intent intent = new Intent(MethodsController.this, CurrentBidsActivity.class);
                 startActivity(intent);
+                finish();
             } else if (v.getId() == R.id.mySessions) {
                 Intent intent = new Intent(MethodsController.this, MySessionsActivity.class);
                 startActivity(intent);
+                finish();
             }
         }
     };

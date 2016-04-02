@@ -49,8 +49,9 @@ public class BidOnSessionActivity extends MethodsController {
         backToAllButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BidOnSessionActivity.this, AvailableSessionsActivity.class);
-                startActivity(intent);
+                finish();
+                //Intent intent = new Intent(BidOnSessionActivity.this, AvailableSessionsActivity.class);
+                //startActivity(intent);
             }
         });
 

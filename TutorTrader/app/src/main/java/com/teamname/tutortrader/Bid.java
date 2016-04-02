@@ -12,17 +12,16 @@ public class Bid {
 
     private UUID bidID; // unique identifying ID
     private UUID bidder; // a user ID
-
+    UUID sessionID; // a session ID
     private Float amount; // in dollars per hour
     private String status; // pending, accepted, declined, etc.
 
     // initialize Bids by passing a session ID, bidder ID, and amount
     public Bid(UUID session, UUID bidder, Float amount) {
-        //UUID sessionID; // a session ID
 
         this.bidID = UUID.randomUUID();
         this.bidder = bidder;
-        //sessionID = session;
+        this.sessionID = session;
         this.amount = amount;
         this.status = "pending";
     }
@@ -33,6 +32,10 @@ public class Bid {
 
     public UUID getBidder() {
         return bidder;
+    }
+
+    public UUID getSessionID() {
+        return sessionID;
     }
 
     public Float getAmount() {
@@ -58,11 +61,10 @@ public class Bid {
     }
 
     // get Session from session ID associated with bid
-//    public Session getSession() {
-//
-//        // TODO: Elastic Search to find the session represented by sessionID
-//
-//    }
+    public Session getSession() {
+
+        return new Session("Title", "description", new Profile("name", "email", "phone"));
+    }
 
     @Override
     public String toString() {
