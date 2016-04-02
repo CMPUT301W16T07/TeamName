@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 /**
- * Created by taylorarnett on 2016-03-01.
  *
  * The activity that allows a user to create a profile.
  */

@@ -3,7 +3,6 @@ package com.teamname.tutortrader;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,8 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
- * Created by MJ Alba on 2016-03-08.
- *
  * The activity that allows users to view information about a
  * single session that they've created.
  */
@@ -27,9 +24,12 @@ public class ViewOneSessionActivity extends MethodsController {
             The index of the entry that was clicked in the list of entries displayed on the main
             screen is passed through the intent. Here is where we access it
         */
-        final String index_receive = intent.getStringExtra("index");
-        final int index_r = Integer.parseInt(index_receive);
-        loadSessions(SESSIONSFILE);
+        /*final String index_receive = intent.getStringExtra("index");
+        final int index_r = Integer.parseInt(index_receive);*/
+        final int index_r = intent.getIntExtra("index",0);
+        final String index_receive = String.valueOf(index_r);
+        //loadSessions(SESSIONSFILE);
+        loadElasticSearch();
         initializeFields(index_r);
 
         Button allSessionsButton = (Button) findViewById(R.id.allSessionsButton);
@@ -60,11 +60,15 @@ public class ViewOneSessionActivity extends MethodsController {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ViewOneSessionActivity.this);
                 builder.setMessage("Are you sure you would like to delete this session?")
                         .setCancelable(false)
+                        // This will delete the session of interest
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                sessions.remove(sessionsOfInterest.get(index_r));
-                                sessionsOfInterest.remove(index_r);
-                                saveInFile(SESSIONSFILE, sessions);
+                                //sessions.remove(sessionsOfInterest.get(index_r));
+                                //sessionsOfInterest.remove(index_r);
+                                //saveInFile(SESSIONSFILE, sessions);
+                                ElasticSearchController.RemoveSessionTask removeSessionTask = new ElasticSearchController.RemoveSessionTask();
+                                removeSessionTask.execute(sessionsOfInterest.get(index_r).getSessionID());
+                                loadElasticSearch();
                                 Intent intent = new Intent(ViewOneSessionActivity.this, MySessionsActivity.class);
                                 startActivity(intent);
                             }

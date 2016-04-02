@@ -1,8 +1,11 @@
 package com.teamname.tutortrader;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
+
+import java.util.UUID;
 
 /**
  * malba @12/2/2016
@@ -40,19 +43,21 @@ public class BiddingTest extends ActivityInstrumentationTestCase2 {
     /** USECASE 05.01.01 = BidForSession
      * Testing if a session's status is changed to pending after a valid bid is added.
      * Test if bid has been added to bids array.
+     * */
 
     public void testBidForSessionValid() {
+        BidOnSessionActivity msa = (BidOnSessionActivity)getActivity();
+        Bitmap.Config conf = Bitmap.Config.ARGB_8888;
+        Bitmap bm1 = Bitmap.createBitmap(1,2, conf);
+        Profile profile = new Profile("Name", "Phone", "Email");
+        Session session = new Session("Math", "Tutor for linear Algebra for all university levels",profile,bm1);
+        UUID profileID = profile.getProfileID();
+        float bidvalue = Float.valueOf(12); // valid amount
+        Bid newbid = new Bid(session.getSessionID(), profileID, bidvalue);
+        session.addBid(newbid);
 
-        Session session = new Session("Math", "Tutor for linear Algebra for all university levels");
-        Bid bid = new Bid();
-        bid.username = "test"; // valid username
-        bid.amount = 12.13; // valid amount
-
-        bidSession(bid.amount);
-
-        assertEquals("The session now has a status of pending.", session.getStatus(), "pending");
-        assertEquals("The session's bid count has been incremented.", session.getBidsCount(), 1);
-        assertTrue("The session's bid array has a new bid.", session.getBids().contains(bid));
+        //assertEquals("The session now has a status of pending.", session.getStatus(), "pending");
+        assertTrue("The session's bid array has a new bid.", session.getBids().contains(newbid));
     }
 
     /** USECASE 05.01.01 = BidForSession

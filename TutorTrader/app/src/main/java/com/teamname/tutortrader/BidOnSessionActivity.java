@@ -11,7 +11,6 @@ import android.widget.TextView;
 import java.util.UUID;
 
 /**
- * Created by abrosda on 3/14/16.
  *
  * The activity for bidding on existing, available sessions.
  */
@@ -36,12 +35,12 @@ public class BidOnSessionActivity extends MethodsController {
             screen is passed through the intent. Here is where we access it
         */
         final String index_receive = intent.getStringExtra("index");
-        int index = Integer.parseInt(index_receive);
-        loadSessions(SESSIONSFILE);
+        final int index = Integer.parseInt(index_receive);
+        loadElasticSearch();
+        //loadSessions(SESSIONSFILE);
         selectedSessionIndex = sessions.indexOf(availableSessions.get(index));
         selectedSession = sessions.get(selectedSessionIndex);
         initializeFields(selectedSessionIndex);
-
 
 
         //super.onCreate(savedInstanceState);
@@ -96,7 +95,13 @@ public class BidOnSessionActivity extends MethodsController {
                     UUID profileID = currentProfile.getProfileID();
                     Bid newbid = new Bid(selectedSession.getSessionID(), profileID, bidvalue);
                     selectedSession.addBid(newbid);
-                    saveInFile(SESSIONSFILE, sessions);
+                    selectedSession.setStatus("Pending");
+
+                    //ElasticSessionController.AddSessionTask addSessionTask = new ElasticSessionController.AddSessionTask();
+                    //addSessionTask.execute(selectedSession);
+                    //TODO: update Elastic Search, we have the code to add session bt we need to remove session. Create a removeSessionTask.
+                    //saveInFile(SESSIONSFILE, sessions);
+                    updateElasticSearch(selectedSession); // to add the newest bid
                     Intent intent = new Intent(BidOnSessionActivity.this, AvailableSessionsActivity.class);
                     startActivity(intent);
                 } catch (Exception err) {
@@ -124,6 +129,7 @@ public class BidOnSessionActivity extends MethodsController {
         TextView titleBody = (TextView) findViewById(R.id.titleBodyB);
         TextView descriptionBody = (TextView) findViewById(R.id.descriptionBodyB);
         TextView postedByBody = (TextView) findViewById(R.id.postedByBodyB);
+        TextView tutorRatingBody = (TextView) findViewById(R.id.tutorRatingB);
         TextView bodyEmail = (TextView) findViewById(R.id.bodyEmailB);
         TextView bodyPhone = (TextView) findViewById(R.id.bodyPhoneB);
         TextView bodyStatus = (TextView) findViewById(R.id.bodyStatusB);
@@ -132,8 +138,9 @@ public class BidOnSessionActivity extends MethodsController {
         titleBody.setText("Title: "+ sessions.get(index).getTitle());
         descriptionBody.setText("Description: "+sessions.get(index).getDescription());
         postedByBody.setText("Posted By: "+sessions.get(index).tutor.getName());
+        tutorRatingBody.setText("Tutor Rating: "+sessions.get(index).tutor.getTutorRating());
         bodyEmail.setText("Email: " + sessions.get(index).tutor.getEmail());
-        bodyPhone.setText("Phone" +sessions.get(index).tutor.getPhone());
+        bodyPhone.setText("Phone: " +sessions.get(index).tutor.getPhone());
         bodyStatus.setText("Status: "+sessions.get(index).getStatus());
 
 

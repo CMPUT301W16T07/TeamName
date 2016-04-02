@@ -4,15 +4,18 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1"
+    android:background="@drawable/apple_left"
     tools:context=".MyProfileActivity">
 
     <!-- Menubar -->
     <include layout="@layout/menubar"/>
+    <include layout="@layout/headerbar"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/white"
         android:text="@string/UsernameField"
         android:id="@+id/username"
         android:layout_weight="0.10" />
@@ -21,6 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/white"
         android:text="@string/EmailField"
         android:id="@+id/email"
         android:layout_weight="0.10" />
@@ -29,8 +33,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/white"
         android:text="@string/PhoneField"
         android:id="@+id/phone"
+        android:layout_weight="0.10" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/white"
+        android:text="@string/TutorRatingField"
+        android:id="@+id/tutorRating"
+        android:layout_weight="0.10" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/white"
+        android:text="@string/StudentRatingField"
+        android:id="@+id/studentRating"
         android:layout_weight="0.10" />
 
     <Button

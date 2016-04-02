@@ -2,7 +2,11 @@ package com.teamname.tutortrader;
 
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.UiThreadTest;
+import android.test.ViewAsserts;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,9 +14,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
+import com.robotium.solo.Solo;
 
 /**
- * Created by taylorarnett on 2016-02-10.
  *
  * For tests dealing with sessions.
  */
@@ -23,9 +28,24 @@ public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCa
     EditText titleInput;
     EditText descriptionInput;
     EditText searchInput;
+    Solo solo;
 
-    public AvailableSessionsActivityTest(Class activityClass) {
-        super(activityClass);
+    @Override
+    public void setUp() throws Exception {
+        //setUp() is run before a test case is started.
+        //This is where the solo object is created.
+        solo = new Solo(getInstrumentation());
+        getActivity();
+    }
+    @Override
+    public void tearDown() throws Exception {
+        //tearDown() is run after a test case has finished.
+        //finishOpenedActivities() will finish all the activities that have been opened during the test execution.
+        solo.finishOpenedActivities();
+    }
+
+    public AvailableSessionsActivityTest() {
+        super(AvailableSessionsActivity.class);
     }
 
 
@@ -33,71 +53,90 @@ public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCa
      * Testing UseCase 01.02.01 - ViewSessions
      * "As an owner, I want to view a list of all my sessions, and their descriptions and statuses."
      * <p/>
-     * To test, we create 2 new sessions and then we leave the MySessions view, and return
-     * to the view to see if the sessions persist.
+     * To test, we add 2 new sessions and then we check if they are there
+     * We assume that sessions.add works
+     * @see AddSessionActivityTest
      */
+    @UiThreadTest
     public void testViewSessions() {
         AvailableSessionsActivity tta = (AvailableSessionsActivity) getActivity();
-        assertNotNull(activity.findViewById(R.id.mySessions));
-        (activity.findViewById(R.id.mySessions)).performClick();
-        MySessionsActivity msa = (MySessionsActivity) getActivity();
+        assertNotNull(tta.findViewById(R.id.mySessions));
+
         ArrayList<Session> sessions = new ArrayList<Session>();
         Profile profile = new Profile("Name", "Phone", "Email");
         Session session = new Session("Math", "Tutor for linear Algebra for all university levels", profile);
         Session session2 = new Session("Stats", "Tutor for Stats 252 and 141", profile);
-        assertNotNull(activity.findViewById(R.id.currentBids));
-        ( activity.findViewById(R.id.currentBids)).performClick();
-        (activity.findViewById(R.id.availibleSessions)).performClick();
+
+
         sessions.add(session);
         sessions.add(session2);
 
+        ListView theSessions = (ListView) tta.findViewById(R.id.sessionList);
+        ArrayAdapter<Session> adapter;
+        adapter = new AvailableSessionsAdapter(tta, sessions);
+        theSessions.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
 
         // To test that two sessions show up
         assertEquals(sessions.size(), 2);
 
-        assertTrue("There is the math session",
-                sessions.get(0).getTitle().equals("Math"));
-        assertTrue("There is the stats session",
-                sessions.get(0).getTitle().equals("Stats"));
+        assertNotNull("There is the math session",
+                theSessions.getItemIdAtPosition(0));
+        assertNotNull("There is a stats session",
+                theSessions.getItemAtPosition(1));
     }
-}
+
 
     /**
      * Testing UseCase 01.04.01 - ViewOneSession
      * "As an owner, I want to view one of my things, its description and status."
-     *
+     * <p/>
      * We will perform a click on list entry to bring us to the ViewOneSession view.
      * From here we test to see that all the buttons are present, and all the TextViews are
      * accurate
-     *
+     */
+    @UiThreadTest
     public void testViewOneSession() {
-        MySessionsActivity msa = (MySessionsActivity)getActivity();
-        assertNotNull(activity.findViewById(com.teamname.tutortrader.R.id.MySessionsButton));
+        AvailableSessionsActivity tta = (AvailableSessionsActivity) getActivity();
+        //assertNotNull(activity.findViewById(com.teamname.tutortrader.R.id.));
 
-        createSession("Math", "Tutor for linear Algebra for all university levels");
+        Profile newProfile = new Profile("Dude", "man", "222");
+        Session newSession = new Session("Math", "Tutor for linear Algebra for all university levels", newProfile);
+        ArrayList<Session> sessions = new ArrayList<Session>();
+
+        sessions.add(newSession);
+
+        ListView theSessions = (ListView) tta.findViewById(R.id.sessionList);
+        ArrayAdapter<Session> adapter;
+        adapter = new AvailableSessionsAdapter(tta, sessions);
+        theSessions.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
 
         // http://blog.denevell.org/android-instrumentation-click-list.html accessed 02-2016-12
-        ListView listView = (ListView)activity.findViewById(com.teamname.tutortrader.R.id.MySessionsList);
-        listView.performItemClick(listView, 0, listView.getItemIdAtPosition(0));
-
+        //solo.clickOnView(solo.getView(com.example.android.notepad.R.id.menu_save));
+        
+        solo.clickOnText("Math");
+        //theSessions.performItemClick(theSessions, 0, theSessions.getItemIdAtPosition(0));
         //testing the fields
-        ViewOneSessionActivity vosa = (ViewOneSessionActivity)getActivity();
-        (TextView) subjectTitle = (TextView)activity.findViewById(com.teamname.tutortrader.R.id.subjectTitle);
+        //ViewOneSessionActivity vosa = (ViewOneSessionActivity) getActivity();
+        TextView subjectTitle = (TextView) solo.getText(R.id.titleBody);
         assertEquals("Math", subjectTitle.getText().toString());
-        (TextView) sessionDescription = (TextView)activity.findViewById(com.teamname.tutortrader.R.id.sessionDescription);
+        TextView sessionDescription = (TextView) solo.getText(R.id.descriptionBody);
         assertEquals("Tutor for linear Algebra for all university levels",
                 sessionDescription.getText().toString());
-        (TextView) biddingStatus = (TextView)activity.findViewById(com.teamname.tutortrader.R.id.biddingStatus);
-        assertTrue((sessionDescription.getText().toString() == "Available") ||
-                (sessionDescription.getText().toString() == "Closed") ||
-                (sessionDescription.getText().toString() == "Pending"));
+        TextView biddingStatus = (TextView) tta.findViewById(R.id.bodyStatus);
+        assertTrue((biddingStatus.getText().toString() == "available") ||
+                (biddingStatus.getText().toString() == "closed") ||
+                (biddingStatus.getText().toString() == "pending"));
 
         // test if buttons are present
-        assertNotNull(activity.findViewById(com.teamname.tutortrader.R.id.allSessionsButton));
-        assertNotNull(activity.findViewById(com.teamname.tutortrader.R.id.editButton));
-        assertNotNull(activity.findViewById(com.teamname.tutortrader.R.id.deleteButton));
+      //  assertNotNull(tta.findViewById(com.teamname.tutortrader.R.id.allSessionsButton));
+      //  assertNotNull(tta.findViewById(com.teamname.tutortrader.R.id.editButton));
+      //  assertNotNull(tta.findViewById(com.teamname.tutortrader.R.id.deleteButton));
+       // assertNotNull(tta.findViewById(R.id.viewBidsButton));
 
     }
+}
 
     /**
      * Testing Use Case 01.04.01 - EditSession
@@ -107,7 +146,15 @@ public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCa
     //EditSessionSuccess will be the case where the user clicks "save"
     public void testEditSessionSuccess () {
         MySessionsActivity msa = (MySessionsActivity)getActivity();
-        createSession("Engls", "No courses ever");
+        Profile newProfile = new Profile("Dude","man","222");
+        Session newSession = new Session ("Engls", "No courses ever",newProfile);
+        ArrayList<Session> sessions = new ArrayList<Session>();
+
+        sessions.add(newSession);
+
+// http://blog.denevell.org/android-instrumentation-click-list.html accessed 02-2016-12
+        ListView listView = (ListView)activity.findViewById(R.id.sessionList);
+        listView.performItemClick(listView, 0, listView.getItemIdAtPosition(0));
 
         ViewOneSessionActivity vosa = (ViewOneSessionActivity)getActivity();
         assertNotNull(activity.findViewById(com.teamname.tutortrader.R.id.editButton));
@@ -118,8 +165,8 @@ public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCa
         assertNotNull(activity.findViewById(com.teamname.tutortrader.R.id.saveButton));
 
         // test to see if the fields are filled in with the previous input
-        (EditText) oldTitle = (EditText)activity.findViewById(com.teamname.tutortrader.R.id.subjectTitle);
-        (EditText) oldDescription = (EditText)activity.findViewById(com.teamname.tutortrader.R.id.sessionDescription);
+        EditText oldTitle = (EditText)activity.findViewById(R.id.subjectEdit);
+        EditText oldDescription = (EditText)activity.findViewById(R.id.descriptionEdit);
         assertEquals("Engls", oldTitle.getText().toString());
         assertEquals("No courses ever", oldDescription.getText().toString());
 
@@ -127,9 +174,9 @@ public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCa
         titleInput.setText("English");
         descriptionInput.setText("All graduate English courses or essay review help");
         ((Button)activity.findViewById(com.teamname.tutortrader.R.id.saveButton)).performClick();
-        MySessionsActivity msa = (MySessionsActivity)getActivity();
+        MySessionsActivity msa2 = (MySessionsActivity)getActivity();
 
-        ArrayAdapter<Session> arrayAdapter = msa.getAdapter();
+        ArrayAdapter<Session> arrayAdapter = msa2.getAdapter();
 
         // To test that two sessions show up
         assertEquals(arrayAdapter.getCount(), 1);
@@ -146,7 +193,14 @@ public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCa
     //EditSessionCancel will be the case where the user clicks "cancel"
     public void testEditSessionCancel () {
         MySessionsActivity msa = (MySessionsActivity)getActivity();
-        createSession("Engls", "No courses ever");
+        Profile newProfile = new Profile("Dude","man","222");
+        Session newSession = new Session ("Engls", "No courses ever",newProfile);
+        ArrayList<Session> sessions = new ArrayList<Session>();
+
+        sessions.add(newSession);
+
+        ListView listView = (ListView)activity.findViewById(R.id.sessionList);
+        listView.performItemClick(listView, 0, listView.getItemIdAtPosition(0));
 
         ViewOneSessionActivity vosa = (ViewOneSessionActivity)getActivity();
         assertNotNull(activity.findViewById(com.teamname.tutortrader.R.id.editButton));
@@ -157,8 +211,8 @@ public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCa
         assertNotNull(activity.findViewById(com.teamname.tutortrader.R.id.saveButton));
 
         // test to see if the feilds are filled in with the previous input
-        (EditText) oldTitle = (EditText)activity.findViewById(com.teamname.tutortrader.R.id.subjectTitle);
-        (EditText) oldDescription = (EditText)activity.findViewById(com.teamname.tutortrader.R.id.sessionDescription);
+        EditText oldTitle = (EditText)activity.findViewById(R.id.subjectEdit);
+        EditText oldDescription = (EditText)activity.findViewById(R.id.descriptionEdit);
         assertEquals("Engls", oldTitle.getText().toString());
         assertEquals("No courses ever", oldDescription.getText().toString());
 
@@ -166,9 +220,9 @@ public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCa
         titleInput.setText("English");
         descriptionInput.setText("All graduate English courses or essay review help");
         ((Button)activity.findViewById(com.teamname.tutortrader.R.id.cancelButton)).performClick();
-        MySessionsActivity msa = (MySessionsActivity)getActivity();
+        MySessionsActivity msa2 = (MySessionsActivity)getActivity();
 
-        ArrayAdapter<Session> arrayAdapter = msa.getAdapter();
+        ArrayAdapter<Session> arrayAdapter = msa2.getAdapter();
 
         // To test that the one sessions show up
         assertEquals(arrayAdapter.getCount(), 1);
@@ -194,7 +248,15 @@ public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCa
      *
     public void testDeleteSessionConfirmed () {
         MySessionsActivity msa = (MySessionsActivity)getActivity();
-        createSession("Delete Me", "Delete this session");
+
+        Profile newProfile = new Profile("Delete","me","222");
+        Session newSession = new Session ("Delete", "mememe",newProfile);
+        ArrayList<Session> sessions = new ArrayList<Session>();
+
+        sessions.add(newSession);
+
+        ListView listView = (ListView)activity.findViewById(R.id.sessionList);
+        listView.performItemClick(listView, 0, listView.getItemIdAtPosition(0));
 
         ViewOneSessionActivity vosa = (ViewOneSessionActivity)getActivity();
         assertNotNull(activity.findViewById(com.teamname.tutortrader.R.id.editButton));
@@ -221,9 +283,14 @@ public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCa
     *
     public void testDeleteSessionCancelled () {
         MySessionsActivity msa = (MySessionsActivity)getActivity();
-        createSession("Delete Me", "Delete this session");
+     Profile newProfile = new Profile("Dude","man","222");
+     Session newSession = new Session ("Engls", "No courses ever",newProfile);
+     ArrayList<Session> sessions = new ArrayList<Session>();
 
-        ViewOneSessionActivity vosa = (ViewOneSessionActivity)getActivity();
+     sessions.add(newSession);
+
+
+     ViewOneSessionActivity vosa = (ViewOneSessionActivity)getActivity();
         assertNotNull(activity.findViewById(com.teamname.tutortrader.R.id.editButton));
         ((Button)activity.findViewById(com.teamname.tutortrader.R.id.editButton)).performClick();
         EditSessionActivity esa = (EditSessionActivity)getActivity();

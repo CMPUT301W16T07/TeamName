@@ -29,17 +29,16 @@ import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 /**
- * Created by iali1 on 3/8/16.
- *
  * The main controller for TutorTrader. Contains important
  * functions that need to be used by all other activities.
  * Also initializes the main data structures of the app.
  */
 
 public class MethodsController extends AppCompatActivity {
-    protected static final String SESSIONSFILE = "sessions.sav";
+    //protected static final String SESSIONSFILE = "sessions.sav";
     protected static final String USERFILE = "profile.sav";
     protected static final String BIDFILE = "bids.sav";
 
@@ -49,12 +48,13 @@ public class MethodsController extends AppCompatActivity {
     protected ArrayList<Session> sessions = new ArrayList<Session>();
     protected ArrayList<Session> availableSessions = new ArrayList<Session>();
     protected ArrayList<Profile> profiles = new ArrayList<Profile>();
+    protected ArrayList<Profile> allProfiles = new ArrayList<>();
     protected ArrayList<Bid> bids = new ArrayList<Bid>();
-
+    protected ArrayList<Session> upcomingSessions = new ArrayList<>();
 
     protected Button btn_availableSession, btn_myProfile, btn_CurrentBids, btn_mySessions;
-    protected ArrayList<Session> sessionsOfInterest = new ArrayList<Session>(); //this creates a list of sessions
-    //protected ArrayList<Session> allSessions = new ArrayList<>();
+    // sessionsofInterest holds the sessions belonging to the currentProfile
+    protected ArrayList<Session> sessionsOfInterest = new ArrayList<Session>();
 
     private static final MethodsController instance = new MethodsController();
     static final int REQUEST_LOCATION = 9999;
@@ -81,7 +81,8 @@ public class MethodsController extends AppCompatActivity {
 
         }
         currentProfile = profiles.get(0);
-        loadSessions(SESSIONSFILE);
+        //loadSessions(SESSIONSFILE);
+        loadElasticSearch();
     }
 
     protected MethodsController(){
@@ -125,7 +126,7 @@ public class MethodsController extends AppCompatActivity {
     };
 
     /**
-     * saveinFile borrowed from lonelyTwitter.
+     * saveinFile borrowed from lonelyTwitter. Saves a list to a local file on the device.
      *
      * @param fileName specifies which file we are going to save to
      * @param list the arraylist we are saving to the file
@@ -225,6 +226,39 @@ public class MethodsController extends AppCompatActivity {
     }
 
     /**
+     *
+     */
+    public void loadElasticSearch () {
+
+        sessionsOfInterest = new ArrayList<Session>();
+        availableSessions = new ArrayList<>();
+        ElasticSearchController.GetSessionsTask getSessionsTask = new ElasticSearchController.GetSessionsTask();
+        getSessionsTask.execute("");
+        try {
+            sessions = getSessionsTask.get();
+            int size = sessions.size();
+            UUID currentProfileID = currentProfile.getProfileID();
+            for (int i = 0; i < size; i++){
+                //TODO: we need to properly save and load profiles so the proper ProfileID is saved and not randomly generated each time we use the app
+                UUID tutorProfileID = sessions.get(i).tutor.getProfileID();
+                if (currentProfileID.compareTo(tutorProfileID) == 0) {
+                    sessionsOfInterest.add(sessions.get(i));
+
+                }
+                if (sessions.get(i).getStatus().equals("available")) {
+                    availableSessions.add(sessions.get(i));
+
+                }
+            }
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
      * loadCurrentBids loads all bids from the sessions array that were made
      * by the current user.
      */
@@ -297,9 +331,20 @@ public class MethodsController extends AppCompatActivity {
         //TODO: Implement this
     }
 
-    private Boolean updateDatabase(){
-        //TODO: not needed straight away so don't do this yet
-        return Boolean.FALSE;
+    /**
+     * updateElasticSearch will update a given session if information was added to it.
+     * It does this by removing the old session and adding the new one.
+     * @param session session object we wish to update
+     */
+    protected void updateElasticSearch(Session session){
+        // Remove old session that has information missing
+        ElasticSearchController.RemoveSessionTask removeSessionTask = new ElasticSearchController.RemoveSessionTask();
+        removeSessionTask.execute(session.getSessionID());
+
+        //add new session that has the information we want to add
+        ElasticSearchController.AddSessionTask addSessionTask = new ElasticSearchController.AddSessionTask();
+        addSessionTask.execute(session);
+        loadElasticSearch(); // load the newest addition
     }
 
     public static MethodsController getInstance(){
@@ -339,8 +384,11 @@ public class MethodsController extends AppCompatActivity {
             Bundle extras = data .getExtras();
             thumbnail = (Bitmap)extras.get("data");
             newImage.setImageBitmap(thumbnail);
-            saveInFile(SESSIONSFILE, sessions); //might not need this here
+            //saveInFile(SESSIONSFILE, sessions); //might not need this here
+
         }
     }
+
+    //TODO: make getProfile which takes a UUID and returns a list with the profile on it;
 
 }

@@ -21,6 +21,8 @@
     <string name="CreateProfileField">Create New Profile</string>
     <string name="UsernameField">Username: </string>
     <string name="EmailField">Email: </string>
+    <string name="TutorRatingField">Tutor Rating: </string>
+    <string name="StudentRatingField">Student Rating: </string>
     <string name="PhoneField">Phone: </string>
 
     <!-- Edit Profile Fields -->
@@ -46,12 +48,18 @@
     <!-- Bid Fields/Buttons -->
     <string name="BidButton">Bid</string>
     <string name="ViewBidsField">View Bids</string>
-    <string name="EnterBidField">Enter your bid here (in dollars per hour): </string>
+    <string name="EnterBidField">Enter your bid here ($/hour): </string>
     <string name="BidsOnMySessionsField">Bids On My Sessions</string>
     <string name="ClearDeclinedBidsField">Clear Declined Bids</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_create_profile">CreateProfileActivity</string>
+
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_view_maps">Map</string>
+
+    <string name="title_activity_upcoming_sessions">UpcomingSessionsActivity</string>
+    <string name="title_activity_view_one_upcoming_session">ViewOneUpcomingSession</string>
+    <string name="titleBody">Subject</string>
+
 </resources>

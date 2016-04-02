@@ -22,10 +22,9 @@ public class ProfileTest extends ActivityInstrumentationTestCase2 {
     EditText email;
     EditText phone;
 
-     public ProfileTest(Class activityClass) {
-        super(activityClass);
+    public ProfileTest() {
+        super(AvailableSessionsActivity.class);
     }
-
 
 
     public void testEditEmail() {
@@ -38,7 +37,6 @@ public class ProfileTest extends ActivityInstrumentationTestCase2 {
         Profile user = new Profile("john","this should be changed","randomemail@email.email");
         user.setPhone("7804737373");
         assertEquals(user.getPhone(),"7804737373");
-
     }
 
 

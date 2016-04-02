@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 /**
- * Created by taylorarnett on 2016-03-01.
- *
  * Holds information for individual tutor sessions.
  */
 
@@ -45,6 +43,16 @@ public class Session {
         this.location = location;
 
     }
+    public Session(String title, String description, Profile tutor) {
+        this.title = title;
+        this.description = description;
+        this.status = "available";
+        this.tutor = tutor;
+        this.sessionID = UUID.randomUUID();
+        this.bids = new ArrayList<Bid>();
+        this.thumbnail = null;
+    }
+
 
     /**
      * When creates a new bid the bid is passed into addBid for the specific session.
@@ -62,6 +70,11 @@ public class Session {
     public ArrayList<Bid> getBids () {
         return bids;
     }
+
+    public int getBidsCount () {
+        return bids.size();
+    }
+
     public String getTitle() {
         return title;
     }

@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class ViewBidsActivity extends MethodsController {
 
@@ -27,21 +28,27 @@ public class ViewBidsActivity extends MethodsController {
         */
         final String index_receive = intent.getStringExtra("index");
         final int index_r = Integer.parseInt(index_receive);
+
         // populates the list of all bids
         allBidsList = (ListView) findViewById(R.id.bidsListView);
-        loadSessions(SESSIONSFILE);
-        adapter = new CurrentBidsAdapter(this, sessionsOfInterest.get(index_r).getBids());
-        //adapter = new ArrayAdapter<>(this,
-        //        R.layout.list_colour, sessionsOfInterest.get(index_r).getBids());
+        allBidsList.setBackgroundResource(R.drawable.black_chalkboard);
+        //loadSessions(SESSIONSFILE);
+        loadElasticSearch();
+        adapter = new CurrentBidsOnMySessionsAdapter(this, sessionsOfInterest.get(index_r).getBids());
         allBidsList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
+        // set appropriate button and header text
+        TextView displaySessionButtonTitle = (TextView) findViewById(R.id.sessionButton);
+        TextView displaySessionHeaderTitle = (TextView) findViewById(R.id.bidsOnMySessionsText);
+        displaySessionButtonTitle.setText("Return to " + sessionsOfInterest.get(index_r).getTitle());
+        displaySessionHeaderTitle.setText("Viewing Bids on " + sessionsOfInterest.get(index_r).getTitle());
 
         final Button sessionButton = (Button) findViewById(R.id.sessionButton);
         sessionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ViewBidsActivity.this, MySessionsActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
 
@@ -69,13 +76,12 @@ public class ViewBidsActivity extends MethodsController {
                             .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     Integer index = sessions.indexOf(sessionsOfInterest.get(index_r));
-                                    sessions.get(index).setStatus("booked");
-
+                                    Session tempSession = sessions.get(index);
+                                    tempSession.setStatus("booked");
+                                    updateElasticSearch(tempSession);
+                                    //availableSessions.remove(index);
                                     notifyBidders(currentBid, index);
-                                    //sessions.get(index).getBids().clear();
-                                    //sessions.get(index).getBids().add(currentBid);
-                                    //TODO: notify bidder on acceptance
-                                    saveInFile(SESSIONSFILE, sessions);
+                                    //saveInFile(SESSIONSFILE, sessions);
                                     adapter.notifyDataSetChanged();
                                 }
                             })
@@ -93,7 +99,8 @@ public class ViewBidsActivity extends MethodsController {
                                     sessions.get(index).getBids().remove(tempObject);
 
                                     //TODO: notify bidder on decline
-                                    saveInFile(SESSIONSFILE, sessions);
+                                    //saveInFile(SESSIONSFILE, sessions);
+                                    updateElasticSearch(sessions.get(index));
                                     adapter.notifyDataSetChanged();
                                 }
                             });
@@ -107,7 +114,7 @@ public class ViewBidsActivity extends MethodsController {
     }
 
 
-    // CURRENTLY NOTIFYING IS NOT WORKING. INDEXING ISSUES
+
     /**
      * notifyBidders will notify all bidders who were declined, and remove those bids from the sessions
      * bids. It will then notify the successful bidder and keep it in the list.
@@ -117,24 +124,26 @@ public class ViewBidsActivity extends MethodsController {
      */
     private void notifyBidders(Bid currentBid, Integer sessionIndex) {
         //sessions.get(sessionIndex).getBids().size()
-
+        Session tempSession = sessions.get(sessionIndex);
         Bid acceptedBid = currentBid;
         acceptedBid.setStatus("accepted");
-        sessions.get(sessionIndex).declineAllBids();
-        for (int i = 0; i < sessions.get(sessionIndex).getBids().size();i++) {
-            if (i==sessions.get(sessionIndex).getBids().indexOf(currentBid)) {
-                sessions.get(sessionIndex).getBids().get(i).setStatus("accepted");
-                acceptedBid = sessions.get(sessionIndex).getBids().get(i);
+        tempSession.declineAllBids();
+        for (int i = 0; i < tempSession.getBids().size();i++) {
+            if (i==tempSession.getBids().indexOf(currentBid)) {
+                tempSession.getBids().get(i).setStatus("accepted");
+                acceptedBid = tempSession.getBids().get(i);
+
                 //TODO: notify winning bidder
             } else {
                 // TODO: alert bidder that it has been declined
-                sessions.get(sessionIndex).getBids().get(i).setStatus("declined"); // probably dont need this line
+                tempSession.getBids().get(i).setStatus("declined"); // probably dont need this line
                // sessions.get(sessionIndex).getBids().remove(sessions.get(sessionIndex).getBids().get(i));
-
             }
+
         }
-        sessions.get(sessionIndex).getBids().clear();
-        sessions.get(sessionIndex).getBids().add(acceptedBid);
-        saveInFile(SESSIONSFILE, sessions);
+        tempSession.getBids().clear();
+        tempSession.getBids().add(acceptedBid);
+        updateElasticSearch(tempSession);
+        //saveInFile(SESSIONSFILE, sessions);
     }
 }

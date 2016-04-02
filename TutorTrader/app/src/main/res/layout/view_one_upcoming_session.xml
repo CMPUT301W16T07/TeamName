@@ -6,14 +6,16 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/MySessionsButton"
-        android:id="@+id/allSessionsButton" />
+        android:text="Back"
+        android:id="@+id/upcomingOneBackButton" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/titleBody" />
+        android:text="@string/titleBody"
+        android:id="@+id/upcomingOneTitleBody" />
+
 
     <Space
         android:layout_width="match_parent"
@@ -23,7 +25,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/descriptionBody" />
+        android:text="@string/DescriptionField"
+        android:id="@+id/upcomingOneDescriptionBody" />
 
     <Space
         android:layout_width="match_parent"
@@ -34,7 +37,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/PostedByField"
-        android:id="@+id/postedByBody" />
+        android:id="@+id/upcomingOnePostedByBody" />
 
     <Space
         android:layout_width="match_parent"
@@ -45,7 +48,7 @@
         android:layout_height="wrap_content"
         android:text="@string/EmailField"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/bodyEmail" />
+        android:id="@+id/upcomingOneBodyEmail" />
 
     <Space
         android:layout_width="match_parent"
@@ -56,65 +59,34 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/PhoneField"
-        android:id="@+id/bodyPhone" />
+        android:id="@+id/upcomingOneBodyPhone" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/StatusField"
-        android:id="@+id/bodyStatus"
+        android:id="@+id/upcomingOneBodyStatus"
         android:layout_gravity="center_horizontal" />
 
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/sessionImage"
+        android:id="@+id/upcomingOneSessionImage"
         android:layout_weight=".75" />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Rate Tutor"
+        android:id="@+id/rateTutorButton" />
+
     <RelativeLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-    <Button
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-
-        android:text="@string/ViewBidsField"
-        android:id="@+id/viewBidsButton" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
 
-    <Button
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignWithParentIfMissing="false"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/viewBidsButton"
-        android:layout_toEndOf="@+id/viewBidsButton"
-        android:text="@string/EditButton"
-        android:id="@+id/editButton" />
-
-
-    <Button
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:text="@string/DeleteButton"
-        android:id="@+id/deleteButton"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/editButton"
-        android:layout_toEndOf="@+id/editButton" />
-
-        <Button
-            android:layout_height="wrap_content"
-            android:layout_width="100dp"
-            android:text="Map"
-            android:id="@+id/mapButton"
-            android:layout_toRightOf="@+id/deleteButton"
-            android:layout_toEndOf="@+id/deleteButton"
-            />
-
-
-
-</RelativeLayout>
+    </RelativeLayout>
 
 
 
