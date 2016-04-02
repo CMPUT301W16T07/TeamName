@@ -78,9 +78,5 @@ public class MySessionsActivity extends MethodsController {
                 startActivity(intent);
             }
         });
-
-
-
     }
-
 }

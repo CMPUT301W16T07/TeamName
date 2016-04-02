@@ -76,17 +76,13 @@ public class EditSessionActivity extends MethodsController {
                     ElasticSearchController.RemoveSessionTask removeSessionTask = new ElasticSearchController.RemoveSessionTask();
                     removeSessionTask.execute(sessionsOfInterest.get(index_r).getSessionID());
 
-                    //sessions.remove(sessionsOfInterest.get(index_r));
-                    //sessionsOfInterest.remove(index_r);
                     Session newSession = new Session(subjectEdit.getText().toString(),descriptionEdit.getText().toString(),currentProfile.getProfileID(),thumbnail);
                     newSession.addThumbnail(thumbnail); //must add this line to properly attach image
-                    //sessions.add(newSession);
+
                     ElasticSearchController.AddSessionTask addSessionTask = new ElasticSearchController.AddSessionTask();
                     addSessionTask.execute(newSession);
                     loadElasticSearch(); // load the newest addition
-                    //saveInFile(SESSIONSFILE, sessions);
-                    Intent intent = new Intent(EditSessionActivity.this, MySessionsActivity.class);
-                    startActivity(intent);
+                    finish();
                 }
             }
         });
