@@ -22,7 +22,7 @@ public class ViewOneSessionActivityTest extends ActivityInstrumentationTestCase2
         //assertNotNull(activity.findViewById(com.teamname.tutortrader.R.id.));
 
         Profile newProfile = new Profile("Dude", "man", "222");
-        Session newSession = new Session("Math", "Tutor for linear Algebra for all university levels", newProfile);
+        Session newSession = new Session("Math", "Tutor for linear Algebra for all university levels", newProfile.getProfileID());
         ArrayList<Session> sessions = new ArrayList<Session>();
 
         sessions.add(newSession);

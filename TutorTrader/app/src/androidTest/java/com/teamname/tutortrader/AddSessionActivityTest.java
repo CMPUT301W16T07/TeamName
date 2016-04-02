@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.graphics.Bitmap;
 import android.test.ActivityInstrumentationTestCase2;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 
@@ -41,13 +43,20 @@ public class AddSessionActivityTest extends ActivityInstrumentationTestCase2 {
      *  clicks the 'save' button for the activity under test:
      */
     public void testAddSessionValid() {
-        AvailableSessionsActivity msa = (AvailableSessionsActivity)getActivity();
+        AvailableSessionsActivity tta = (AvailableSessionsActivity)getActivity();
         Profile profile = new Profile("Name", "Phone", "Email");
         Bitmap.Config conf = Bitmap.Config.ARGB_8888;
         Bitmap bm1 = Bitmap.createBitmap(1,2, conf);
-        Session session = new Session("Math", "Tutor for linear Algebra for all university levels",profile,bm1 );
+        Session session = new Session("Math", "Tutor for linear Algebra for all university levels",profile.getProfileID(),bm1 );
+
         ArrayList<Session> sessions = new ArrayList<Session>();
         sessions.add(session);
+        ListView theSessions = (ListView) tta.findViewById(R.id.sessionList);
+        ArrayAdapter<Session> adapter;
+        adapter = new AvailableSessionsAdapter(tta, sessions);
+        theSessions.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
         assertEquals(sessions.get(0), session);
         assertEquals("this is the title we expected", session.getTitle(), "Math");
         assertEquals("this is the description we expected", session.getDescription(),
