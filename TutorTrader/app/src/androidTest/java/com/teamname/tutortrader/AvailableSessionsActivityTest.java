@@ -28,19 +28,21 @@ public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCa
     public AvailableSessionsActivityTest() {
         super(AvailableSessionsActivity.class);
     }
-    @Override
+
     public void setUp() throws Exception {
         super.setUp();
         //setUp() is run before a test case is started.
         //This is where the solo object is create   d.
-        solo = new Solo(getInstrumentation(),getActivity());
+        solo = new Solo(getInstrumentation());
+        getActivity();
     }
 
     @Override
     public void tearDown() throws Exception {
-        //tearDown() is run after a test case has finished.
+        //tearDown() is run after a test cas    e has finished.
         //finishOpenedActivities() will finish all the activities that have been opened during the test execution.
         solo.finishOpenedActivities();
+        super.tearDown();
     }
 
 
@@ -52,10 +54,11 @@ public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCa
      * We assume that sessions.add works
      * @see AddSessionActivityTest
      */
-    @UiThreadTest
+
     public void testViewSessions() throws Exception {
         AvailableSessionsActivity tta = (AvailableSessionsActivity) getActivity();
-        //solo.assertCurrentActivity("wrong act", AvailableSessionsActivity.class);
+        solo.waitForActivity("AvailableSessionsActivity",2000);
+        solo.assertCurrentActivity("wrong act", AvailableSessionsActivity.class);
         assertNotNull(tta.findViewById(R.id.mySessions));
 
         ArrayList<Session> sessions = new ArrayList<Session>();
@@ -68,14 +71,13 @@ public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCa
         sessions.add(session2);
 
         ListView theSessions = (ListView) tta.findViewById(R.id.sessionList);
-        ArrayAdapter<Session> adapter;
-        adapter = new AvailableSessionsAdapter(tta, sessions);
+        ArrayAdapter adapter;
+        adapter = new AvailableSessionsAdapter(solo.getCurrentActivity(), sessions);
         theSessions.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-
         // To test that two sessions show up
         assertEquals(sessions.size(), 2);
-        //assertTrue(solo.searchText("Math"));
+        assertTrue(solo.searchText("Math"));
         assertNotNull("There is the math session",
                 theSessions.getItemIdAtPosition(0));
         assertNotNull("There is a stats session",
@@ -101,25 +103,21 @@ public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCa
         Session newSession = new Session("Math", "Tutor for linear Algebra for all university levels", newProfile.getProfileID());
         ArrayList<Session> sessions = new ArrayList<Session>();
 
-        sessions.add(newSession);
-
-        final ListView theSessions = (ListView) tta.findViewById(R.id.sessionList);
-        ArrayAdapter<Session> adapter;
-        adapter = new AvailableSessionsAdapter(tta, sessions);
-        theSessions.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        ElasticSearchController.AddSessionTask addSessionTask = new ElasticSearchController.AddSessionTask();
+        addSessionTask.execute(newSession);
+        solo.clickOnMenuItem("Available");
 
         // http://blog.denevell.org/android-instrumentation-click-list.html accessed 02-2016-12
         //solo.clickOnView(solo.getView(com.example.android.notepad.R.id.menu_save));
         solo.assertCurrentActivity("still good", AvailableSessionsActivity.class);
         //solo.waitForText("Math");
-        assertNotNull("There is the math session",
-                theSessions.getItemIdAtPosition(0));
+        //assertNotNull("There is the math session",
+        //        theSessions.getItemIdAtPosition(0));
 
 //        solo.clickOnButton(R.id.myProfile);
-        //solo.clickOnText("Math");
+        solo.clickOnText("Math");
         //solo.clickInList(0,1);
-        theSessions.performItemClick(theSessions, 0, theSessions.getItemIdAtPosition(0));
+        //theSessions.performItemClick(theSessions, 0, theSessions.getItemIdAtPosition(0));
         //testing the fields
 //        solo.assertCurrentActivity("hmm", BidOnSessionActivity.class);
         //BidOnSessionActivity vosa = getActivity();
