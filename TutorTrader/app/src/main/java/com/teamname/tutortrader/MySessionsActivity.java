@@ -19,10 +19,6 @@ public class MySessionsActivity extends MethodsController {
     //final MethodsController instance = MethodsController.getInstance();
     //final Profile currentProfile = instance.getCurrentProfile();
 
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ListView oldSessionsList;
@@ -49,7 +45,7 @@ public class MySessionsActivity extends MethodsController {
         // set activity title
         TextView activityTitle = (TextView) findViewById(R.id.activityTitle);
         activityTitle.setText(R.string.MySessionsButton);
-        
+
         /*ElasticSessionController.GetSessionsTask getSessionsTask = new ElasticSessionController.GetSessionsTask();
         getSessionsTask.execute("ProfileID",currentProfile.getProfileID().toString());
         try {

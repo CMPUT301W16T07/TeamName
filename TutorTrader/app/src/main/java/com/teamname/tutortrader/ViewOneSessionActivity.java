@@ -37,8 +37,9 @@ public class ViewOneSessionActivity extends MethodsController {
             @Override
             public void onClick(View v) {
                 //TODO: we should pass the data entry so the fields can be filled in
-                Intent intent = new Intent(ViewOneSessionActivity.this, MySessionsActivity.class);
-                startActivity(intent);
+                finish();
+                //Intent intent = new Intent(ViewOneSessionActivity.this, MySessionsActivity.class);
+                //startActivity(intent);
             }
         });
 

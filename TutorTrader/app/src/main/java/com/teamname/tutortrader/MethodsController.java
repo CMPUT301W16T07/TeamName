@@ -112,15 +112,19 @@ public class MethodsController extends AppCompatActivity {
             if (v.getId() == R.id.myProfile) {
                 Intent intent = new Intent(MethodsController.this, MyProfileActivity.class);
                 startActivity(intent);
+                finish();
             } else if (v.getId() == R.id.availableSessions) {
                 Intent intent = new Intent(MethodsController.this, AvailableSessionsActivity.class);
                 startActivity(intent);
+                finish();
             } else if (v.getId() == R.id.currentBids) {
                 Intent intent = new Intent(MethodsController.this, CurrentBidsActivity.class);
                 startActivity(intent);
+                finish();
             } else if (v.getId() == R.id.mySessions) {
                 Intent intent = new Intent(MethodsController.this, MySessionsActivity.class);
                 startActivity(intent);
+                finish();
             }
         }
     };
@@ -429,7 +433,9 @@ public class MethodsController extends AppCompatActivity {
      * @param uuid the profile's UUID
      * @return the Profile object
      */
+
     public static Profile getProfile (UUID uuid) {
+
         ArrayList <Profile> returnedProfile = new ArrayList<>();
         ElasticSearchController.GetProfileTask getProfileTask = new ElasticSearchController.GetProfileTask();
         getProfileTask.execute("ProfileID", uuid.toString());
@@ -452,10 +458,10 @@ public class MethodsController extends AppCompatActivity {
      * @param uuid the session's UUID
      * @return the Session object
      */
-    public Session getSession (UUID uuid) {
+    static public Session getSession (UUID uuid) {
         ArrayList <Session> returnedSession = new ArrayList<>();
         ElasticSearchController.GetSessionsTask getSessionsTask = new ElasticSearchController.GetSessionsTask();
-        getSessionsTask.execute("SessionID", uuid.toString());
+        getSessionsTask.execute("sessionID", uuid.toString());
         try {
             returnedSession = getSessionsTask.get();
         } catch (ExecutionException e) {

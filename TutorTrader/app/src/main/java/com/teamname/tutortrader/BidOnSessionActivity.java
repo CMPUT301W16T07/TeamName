@@ -49,8 +49,9 @@ public class BidOnSessionActivity extends MethodsController {
         backToAllButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BidOnSessionActivity.this, AvailableSessionsActivity.class);
-                startActivity(intent);
+                finish();
+                //Intent intent = new Intent(BidOnSessionActivity.this, AvailableSessionsActivity.class);
+                //startActivity(intent);
             }
         });
 
@@ -81,12 +82,12 @@ public class BidOnSessionActivity extends MethodsController {
                     UUID profileID = currentProfile.getProfileID();
                     Bid newbid = new Bid(selectedSession.getSessionID(), profileID, bidvalue);
                     selectedSession.addBid(newbid);
-                    selectedSession.setStatus("Pending");
 
                     //ElasticSessionController.AddSessionTask addSessionTask = new ElasticSessionController.AddSessionTask();
                     //addSessionTask.execute(selectedSession);
                     //TODO: update Elastic Search, we have the code to add session bt we need to remove session. Create a removeSessionTask.
                     //saveInFile(SESSIONSFILE, sessions);
+
                     updateElasticSearchSession(selectedSession); // to add the newest bid
                     Intent intent = new Intent(BidOnSessionActivity.this, AvailableSessionsActivity.class);
                     startActivity(intent);
