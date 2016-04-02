@@ -39,7 +39,8 @@ public class CurrentBidsAdapter extends ArrayAdapter<Bid> {
         TextView statusView = (TextView) currentBidView.findViewById(R.id.status);
 
         Session bidSession = arrayList.get(index).getBidSession();
-        String sessionString = bidSession.getTitle() + " <i>by " + bidSession.tutor.getName() + "</i>";
+        Profile tempProfile = MethodsController.getProfile(bidSession.getTutorID());
+        String sessionString = bidSession.getTitle() + " <i>by " + tempProfile.getName() + "</i>";
         String amountString = "Bid: <b>$" + arrayList.get(index).getAmount() + "</b> per hour.";
         String statusString = "Bid Status: <b>" + arrayList.get(index).getStatus() + "</b>.";
 
