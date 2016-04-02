@@ -109,7 +109,7 @@ public class AvailableSessionsActivity extends MethodsController {
                 ArrayList<Session> tempsearchedSessions = new ArrayList<Session>();
                 String searchstring = query.getText().toString();
                 if (searchstring.length() != 0) {  //Check if they are searching anything
-                    ElasticSessionController.GetSessionsTask getSessionsTask = new ElasticSessionController.GetSessionsTask();
+                    ElasticSearchController.GetSessionsTask getSessionsTask = new ElasticSearchController.GetSessionsTask();
                     getSessionsTask.execute("title", searchstring);
                     try {
                         searchedSessions = getSessionsTask.get();
@@ -118,7 +118,7 @@ public class AvailableSessionsActivity extends MethodsController {
                     } catch (ExecutionException e) {
                         e.printStackTrace();
                     }
-                    ElasticSessionController.GetSessionsTask moreSessionsTask = new ElasticSessionController.GetSessionsTask();
+                    ElasticSearchController.GetSessionsTask moreSessionsTask = new ElasticSearchController.GetSessionsTask();
                     moreSessionsTask.execute("description", searchstring);
                     try {
                         tempsearchedSessions = (moreSessionsTask.get());
@@ -216,7 +216,7 @@ public class AvailableSessionsActivity extends MethodsController {
      * loadFromFile in Availible must load all session.
      *
      * @param filename the name of the file containing all the sessions.
-     */
+     *
     private void loadFromFile (String filename) {
 
         try {
@@ -233,7 +233,7 @@ public class AvailableSessionsActivity extends MethodsController {
             // TODO Auto-generated catch block
 
         }
-    }
+    }*/
 
 
 

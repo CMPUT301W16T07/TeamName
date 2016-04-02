@@ -88,7 +88,7 @@ public class BidOnSessionActivity extends MethodsController {
                     //addSessionTask.execute(selectedSession);
                     //TODO: update Elastic Search, we have the code to add session bt we need to remove session. Create a removeSessionTask.
                     //saveInFile(SESSIONSFILE, sessions);
-                    updateElasticSearch(selectedSession); // to add the newest bid
+                    updateElasticSearchSession(selectedSession); // to add the newest bid
                     Intent intent = new Intent(BidOnSessionActivity.this, AvailableSessionsActivity.class);
                     startActivity(intent);
                 } catch (Exception err) {

@@ -8,7 +8,6 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
 /**
@@ -58,7 +57,7 @@ public class AddSessionActivity extends MethodsController  {
                     Session newSession = new Session(subjectEdit.getText().toString(),descriptionEdit.getText().toString(),currentProfile, thumbnail);
                     newSession.addThumbnail(thumbnail);
                     //sessions.add(newSession);
-                    ElasticSessionController.AddSessionTask addSessionTask = new ElasticSessionController.AddSessionTask();
+                    ElasticSearchController.AddSessionTask addSessionTask = new ElasticSearchController.AddSessionTask();
                     addSessionTask.execute(newSession);
                     loadElasticSearch(); // load the newest addition
                     //sessions.add(newSession);

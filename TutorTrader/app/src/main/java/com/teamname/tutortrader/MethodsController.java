@@ -38,7 +38,7 @@ import java.util.concurrent.ExecutionException;
  */
 
 public class MethodsController extends AppCompatActivity {
-    protected static final String SESSIONSFILE = "sessions.sav";
+    //protected static final String SESSIONSFILE = "sessions.sav";
     protected static final String USERFILE = "profile.sav";
     protected static final String BIDFILE = "bids.sav";
 
@@ -48,6 +48,7 @@ public class MethodsController extends AppCompatActivity {
     protected ArrayList<Session> sessions = new ArrayList<Session>();
     protected ArrayList<Session> availableSessions = new ArrayList<Session>();
     protected ArrayList<Profile> profiles = new ArrayList<Profile>();
+    protected ArrayList<Profile> allProfiles = new ArrayList<>(); // similar to sessions array but for profiles
     protected ArrayList<Bid> bids = new ArrayList<Bid>();
     protected ArrayList<Session> upcomingSessions = new ArrayList<>();
 
@@ -235,7 +236,19 @@ public class MethodsController extends AppCompatActivity {
 
         sessionsOfInterest = new ArrayList<Session>();
         availableSessions = new ArrayList<>();
-        ElasticSessionController.GetSessionsTask getSessionsTask = new ElasticSessionController.GetSessionsTask();
+
+        ElasticSearchController.GetProfileTask getProfileTask = new ElasticSearchController.GetProfileTask();
+        getProfileTask.execute("");
+        try {
+            allProfiles = getProfileTask.get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        //update sessions array
+        ElasticSearchController.GetSessionsTask getSessionsTask = new ElasticSearchController.GetSessionsTask();
         getSessionsTask.execute("");
         try {
             sessions = getSessionsTask.get();
@@ -335,18 +348,34 @@ public class MethodsController extends AppCompatActivity {
     }
 
     /**
-     * updateElasticSearch will update a given session if information was added to it.
+     * updateElasticSearchSession will update a given session if information was added to it.
      * It does this by removing the old session and adding the new one.
      * @param session session object we wish to update
      */
-    protected void updateElasticSearch(Session session){
+    protected void updateElasticSearchSession(Session session){
         // Remove old session that has information missing
-        ElasticSessionController.RemoveSessionTask removeSessionTask = new ElasticSessionController.RemoveSessionTask();
+        ElasticSearchController.RemoveSessionTask removeSessionTask = new ElasticSearchController.RemoveSessionTask();
         removeSessionTask.execute(session.getSessionID());
 
         //add new session that has the information we want to add
-        ElasticSessionController.AddSessionTask addSessionTask = new ElasticSessionController.AddSessionTask();
+        ElasticSearchController.AddSessionTask addSessionTask = new ElasticSearchController.AddSessionTask();
         addSessionTask.execute(session);
+        loadElasticSearch(); // load the newest addition
+    }
+
+    /**
+     * updateElasticSearchProfile will update a given profile if information was added to it.
+     * It does this by removing the old profile and adding the new one.
+     * @param profile profile object we wish to update
+     */
+    protected void updateElasticSearchProfile(Profile profile){
+        // Remove old profile that has information missing
+        ElasticSearchController.RemoveProfileTask removeProfileTask = new ElasticSearchController.RemoveProfileTask();
+        removeProfileTask.execute(profile.getProfileID());
+
+        //add new profile that has the information we want to add
+        ElasticSearchController.AddProfileTask addProfileTask = new ElasticSearchController.AddProfileTask();
+        addProfileTask.execute(profile);
         loadElasticSearch(); // load the newest addition
     }
 
@@ -389,6 +418,52 @@ public class MethodsController extends AppCompatActivity {
             newImage.setImageBitmap(thumbnail);
             //saveInFile(SESSIONSFILE, sessions); //might not need this here
 
+        }
+    }
+
+    /**
+     * get profile will return a profile object from elastic search if you pass in a profile UUID
+     * @param uuid the profile's UUID
+     * @return the Profile object
+     */
+    public Profile getProfile (UUID uuid) {
+        ArrayList <Profile> returnedProfile = new ArrayList<>();
+        ElasticSearchController.GetProfileTask getProfileTask = new ElasticSearchController.GetProfileTask();
+        getProfileTask.execute("ProfileID", uuid.toString());
+        try {
+            returnedProfile = getProfileTask.get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (returnedProfile.size() == 1) {
+            return returnedProfile.get(0);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * get session will return a session object from elastic search if you pass in a session UUID
+     * @param uuid the session's UUID
+     * @return the Session object
+     */
+    public Session getSession (UUID uuid) {
+        ArrayList <Session> returnedSession = new ArrayList<>();
+        ElasticSearchController.GetSessionsTask getSessionsTask = new ElasticSearchController.GetSessionsTask();
+        getSessionsTask.execute("SessionID", uuid.toString());
+        try {
+            returnedSession = getSessionsTask.get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (returnedSession.size() == 1) {
+            return returnedSession.get(0);
+        } else {
+            return null;
         }
     }
 

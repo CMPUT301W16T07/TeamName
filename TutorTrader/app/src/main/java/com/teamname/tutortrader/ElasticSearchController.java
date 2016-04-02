@@ -31,7 +31,7 @@ import io.searchbox.core.SearchResult;
  * Created by abrosda on 3/22/16.
  * From lonely twitter elastic search lab
  */
-public class ElasticSessionController {
+public class ElasticSearchController {
 
 
     private static JestDroidClient client;
@@ -171,6 +171,121 @@ public class ElasticSessionController {
                 client.setGson(gson);
             }
         }
+
+    public static class GetProfileTask extends AsyncTask<String, Void, ArrayList<Profile>> {
+
+        @Override
+        protected ArrayList<Profile> doInBackground(String... params) {
+            verifyClient();
+
+            // Base arraylist to hold sessions
+            ArrayList<Profile> newProfiles = new ArrayList<Profile>();
+
+            // The following gets the top "10000" profiles
+            String search_string;
+            if (params[0] == "") {
+                //search_string = "{\"from\":0,\"size\":10000,\"query\":{\"match\":{\"status\":\"available\" }}}";
+                search_string = "{\"from\" : 0, \"size\" : 10000}";//, \"query\":{\"match\":{\"status\":\"available\"}}}";
+            } else {
+                // The following gets the top 10000 sessions matching the string passed in
+                search_string = "{\"from\":0,\"size\":10000,\"query\":{\"match\":{\"" + params[0] + "\":\"" + params[1] + "\"}}}";
+            }
+            Search search = new Search.Builder(search_string)
+                    .addIndex("cmput301w16t07")
+                    .addType("profile")
+                    .build();
+            try {
+                SearchResult execute = client.execute(search);
+                if (execute.isSucceeded()) {
+                    List<Profile> searchedProfile = execute.getSourceAsObjectList(Profile.class);
+                    newProfiles.addAll(searchedProfile);
+                }
+            } catch (IOException e) {
+                throw new RuntimeException();
+            }
+            return newProfiles;
+        }
+    }
+
+    public static class AddProfileTask extends AsyncTask<Profile, Void, Void> {
+
+
+        @Override
+        protected Void doInBackground(Profile... params) {
+            verifyClient();
+
+            for (Profile profile : params) {
+                Index index = new Index.Builder(profile).index("cmput301w16t07").type("profile").build();
+
+                try {
+                    DocumentResult execute = client.execute(index);
+                    if (execute.isSucceeded()) {
+
+                    } else {
+                        // TODO: Something more useful
+                        Log.e("TODO", "Our insert of profile failed, oh no!");
+                    }
+                    return null;
+                } catch (IOException e) {
+                    // TODO: Something more useful
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+    }
+
+    /**
+     * must pass in a profile's UUID
+     * from:https://github.com/CMPUT301W16T06/TechNoLogic/blob/master/src/app/src/main/java/ca/ualberta/cs/technologic/ElasticSearchComputer.java
+     */
+    public static class RemoveProfileTask extends AsyncTask<UUID, Void, Void> {
+
+        @Override
+        protected Void doInBackground(UUID... params) {
+            verifyClient();
+            ArrayList<Profile> profileToDelete = new ArrayList<>();
+            List<SearchResult.Hit<Map,Void>> hits = null;
+            String elasticSearchID;
+            String query = "{\"query\":{ \"match\" :{\"ProfileID\":\"" + params[0] + "\"}}}";
+            Search search = new Search.Builder(query)
+                    .addIndex("cmput301w16t07")
+                    .addType("profile")
+                    .build();
+
+            try {
+                SearchResult execute = client.execute(search);
+                if (execute.isSucceeded()) {
+                    List<Profile> searchedProfiles = execute.getSourceAsObjectList(Profile.class);
+                    hits = execute.getHits(Map.class);
+                    profileToDelete.addAll(searchedProfiles);
+                    Log.e("TEST", "Searching for profile to delete");
+                }
+            } catch (IOException e) {
+                throw new RuntimeException();
+            }
+
+
+            SearchResult.Hit hit = hits.get(0);
+            Map source = (Map)hit.source;
+            elasticSearchID = (String) source.get(JestResult.ES_METADATA_ID);
+            Delete delete = new Delete.Builder(elasticSearchID).index("cmput301w16t07").type("profile").build();
+
+            try {
+                DocumentResult execute = client.execute(delete);
+                if (execute.isSucceeded()) {
+                } else {
+                    // TODO: Something more useful
+                    Log.e("TODO", "Our delete of profile failed, oh no!");
+                }
+                return null;
+            } catch (IOException e) {
+                // TODO: Something more useful
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
 
     }
 
