@@ -57,7 +57,7 @@ public class UpcomingSessionsActivity extends MethodsController {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //TODO: make a mock ViewOneSessionActivity that will give options to show close, reopen and rate
-                Intent intent = new Intent(UpcomingSessionsActivity.this, ViewOneSessionActivity.class);
+                Intent intent = new Intent(UpcomingSessionsActivity.this, ViewOneUpcomingSession.class);
                 String index = String.valueOf(position);
                 // http://stackoverflow.com/questions/2091465/how-do-i-pass-data-between-activities-on-android
                 intent.putExtra("index", index);
