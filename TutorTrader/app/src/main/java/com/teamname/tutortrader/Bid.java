@@ -23,7 +23,7 @@ public class Bid {
         this.bidder = bidder;
         this.sessionID = session;
         this.amount = amount;
-        this.status = "pending";
+        this.status = "Pending";
     }
 
     public UUID getBidID() {
@@ -61,9 +61,8 @@ public class Bid {
     }
 
     // get Session from session ID associated with bid
-    public Session getSession() {
-
-        return new Session("Title", "description", new Profile("name", "email", "phone"));
+    public Session getBidSession() {
+        return MethodsController.getSession(this.sessionID); // from MethodsController
     }
 
     @Override
