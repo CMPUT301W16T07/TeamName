@@ -94,5 +94,24 @@ public class ActivitySessionActivityTest extends ActivityInstrumentationTestCase
 
     }
 
+    /**
+     * Testing UseCase 04.01.01 and 04.02.01 - Searching
+     * "As a borrower, I want to specify a set of keywords, and search for all things not currently
+     * borrowed whose description contains all keywords." and "As a borrower, I want search results
+     * to show each thing not currently borrowed with its description, owner username, and status."
+     * <p/>
+     * We will type things into the search bar. Then we will click search. This will then
+     * bring up a new screen with the search results.
+     */
+    public void testSearching(){
+        solo.assertCurrentActivity("right activity", AvailableSessionsActivity.class);
+
+        solo.typeText(0, "Math");
+        solo.clickOnButton("Search");
+
+        assertTrue(solo.searchText("Math", 2));
+        assertTrue(solo.searchText("Tutor for linear Algebra for all university levels"));
+    }
+
 
 }
