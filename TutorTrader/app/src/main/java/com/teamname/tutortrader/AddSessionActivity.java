@@ -72,8 +72,8 @@ public class AddSessionActivity extends MethodsController {
         LocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AddSessionActivity.this, MapsActivity.class);
 
+                Intent intent = new Intent(AddSessionActivity.this, MapsActivity.class);
                 startActivityForResult(intent, REQUEST_LOCATION);
 
 
@@ -108,10 +108,9 @@ public class AddSessionActivity extends MethodsController {
             newImage.setImageBitmap(thumbnail);
         }
         if(requestCode == REQUEST_LOCATION && resultCode == RESULT_OK){
-            if(data.hasExtra("point")){
-                Bundle extras = data.getExtras();
-                tempPoint = (LatLng) extras.get("point");
-            }
+           Bundle extras = data.getExtras();
+            tempPoint = extras.getParcelable("point");
+
         }
     }
 

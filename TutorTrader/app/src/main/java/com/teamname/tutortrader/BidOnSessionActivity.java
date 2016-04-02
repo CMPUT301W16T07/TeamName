@@ -55,6 +55,20 @@ public class BidOnSessionActivity extends MethodsController {
             }
         });
 
+        Button mapButton = (Button) findViewById(R.id.mapButton);
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BidOnSessionActivity.this,ViewMapsActivity.class);
+
+                Bundle place = new Bundle();
+                place.putParcelable("place",sessionsOfInterest.get(selectedSessionIndex).getLocation());
+                intent.putExtras(place);
+                startActivity(intent);
+
+            }
+        });
+
         Button viewImageButton = (Button) findViewById(R.id.viewImageButton);
         viewImageButton.setOnClickListener(new View.OnClickListener() {
             @Override

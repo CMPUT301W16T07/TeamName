@@ -13,6 +13,14 @@
         android:text="@string/AvailableSessionsButton"
         android:id="@+id/allSessionsButton" />
     <Button
+        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:text="Map"
+        android:id="@+id/mapButton"
+        android:layout_toLeftOf="@+id/viewImageButton"
+
+        />
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="View Image"

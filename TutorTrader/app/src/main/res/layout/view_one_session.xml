@@ -84,14 +84,15 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
     <Button
-        android:layout_width="125dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
+
         android:text="@string/ViewBidsField"
         android:id="@+id/viewBidsButton" />
 
 
     <Button
-        android:layout_width="125dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_alignWithParentIfMissing="false"
         android:layout_alignParentTop="true"
@@ -102,13 +103,25 @@
 
 
     <Button
-        android:layout_width="125dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="@string/DeleteButton"
         android:id="@+id/deleteButton"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/editButton"
         android:layout_toEndOf="@+id/editButton" />
+
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:text="Map"
+            android:id="@+id/mapButton"
+            android:layout_toRightOf="@+id/deleteButton"
+            android:layout_toEndOf="@+id/deleteButton"
+            />
+
+
+
 </RelativeLayout>
 
 

@@ -26,7 +26,9 @@ public class MapsActivity extends FragmentActivity {
         setUpMapIfNeeded();
         mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
-        centerOnCurrentLocation();
+
+
+
 
         /**
          * developers.google.com
@@ -36,7 +38,7 @@ public class MapsActivity extends FragmentActivity {
 
 
              @Override
-             public void onMapLongClick(LatLng latLng) {
+             public void onMapLongClick(final LatLng latLng) {
                  mMap.addMarker(new MarkerOptions()
                                     .position(latLng)
                                     .title("Session Location"));
@@ -48,8 +50,11 @@ public class MapsActivity extends FragmentActivity {
                          .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                              public void onClick(DialogInterface dialog, int id) {
                                  // return to Create Session Activity
-                                 //TODO: Add point to bundle for data return
-
+                                 Intent dataRet = new Intent();
+                                 Bundle data = new Bundle();
+                                 data.putParcelable("point", latLng);
+                                 dataRet.putExtras(data);
+                                 setResult(RESULT_OK, dataRet);
                                  finish();
                              }
                          })
@@ -77,7 +82,7 @@ public class MapsActivity extends FragmentActivity {
     /**
      * Sets up the map if it is possible to do so (i.e., the Google Play services APK is correctly
      * installed) and the map has not already been instantiated.. This will ensure that we only ever
-     * call {@link #setUpMap()} once when {@link #mMap} is not null.
+     * call  once when {@link #mMap} is not null.
      * <p/>
      * If it isn't installed {@link SupportMapFragment} (and
      * {@link com.google.android.gms.maps.MapView MapView}) will show a prompt for the user to
@@ -105,11 +110,9 @@ public class MapsActivity extends FragmentActivity {
      *
      * code based off of: http://stackoverflow.com/questions/18425141/android-google-maps-api-v2-zoom-to-current-location
      */
-    public void centerOnCurrentLocation(){
-        Location currentLocation = mMap.getMyLocation();
-        if (currentLocation != null) {
-            LatLng currentPoint = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentPoint, 11));
+    public void centerOnLocation(LatLng point){
+        if (point != null) {
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(point, 11));
         }
     }
 

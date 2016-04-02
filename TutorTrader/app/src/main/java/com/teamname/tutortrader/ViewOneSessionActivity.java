@@ -89,6 +89,20 @@ public class ViewOneSessionActivity extends MethodsController {
                 startActivity(intent);
             }
         });
+
+        Button mapButton = (Button) findViewById(R.id.mapButton);
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ViewOneSessionActivity.this,ViewMapsActivity.class);
+
+                Bundle place = new Bundle();
+                place.putParcelable("place",sessionsOfInterest.get(index_r).getLocation());
+                intent.putExtras(place);
+                startActivity(intent);
+
+            }
+        });
     }
 
     /**
