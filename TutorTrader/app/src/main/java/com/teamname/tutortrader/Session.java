@@ -43,6 +43,18 @@ public class Session {
         this.location = location;
 
     }
+
+    public Session(String title, String description, Profile tutor, Bitmap thumbnail) {
+        this.title = title;
+        this.description = description;
+        this.status = "available";
+        this.tutor = tutor;
+        this.sessionID = UUID.randomUUID();
+        this.bids = new ArrayList<Bid>();
+        this.thumbnail = thumbnail;
+
+    }
+
     public Session(String title, String description, Profile tutor) {
         this.title = title;
         this.description = description;

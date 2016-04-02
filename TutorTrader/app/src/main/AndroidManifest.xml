@@ -6,7 +6,7 @@
         android:name="android.hardware.camera"
         android:required="true" />
 
-<<<<<<< HEAD
+
     <uses-permission android:name="android.permission.MAPS_RECEIVE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -20,10 +20,10 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <!-- New! -->
-=======
+
     <uses-permission android:name="android.permission.INTERNET" />
 
->>>>>>> master
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -57,7 +57,7 @@
             android:label="@string/title_activity_create_profile" />
         <activity android:name=".ViewBidsActivity" />
         <activity android:name=".ViewImageActivity" />
-<<<<<<< HEAD
+
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -74,14 +74,14 @@
             android:name=".ViewMapsActivity"
             android:label="@string/title_activity_view_maps" >
         </activity>
-=======
+
         <activity
             android:name=".UpcomingSessionsActivity"
             android:label="@string/title_activity_upcoming_sessions"></activity>
         <activity
             android:name=".ViewOneUpcomingSession"
             android:label="@string/title_activity_view_one_upcoming_session"></activity>
->>>>>>> master
+
     </application>
 
 </manifest>
