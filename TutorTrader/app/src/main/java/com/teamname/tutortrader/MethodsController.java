@@ -344,6 +344,7 @@ public class MethodsController extends AppCompatActivity {
         //add new session that has the information we want to add
         ElasticSearchController.AddSessionTask addSessionTask = new ElasticSearchController.AddSessionTask();
         addSessionTask.execute(session);
+
         loadElasticSearch(); // load the newest addition
     }
 

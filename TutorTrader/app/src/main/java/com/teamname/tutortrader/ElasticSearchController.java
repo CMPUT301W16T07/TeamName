@@ -156,6 +156,29 @@ public class ElasticSearchController {
         }
     }
 
+    public static class UpdateSessionTask extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected Void doInBackground(String... params) {
+            verifyClient();
+            try {
+                String deleter = "{\"from\":0,\"size\":10000,\"query\":{\"match\":{\"" + params[0] + "\":\"" + params[1] + "\"}}}";
+                DeleteByQuery deleteSession = new DeleteByQuery.Builder(deleter)
+                        .addIndex("cmput301w16t07")
+                        .addType("session")
+                        .build();
+                // TODO: Something more useful
+                Log.e("TODO", "Delete code worked!");
+                client.execute(deleteSession);
+
+            } catch (IOException e) {
+                throw new RuntimeException();
+            }
+            return null;
+        }
+
+    }
+
         public static void verifyClient() {
             if (client == null) {
                 // TODO: Consider moving this URL in to some config class

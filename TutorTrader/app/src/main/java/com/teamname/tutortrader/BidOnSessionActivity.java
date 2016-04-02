@@ -1,12 +1,14 @@
 package com.teamname.tutortrader;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.UUID;
 
@@ -40,6 +42,7 @@ public class BidOnSessionActivity extends MethodsController {
         //loadSessions(SESSIONSFILE);
         selectedSessionIndex = sessions.indexOf(availableSessions.get(index));
         selectedSession = sessions.get(selectedSessionIndex);
+        checkForSelf(selectedSession);
         initializeFields(selectedSessionIndex);
 
 
@@ -121,14 +124,31 @@ public class BidOnSessionActivity extends MethodsController {
         TextView bodyStatus = (TextView) findViewById(R.id.bodyStatusB);
 
         subjectText.setText(sessions.get(index).getTitle());
-        titleBody.setText("Title: "+ sessions.get(index).getTitle());
-        descriptionBody.setText("Description: "+sessions.get(index).getDescription());
+        titleBody.setText("Title: " + sessions.get(index).getTitle());
+        descriptionBody.setText("Description: " + sessions.get(index).getDescription());
         postedByBody.setText("Posted By: "+sessions.get(index).tutor.getName());
         tutorRatingBody.setText("Tutor Rating: "+sessions.get(index).tutor.getTutorRating());
         bodyEmail.setText("Email: " + sessions.get(index).tutor.getEmail());
-        bodyPhone.setText("Phone: " +sessions.get(index).tutor.getPhone());
-        bodyStatus.setText("Status: "+sessions.get(index).getStatus());
+        bodyPhone.setText("Phone: " + sessions.get(index).tutor.getPhone());
+        bodyStatus.setText("Status: " + sessions.get(index).getStatus());
 
 
+    }
+
+    /**
+     * checks if the selected session is your own session
+     * @param selectedSession
+     */
+    public void checkForSelf(Session selectedSession) {
+        if (selectedSession.tutor.getProfileID().equals(currentProfile.getProfileID())) {
+            //Learned from http://developer.android.com/guide/topics/ui/notifiers/toasts.html
+            Context context = getApplicationContext();
+            CharSequence text = "You cannot bid on your own session!";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+            finish();
+        }
     }
 }
