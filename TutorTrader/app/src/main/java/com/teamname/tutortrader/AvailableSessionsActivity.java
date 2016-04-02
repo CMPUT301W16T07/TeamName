@@ -68,6 +68,10 @@ public class AvailableSessionsActivity extends MethodsController {
             e.printStackTrace();
         }*/
         loadElasticSearch();
+
+        /**
+         * Following work was redacted as elastic search made it obsolete
+         */
         //loadSessions(SESSIONSFILE);
         //ElasticSessionController.getLatestSessions();
         //available sessions will only contain available sessions that are not booked
@@ -77,8 +81,8 @@ public class AvailableSessionsActivity extends MethodsController {
                 availableSessions.add(sessions.get(i));
             }
         }*/
-        //Notify is the notification!
-        Notify();
+
+
 
         //adapter = new AvailableSessionsAdapter(this, sessions);
         adapter = new AvailableSessionsAdapter(this, availableSessions);
@@ -205,7 +209,6 @@ public class AvailableSessionsActivity extends MethodsController {
         adapter = new AvailableSessionsAdapter(this, availableSessions);
         oldSessions.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-        //TODO: load list to contorller
 
 
 
