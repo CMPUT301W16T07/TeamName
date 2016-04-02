@@ -63,6 +63,11 @@ public class Session {
     public ArrayList<Bid> getBids () {
         return bids;
     }
+
+    public int getBidsCount () {
+        return bids.size();
+    }
+
     public String getTitle() {
         return title;
     }

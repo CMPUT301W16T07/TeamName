@@ -51,7 +51,7 @@ public class MySessionsActivity extends MethodsController {
 
 
         loadSessions(SESSIONSFILE);
-        adapter = new AvailableSessionsAdapter(this, sessionsOfInterest);
+        adapter = new MySessionsAdapter(this, sessionsOfInterest);
         oldSessionsList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 //        adapter = new ArrayAdapter<>(this,
