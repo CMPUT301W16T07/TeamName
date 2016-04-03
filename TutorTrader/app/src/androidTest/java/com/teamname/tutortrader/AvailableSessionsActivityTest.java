@@ -56,15 +56,12 @@ public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCa
         super(AvailableSessionsActivity.class);
     }
 
-    /**
-     * Testing "Things" Use Cases
-     */
+    public void testTest(){
+        solo.clickOnMenuItem("Profile");
+        solo.sleep(2000);
+        solo.clickOnMenuItem("Available");
+    }
 
-
-    /** USECASE 1 - AddSession
-     *  createSession(title, description) fills in the input text field and
-     *  clicks the 'save' button for the activity under test:
-     */
     public void testViewAvailable() {
         Profile profile = new Profile("Test tutor", "test@test.test", "780-666-6666");
         Bitmap.Config conf = Bitmap.Config.ARGB_8888;
