@@ -25,17 +25,18 @@
     <string name="PhoneField">Phone: </string>
 
     <!-- Edit Profile Fields -->
-    <string name="EditProfileField">EditProfile</string>
+    <string name="EditProfileField">Edit Profile</string>
     <string name="NewUsernameField">Enter New Username</string>
     <string name="NewEmailField">Enter New Email</string>
     <string name="NewPhoneField">Enter New Phone</string>
+    <string name="EditProfileButton">Edit Profile</string>
 
     <!-- Miscellaneous Fields -->
     <string name="StatusField">Status: </string>
     <string name="DescriptionField">Description</string>
     <string name="SubjectField">Subject</string>
     <string name="PostedByField">Posted By: </string>
-    <string name="SearchKeywordsHint">Enter keywords here</string>
+    <string name="SearchKeywordsHint">Enter keywords here...</string>
 
     <!-- Miscellaneous Buttons -->
     <string name="SaveButton">Save</string>
