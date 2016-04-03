@@ -3,6 +3,8 @@ package com.teamname.tutortrader;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -19,6 +21,9 @@ public class ViewMapsActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_maps);
         setUpMapIfNeeded();
+        mMap.setMyLocationEnabled(true);
+        mMap.getUiSettings().setMyLocationButtonEnabled(true);
+        mMap.getUiSettings().setZoomControlsEnabled(true);
 
         Intent dataRecv = getIntent();
         if (dataRecv != null){
@@ -26,6 +31,15 @@ public class ViewMapsActivity extends FragmentActivity {
             centerOnLocation(startPoint);
 
         }
+
+        Button back = (Button) findViewById(R.id.mapsBack);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMap.clear();
+                finish();
+            }
+        });
 
 
     }
@@ -35,6 +49,8 @@ public class ViewMapsActivity extends FragmentActivity {
         super.onResume();
         setUpMapIfNeeded();
     }
+
+
 
     /**
      * Sets up the map if it is possible to do so (i.e., the Google Play services APK is correctly

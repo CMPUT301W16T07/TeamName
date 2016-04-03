@@ -62,12 +62,17 @@ public class BidOnSessionActivity extends MethodsController {
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BidOnSessionActivity.this,ViewMapsActivity.class);
 
-                Bundle place = new Bundle();
-                place.putParcelable("place",sessionsOfInterest.get(selectedSessionIndex).getLocation());
-                intent.putExtras(place);
-                startActivity(intent);
+                if(Connectivity && (selectedSession.getLocation() != null)) {
+                    Intent intent = new Intent(BidOnSessionActivity.this, ViewMapsActivity.class);
+
+                    Bundle place = new Bundle();
+                    place.putParcelable("place", selectedSession.getLocation());
+                    intent.putExtras(place);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(BidOnSessionActivity.this, "No Location Available",Toast.LENGTH_LONG).show();
+                }
 
             }
         });

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 
 import com.google.android.gms.maps.model.LatLng;
@@ -73,6 +74,7 @@ public class AddSessionActivity extends MethodsController  {
                          ArrayList<Session> tempSessions = loadOffline();
                         tempSessions.add(newSession);
                         saveInFile(OFFLINEFILE, tempSessions);
+                        Toast.makeText(AddSessionActivity.this, "Session will be uploaded once internet is connected", Toast.LENGTH_LONG);
                     }
                     loadElasticSearch(); // load the newest addition
                     //sessions.add(newSession);
@@ -88,8 +90,12 @@ public class AddSessionActivity extends MethodsController  {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(AddSessionActivity.this, MapsActivity.class);
-                startActivityForResult(intent, REQUEST_LOCATION);
+                if(Connectivity) {
+                    Intent intent = new Intent(AddSessionActivity.this, MapsActivity.class);
+                    startActivityForResult(intent, REQUEST_LOCATION);
+                }else{
+                    Toast.makeText(AddSessionActivity.this,"You need internet to add a location.",Toast.LENGTH_LONG).show();
+                }
 
 
             }

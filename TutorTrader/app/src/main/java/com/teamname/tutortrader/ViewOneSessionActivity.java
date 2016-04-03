@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * The activity that allows users to view information about a
@@ -100,12 +101,17 @@ public class ViewOneSessionActivity extends MethodsController {
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ViewOneSessionActivity.this, ViewMapsActivity.class);
+                if(Connectivity && (sessionsOfInterest.get(index_r).getLocation() != null)){
+                    Intent intent = new Intent(ViewOneSessionActivity.this, ViewMapsActivity.class);
 
-                Bundle place = new Bundle();
-                place.putParcelable("place", sessionsOfInterest.get(index_r).getLocation());
-                intent.putExtras(place);
-                startActivity(intent);
+                    Bundle place = new Bundle();
+                    place.putParcelable("place", sessionsOfInterest.get(index_r).getLocation());
+                    intent.putExtras(place);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(ViewOneSessionActivity.this, "No Location Available", Toast.LENGTH_LONG).show();
+                }
+
             }
         });
 

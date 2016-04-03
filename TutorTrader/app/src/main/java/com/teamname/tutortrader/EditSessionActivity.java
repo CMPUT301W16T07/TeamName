@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -95,9 +96,12 @@ public class EditSessionActivity extends MethodsController {
         LocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(EditSessionActivity.this, MapsActivity.class);
-
-                startActivityForResult(intent, REQUEST_LOCATION);
+                if (Connectivity && (sessionsOfInterest.get(index_r).getLocation() != null)){
+                    Intent intent = new Intent(EditSessionActivity.this, MapsActivity.class);
+                    startActivityForResult(intent, REQUEST_LOCATION);
+                }else{
+                    Toast.makeText(EditSessionActivity.this, "You need internet to add a location.", Toast.LENGTH_LONG).show();
+                }
 
 
             }

@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -14,6 +16,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.Timer;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
 public class MapsActivity extends FragmentActivity {
 
@@ -26,6 +32,7 @@ public class MapsActivity extends FragmentActivity {
         setUpMapIfNeeded();
         mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
+        mMap.getUiSettings().setZoomControlsEnabled(true);
 
 
 
@@ -39,6 +46,7 @@ public class MapsActivity extends FragmentActivity {
 
              @Override
              public void onMapLongClick(final LatLng latLng) {
+
                  mMap.addMarker(new MarkerOptions()
                                     .position(latLng)
                                     .title("Session Location"));
@@ -55,21 +63,32 @@ public class MapsActivity extends FragmentActivity {
                                  data.putParcelable("point", latLng);
                                  dataRet.putExtras(data);
                                  setResult(RESULT_OK, dataRet);
+                                 mMap.clear();
                                  finish();
                              }
                          })
                          .setNegativeButton("No", new DialogInterface.OnClickListener() {
                              public void onClick(DialogInterface dialog, int id) {
-                                //remove marker
-                                 //TODO: remove marker if uses does not want it.
+                                 //remove marker
+                                 mMap.clear();
                              }
                          });
+
 
                  AlertDialog alert = builder.create();
                  alert.show();
 
              }
          });
+
+        Button back = (Button) findViewById(R.id.mapsBack);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMap.clear();
+                finish();
+            }
+        });
 
     }
 
@@ -115,5 +134,7 @@ public class MapsActivity extends FragmentActivity {
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(point, 11));
         }
     }
+
+
 
 }
