@@ -73,35 +73,38 @@ public class BidOnSessionActivity extends MethodsController {
         bidButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!currentProfile.isDefaultUser()) {
+                    float bidvalue;
 
-                float bidvalue;
+                    try {
+                        EditText bidtext = ((EditText) findViewById(R.id.bidtext));
+                        /**
+                         * taken from http://stackoverflow.com/questions/4229710/string-from-edittext-to-float
+                         */
+                        bidvalue = Float.valueOf(bidtext.getText().toString());
+                        UUID profileID = currentProfile.getProfileID();
+                        Bid newbid = new Bid(selectedSession.getSessionID(), profileID, bidvalue);
+                        selectedSession.addBid(newbid);
+                        Profile owner = MethodsController.getProfile(selectedSession.getTutorID());
+                        owner.setNewBid(true);
 
-                try {
-                    EditText bidtext = ((EditText) findViewById(R.id.bidtext));
-                    /**
-                     * taken from http://stackoverflow.com/questions/4229710/string-from-edittext-to-float
-                     */
-                    bidvalue = Float.valueOf(bidtext.getText().toString());
-                    UUID profileID = currentProfile.getProfileID();
-                    Bid newbid = new Bid(selectedSession.getSessionID(), profileID, bidvalue);
-                    selectedSession.addBid(newbid);
-                    Profile owner = MethodsController.getProfile(selectedSession.getTutorID());
-                    owner.setNewBid(true);
+                        //updates the profile of elastic search
+                        updateElasticSearchProfile(owner);
 
-                    //updates the profile of elastic search
-                    updateElasticSearchProfile(owner);
+                        updateElasticSearchSession(selectedSession); // to add the newest bid
+                        Intent intent = new Intent(BidOnSessionActivity.this, AvailableSessionsActivity.class);
+                        startActivity(intent);
 
-                    updateElasticSearchSession(selectedSession); // to add the newest bid
-                    Intent intent = new Intent(BidOnSessionActivity.this, AvailableSessionsActivity.class);
-                    startActivity(intent);
+                    } catch (Exception err) {
+                        AlertDialog.Builder builder1 = new AlertDialog.Builder(BidOnSessionActivity.this);
+                        builder1.setMessage("Error invalid input, please use a numerical value");
+                        builder1.setCancelable(true);
 
-                } catch (Exception err) {
-                    AlertDialog.Builder builder1 = new AlertDialog.Builder(BidOnSessionActivity.this);
-                    builder1.setMessage("Error invalid input, please use a numerical value");
-                    builder1.setCancelable(true);
-
-                    AlertDialog alert1 = builder1.create();
-                    alert1.show();
+                        AlertDialog alert1 = builder1.create();
+                        alert1.show();
+                    }
+                } else {
+                    verifyLogin();
                 }
 
 

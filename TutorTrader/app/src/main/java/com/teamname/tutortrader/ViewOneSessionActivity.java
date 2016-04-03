@@ -1,6 +1,7 @@
 package com.teamname.tutortrader;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * The activity that allows users to view information about a
@@ -122,6 +124,49 @@ public class ViewOneSessionActivity extends MethodsController {
                 AlertDialog alert = builder.create();
                 alert.show();
             }
+        });
+
+        Button rateStudentButton = (Button) findViewById(R.id.rateStudentButton);
+        rateStudentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (sessionsOfInterest.get(index_r).getStatus().equals("booked")) {
+                    final CharSequence[] items = {"1","2","3","4","5"};
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ViewOneSessionActivity.this);
+                    builder.setTitle("Rate Student")
+                            .setItems(items, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // get the winning bid
+                                    Bid winningBid = null;
+                                    // to get the accepted bidders ID
+                                    for (int i=0; i<sessionsOfInterest.get(index_r).getBids().size();i++){
+                                        if (sessionsOfInterest.get(index_r).getBids().get(i).equals("accepted")) {
+                                            winningBid = sessionsOfInterest.get(index_r).getBids().get(i);
+                                            break;
+                                        }
+                                    }
+                                    Profile studentProfile = getProfile(winningBid.getBidder());
+                                    Double rating = (double)which + 1;
+                                    studentProfile.addTutorRating(rating);
+                                    updateElasticSearchProfile(studentProfile);
+                                    loadElasticSearch();
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+
+                } else {
+                    // TODO: prompt saying you cant rate until session is booked
+                    //Learned from http://developer.android.com/guide/topics/ui/notifiers/toasts.html
+                    Context context = getApplicationContext();
+                    CharSequence text = "Rating can only be done once session is booked!";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
+
+            }
+
         });
     }
 
