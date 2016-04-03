@@ -10,6 +10,7 @@ import android.widget.TextView;
  * The activity that allows a user to view their profile.
  */
 public class MyProfileActivity extends MethodsController {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,10 +64,5 @@ public class MyProfileActivity extends MethodsController {
 
             }
         });
-
-
-
-
-
     }
 }
