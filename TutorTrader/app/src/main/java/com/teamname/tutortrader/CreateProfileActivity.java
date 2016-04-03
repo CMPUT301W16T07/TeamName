@@ -1,15 +1,15 @@
 package com.teamname.tutortrader;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 /**
- *
  * The activity that allows a user to create a profile.
  */
 public class CreateProfileActivity extends MethodsController{
@@ -19,7 +19,6 @@ public class CreateProfileActivity extends MethodsController{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_profile);
-
 
         final Button saveButton = (Button) findViewById(R.id.saveButton);
         final Button cancelButton = (Button) findViewById(R.id.cancelButton);
@@ -47,9 +46,9 @@ public class CreateProfileActivity extends MethodsController{
                     currentProfile = profiles.get(0);
 
                     setResult(RESULT_OK);
-                    //Intent intent = new Intent(CreateProfileActivity.this, MyProfileActivity.class);
-                    //startActivity(intent);
-                    finish();
+                    Intent intent = new Intent(CreateProfileActivity.this, MyProfileActivity.class);
+                    startActivity(intent);
+                    //finish();
 
 
                 }
@@ -61,31 +60,47 @@ public class CreateProfileActivity extends MethodsController{
             public void onClick(View v) {
                 Intent intent = new Intent(CreateProfileActivity.this, AvailableSessionsActivity.class);
                 startActivity(intent);
+                //finish();
             }
         });
 
     }
 
     public boolean verifyFields () {
-        //Boolean validFields = false;
-        Button saveButton = (Button) findViewById(R.id.saveButton);
-        Button cancelButton = (Button) findViewById(R.id.cancelButton);
+
         EditText newUsername = (EditText) findViewById(R.id.editUsername);
         EditText newEmail = (EditText) findViewById(R.id.editEmail);
         EditText newPhone = (EditText) findViewById(R.id.editPhone);
 
-        if ((!newUsername.getText().toString().equals("")) && (!newEmail.getText().toString().equals("")) && (!newPhone.getText().toString().equals(""))) {
-            return true;
-        }
-        return false;
-    }
+        Boolean valid = true; // assume fields are valid
+        Context context = getApplicationContext();
+        CharSequence text = "Sorry! Something went wrong."; // warning text if invalid
+        int duration = Toast.LENGTH_SHORT; // warning length
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_create_profile, menu);
-//        return true;
-//    }
+        // validate every field
+        if (newUsername.getText().toString().equals("")) {
+            text = "Invalid Username!";
+            valid = false;
+        } else if (MethodsController.profileExists(newUsername.getText().toString(), currentProfile.getName())) {
+            text = "Username already exists!";
+            valid = false;
+        } else if (newEmail.getText().toString().equals("")) {
+            text = "Invalid Email!";
+            valid = false;
+        } else if (newPhone.getText().toString().equals("")) {
+            text = "Invalid Phone Number!";
+            valid = false;
+        }
+
+        // show toast if necessary
+        if (!valid) {
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
+
+        // return true if valid, false if not
+        return valid;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
