@@ -85,7 +85,7 @@ public class ElasticSearchController {
             verifyClient();
 
             for (Session session : params) {
-                Index index = new Index.Builder(session).index("cmput301w16t07").type("session").build();
+                Index index = new Index.Builder(session).index("cmput301w16t07").type("session").id(params[0].getSessionID().toString()).build();
 
                 try {
                     DocumentResult execute = client.execute(index);
@@ -160,20 +160,22 @@ public class ElasticSearchController {
         }
     }
 
-    public static class UpdateSessionTask extends AsyncTask<String, Void, Void> {
+    public static class UpdateSessionTask extends AsyncTask<Session, Void, Void> {
 
         @Override
-        protected Void doInBackground(String... params) {
+        protected Void doInBackground(Session... params) {
             verifyClient();
             try {
-                String deleter = "{\"from\":0,\"size\":10000,\"query\":{\"match\":{\"" + params[0] + "\":\"" + params[1] + "\"}}}";
-                DeleteByQuery deleteSession = new DeleteByQuery.Builder(deleter)
-                        .addIndex("cmput301w16t07")
-                        .addType("session")
-                        .build();
+                //String updater = "{\"from\":0,\"size\":10000,\"query\":{\"match\":{\"" + params[0] + "\":\"" + params[1] + "\"}}}";
+                String newId = params[0].getSessionID().toString();
+                JestResult result = client.execute(new Index.Builder(params[0])
+                                .index("cmput301w16t07")
+                                .type("session")
+                                .id(newId)
+                                .build()
+                );
                 // TODO: Something more useful
                 Log.e("TODO", "Delete code worked!");
-                client.execute(deleteSession);
 
             } catch (IOException e) {
                 throw new RuntimeException();
