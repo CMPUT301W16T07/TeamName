@@ -87,6 +87,7 @@ public class BidOnSessionActivity extends MethodsController {
                     selectedSession.addBid(newbid);
                     Profile owner = MethodsController.getProfile(selectedSession.getTutorID());
                     owner.setNewBid(true);
+
                     ElasticSearchController.RemoveProfileTask removeProfileTask = new ElasticSearchController.RemoveProfileTask();
                     removeProfileTask.execute(owner.getProfileID());
                     ElasticSearchController.AddProfileTask addProfileTask = new ElasticSearchController.AddProfileTask();

@@ -374,15 +374,18 @@ public class MethodsController extends AppCompatActivity {
      * @param session session object we wish to update
      */
     protected void updateElasticSearchSession(Session session){
+
+        ElasticSearchController.UpdateSessionTask updateSessionTask = new ElasticSearchController.UpdateSessionTask();
+        updateSessionTask.execute(session);
         // Remove old session that has information missing
-        ElasticSearchController.RemoveSessionTask removeSessionTask = new ElasticSearchController.RemoveSessionTask();
-        removeSessionTask.execute(session.getSessionID());
+        //ElasticSearchController.RemoveSessionTask removeSessionTask = new ElasticSearchController.RemoveSessionTask();
+        //removeSessionTask.execute(session.getSessionID());
 
         //add new session that has the information we want to add
-        ElasticSearchController.AddSessionTask addSessionTask = new ElasticSearchController.AddSessionTask();
-        addSessionTask.execute(session);
+       // ElasticSearchController.AddSessionTask addSessionTask = new ElasticSearchController.AddSessionTask();
+        //addSessionTask.execute(session);
 
-        loadElasticSearch(); // load the newest addition
+       loadElasticSearch(); // load the newest addition
     }
 
     /**
