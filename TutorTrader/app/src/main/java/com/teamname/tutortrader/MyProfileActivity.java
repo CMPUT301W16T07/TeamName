@@ -29,13 +29,14 @@ public class MyProfileActivity extends MethodsController {
         TextView activityTitle = (TextView) findViewById(R.id.activityTitle);
         activityTitle.setText(R.string.MyProfileButton);
 
+
         if (currentProfile.isDefaultUser()){
             //create new profile
             Intent intent = new Intent(MyProfileActivity.this, CreateProfileActivity.class);
             startActivity(intent);
         }
 
-        if (getProfile(currentProfile.getProfileID()) != null) {
+        if ((Connectivity)&&(getProfile(currentProfile.getProfileID()) != null)) {
             setCurrentProfile(getProfile(currentProfile.getProfileID())); // in case ratings changed
         }
 

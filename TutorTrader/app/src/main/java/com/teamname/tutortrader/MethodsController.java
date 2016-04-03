@@ -120,10 +120,12 @@ public class MethodsController extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             if (v.getId() == R.id.myProfile) {
+
                 Intent intent = new Intent(MethodsController.this, MyProfileActivity.class);
                 startActivity(intent);
                 finish();
             } else if (v.getId() == R.id.availableSessions) {
+
                 Intent intent = new Intent(MethodsController.this, AvailableSessionsActivity.class);
                 startActivity(intent);
                 finish();
@@ -558,9 +560,9 @@ public class MethodsController extends AppCompatActivity {
                     Session session = toUpload.get(i);
                     ElasticSearchController.AddSessionTask addSessionTask = new ElasticSearchController.AddSessionTask();
                     addSessionTask.execute(session);
-                    toUpload.remove(i);
 
                 }
+                toUpload.clear();
                 saveInFile(OFFLINEFILE,toUpload);
             }
 
