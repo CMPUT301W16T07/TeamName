@@ -85,7 +85,7 @@ public class ElasticSearchController {
             verifyClient();
 
             for (Session session : params) {
-                Index index = new Index.Builder(session).index("cmput301w16t07").type("session").build();
+                Index index = new Index.Builder(session).index("cmput301w16t07").type("session").id(params[0].getSessionID().toString()).build();
 
                 try {
                     DocumentResult execute = client.execute(index);
@@ -144,6 +144,7 @@ public class ElasticSearchController {
             try {
                 DocumentResult execute = client.execute(delete);
                 if (execute.isSucceeded()) {
+                    Log.e("TODO", "Our delete of session succeded, oh yes!");
                 } else {
                     // TODO: Something more useful
                     Log.e("TODO", "Our delete of session failed, oh no!");
@@ -151,26 +152,30 @@ public class ElasticSearchController {
                 return null;
             } catch (IOException e) {
                 // TODO: Something more useful
+                Log.e("TODO", "Our delete of session failed, at part 2!");
                 e.printStackTrace();
+
             }
             return null;
         }
     }
 
-    public static class UpdateSessionTask extends AsyncTask<String, Void, Void> {
+    public static class UpdateSessionTask extends AsyncTask<Session, Void, Void> {
 
         @Override
-        protected Void doInBackground(String... params) {
+        protected Void doInBackground(Session... params) {
             verifyClient();
             try {
-                String deleter = "{\"from\":0,\"size\":10000,\"query\":{\"match\":{\"" + params[0] + "\":\"" + params[1] + "\"}}}";
-                DeleteByQuery deleteSession = new DeleteByQuery.Builder(deleter)
-                        .addIndex("cmput301w16t07")
-                        .addType("session")
-                        .build();
+                //String updater = "{\"from\":0,\"size\":10000,\"query\":{\"match\":{\"" + params[0] + "\":\"" + params[1] + "\"}}}";
+                String newId = params[0].getSessionID().toString();
+                JestResult result = client.execute(new Index.Builder(params[0])
+                                .index("cmput301w16t07")
+                                .type("session")
+                                .id(newId)
+                                .build()
+                );
                 // TODO: Something more useful
                 Log.e("TODO", "Delete code worked!");
-                client.execute(deleteSession);
 
             } catch (IOException e) {
                 throw new RuntimeException();
@@ -180,6 +185,29 @@ public class ElasticSearchController {
 
     }
 
+    public static class UpdateProfileTask extends AsyncTask<Profile, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Profile... profiles) {
+            verifyClient();
+            try {
+                //String updater = "{\"from\":0,\"size\":10000,\"query\":{\"match\":{\"" + params[0] + "\":\"" + params[1] + "\"}}}";
+                String newId = profiles[0].getProfileID().toString();
+                JestResult result = client.execute(new Index.Builder(profiles[0])
+                                .index("cmput301w16t07")
+                                .type("profile")
+                                .id(newId)
+                                .build()
+                );
+                // TODO: Something more useful
+                Log.e("TODO", "Delete code worked!");
+
+            } catch (IOException e) {
+                throw new RuntimeException();
+            }
+            return null;
+        }
+    }
         public static void verifyClient() {
             if (client == null) {
                 // TODO: Consider moving this URL in to some config class
@@ -239,7 +267,7 @@ public class ElasticSearchController {
             verifyClient();
 
             for (Profile profile : params) {
-                Index index = new Index.Builder(profile).index("cmput301w16t07").type("profile").build();
+                Index index = new Index.Builder(profile).index("cmput301w16t07").type("profile").id(profile.getProfileID().toString()).build();
 
                 try {
                     DocumentResult execute = client.execute(index);
@@ -298,6 +326,7 @@ public class ElasticSearchController {
             try {
                 DocumentResult execute = client.execute(delete);
                 if (execute.isSucceeded()) {
+                    Log.e("TEST", "Profile deletion succesful");
                 } else {
                     // TODO: Something more useful
                     Log.e("TODO", "Our delete of profile failed, oh no!");
@@ -305,6 +334,7 @@ public class ElasticSearchController {
                 return null;
             } catch (IOException e) {
                 // TODO: Something more useful
+                Log.e("TODO", "Our delete of profile failed, 2nd type of exception");
                 e.printStackTrace();
             }
             return null;

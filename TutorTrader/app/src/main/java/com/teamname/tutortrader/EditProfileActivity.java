@@ -1,12 +1,13 @@
 package com.teamname.tutortrader;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 /**
  * The activity that allows a user to edit a profile.
@@ -29,10 +30,6 @@ public class EditProfileActivity extends MethodsController {
         newEmail.setText(currentProfile.getEmail());
         newPhone.setText(currentProfile.getPhone());
 
-        //final MethodsController instance = MethodsController.getInstance();
-        //final Profile currentProfile = instance.getCurrentProfile();
-
-
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,14 +38,14 @@ public class EditProfileActivity extends MethodsController {
                     currentProfile.setName(newUsername.getText().toString());
                     currentProfile.setEmail(newEmail.getText().toString());
                     currentProfile.setPhone(newPhone.getText().toString());
-                    int index = profiles.indexOf(currentProfile);
-                    profiles.remove(index);
-                    profiles.add(index, currentProfile);
-                    saveInFile(USERFILE, profiles);
+                    profiles.remove(0); // remove the current profile
+                    profiles.add(0, currentProfile); // replace the current profile
+                    saveInFile(USERFILE, profiles); // save the new current profile
                     updateElasticSearchProfile(currentProfile); // update on Elastic Search
                     setResult(RESULT_OK);
                     Intent intent = new Intent(EditProfileActivity.this, MyProfileActivity.class);
                     startActivity(intent);
+                    //finish();
                 }
             }
         });
@@ -60,23 +57,39 @@ public class EditProfileActivity extends MethodsController {
 
             }
         });
-
     }
+
     public boolean verifyFields (EditText newUsername, EditText newEmail, EditText newPhone) {
-        //Boolean validFields = false;
 
-        if ((!newUsername.getText().toString().equals("")) && (!newEmail.getText().toString().equals("")) && (!newPhone.getText().toString().equals(""))) {
-            return true;
+        Boolean valid = true; // assume fields are valid
+        Context context = getApplicationContext();
+        CharSequence text = "Sorry! Something went wrong."; // warning text if invalid
+        int duration = Toast.LENGTH_SHORT; // warning length
+
+        // validate every field
+        if (newUsername.getText().toString().equals("")) {
+            text = "Invalid Username!";
+            valid = false;
+        } else if (MethodsController.profileExists(newUsername.getText().toString(), currentProfile.getName())) {
+            text = "Username already exists!";
+            valid = false;
+        } else if (newEmail.getText().toString().equals("")) {
+            text = "Invalid Email!";
+            valid = false;
+        } else if (newPhone.getText().toString().equals("")) {
+            text = "Invalid Phone Number!";
+            valid = false;
         }
-        return false;
-    }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_edit_profile, menu);
-//        return true;
-//    }
+        // show toast if necessary
+        if (!valid) {
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
+
+        // return true if valid, false if not
+        return valid;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

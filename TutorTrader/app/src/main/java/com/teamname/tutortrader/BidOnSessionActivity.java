@@ -87,17 +87,9 @@ public class BidOnSessionActivity extends MethodsController {
                     selectedSession.addBid(newbid);
                     Profile owner = MethodsController.getProfile(selectedSession.getTutorID());
                     owner.setNewBid(true);
-                    ElasticSearchController.RemoveProfileTask removeProfileTask = new ElasticSearchController.RemoveProfileTask();
-                    removeProfileTask.execute(owner.getProfileID());
-                    ElasticSearchController.AddProfileTask addProfileTask = new ElasticSearchController.AddProfileTask();
-                    addProfileTask.execute(owner);
 
-
-
-                    //ElasticSessionController.AddSessionTask addSessionTask = new ElasticSessionController.AddSessionTask();
-                    //addSessionTask.execute(selectedSession);
-                    //TODO: update Elastic Search, we have the code to add session bt we need to remove session. Create a removeSessionTask.
-                    //saveInFile(SESSIONSFILE, sessions);
+                    //updates the profile of elastic search
+                    updateElasticSearchProfile(owner);
 
                     updateElasticSearchSession(selectedSession); // to add the newest bid
                     Intent intent = new Intent(BidOnSessionActivity.this, AvailableSessionsActivity.class);
