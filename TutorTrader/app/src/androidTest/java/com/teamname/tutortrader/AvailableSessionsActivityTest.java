@@ -30,12 +30,7 @@ import io.searchbox.core.SearchResult;
 public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCase2 {
 
 
-    Instrumentation instrumentation;
-    Activity activity;
-    EditText titleInput;
-    EditText descriptionInput;
-    EditText searchInput;
-    Solo solo;
+    private Solo solo;
 
     public void setUp() throws Exception {
         super.setUp();
@@ -57,6 +52,18 @@ public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCa
     }
 
     public void testTest(){
+        Profile profile = new Profile("Test tutor", "test@test.test", "780-666-6666");
+        Bitmap.Config conf = Bitmap.Config.ARGB_8888;
+        Bitmap bm1 = Bitmap.createBitmap(1, 2, conf);
+        Session session = new Session("Math", "Tutor for linear Algebra for all university levels", profile.getProfileID(), bm1);
+
+        Profile owner = MethodsController.getProfile(session.getTutorID());
+        ElasticSearchController.RemoveProfileTask removeProfileTask = new ElasticSearchController.RemoveProfileTask();
+        removeProfileTask.execute(owner.getProfileID());
+
+        ElasticSearchController.RemoveSessionTask removeSessionTask = new ElasticSearchController.RemoveSessionTask();
+        removeSessionTask.execute(session.getSessionID());
+
         solo.clickOnMenuItem("Profile");
         solo.sleep(2000);
         solo.clickOnMenuItem("Available");
@@ -107,9 +114,11 @@ public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCa
          */
 
         solo.assertCurrentActivity("right activity", AvailableSessionsActivity.class);
-
+        solo.clickOnMenuItem("Profile");
+        solo.sleep(2000);
+        solo.clickOnMenuItem("Available");
         solo.clickOnText("Math");
-
+        solo.assertCurrentActivity("switched sessions", BidOnSessionActivity.class);
         assertTrue(solo.searchText("Math"));
         assertTrue(solo.searchText("Tutor for linear Algebra for all university levels"));
         assertTrue(solo.searchText("Test tutor"));

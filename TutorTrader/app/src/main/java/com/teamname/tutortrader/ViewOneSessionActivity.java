@@ -100,7 +100,7 @@ public class ViewOneSessionActivity extends MethodsController {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ViewOneSessionActivity.this);
-                builder.setMessage("Reposting this session means all bids will be removed and the status will be set to available do you wish tp continue?")
+                builder.setMessage("Reposting this session means all bids will be removed and the status will be set to available do you wish to continue?")
                 .setCancelable(false)
                         // This will repost the session of interest
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
