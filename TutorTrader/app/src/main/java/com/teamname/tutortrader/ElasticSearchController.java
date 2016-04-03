@@ -144,6 +144,7 @@ public class ElasticSearchController {
             try {
                 DocumentResult execute = client.execute(delete);
                 if (execute.isSucceeded()) {
+                    Log.e("TODO", "Our delete of session succeded, oh yes!");
                 } else {
                     // TODO: Something more useful
                     Log.e("TODO", "Our delete of session failed, oh no!");
@@ -151,7 +152,9 @@ public class ElasticSearchController {
                 return null;
             } catch (IOException e) {
                 // TODO: Something more useful
+                Log.e("TODO", "Our delete of session failed, at part 2!");
                 e.printStackTrace();
+
             }
             return null;
         }
@@ -298,6 +301,7 @@ public class ElasticSearchController {
             try {
                 DocumentResult execute = client.execute(delete);
                 if (execute.isSucceeded()) {
+                    Log.e("TEST", "Profile deletion succesful");
                 } else {
                     // TODO: Something more useful
                     Log.e("TODO", "Our delete of profile failed, oh no!");
@@ -305,6 +309,7 @@ public class ElasticSearchController {
                 return null;
             } catch (IOException e) {
                 // TODO: Something more useful
+                Log.e("TODO", "Our delete of profile failed, 2nd type of exception");
                 e.printStackTrace();
             }
             return null;

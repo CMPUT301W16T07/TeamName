@@ -108,9 +108,13 @@ public class MethodsController extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             } else if (v.getId() == R.id.availableSessions) {
-                Intent intent = new Intent(MethodsController.this, AvailableSessionsActivity.class);
-                startActivity(intent);
-                finish();
+                //Intent intent = new Intent(MethodsController.this, AvailableSessionsActivity.class);
+                //startActivity(intent);
+                //finish();
+                Intent i = new Intent(MethodsController.this, AvailableSessionsActivity.class);
+                // set the new task and clear flags
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
             } else if (v.getId() == R.id.currentBids) {
                 Intent intent = new Intent(MethodsController.this, CurrentBidsActivity.class);
                 startActivity(intent);
@@ -269,7 +273,7 @@ public class MethodsController extends AppCompatActivity {
 
         // code to notify peeps of the bids
         for(int i = 0; i < allProfiles.size(); i++) {
-            if (allProfiles.get(i).getProfileID().compareTo(currentProfile.getProfileID()) == 0) {
+            if (allProfiles.get(i).getProfileID().equals(currentProfile.getProfileID())) {
                 if ( allProfiles.get(i).isNewBid() == true) {
                     Notify();
                     allProfiles.get(i).setNewBid(false);
