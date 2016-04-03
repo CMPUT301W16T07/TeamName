@@ -277,10 +277,13 @@ public class MethodsController extends AppCompatActivity {
                 if ( allProfiles.get(i).isNewBid() == true) {
                     Notify();
                     allProfiles.get(i).setNewBid(false);
-                    ElasticSearchController.RemoveProfileTask removeProfileTask = new ElasticSearchController.RemoveProfileTask();
-                    removeProfileTask.execute(currentProfile.getProfileID());
-                    ElasticSearchController.AddProfileTask addProfileTask = new ElasticSearchController.AddProfileTask();
-                    addProfileTask.execute(currentProfile);
+
+                    ElasticSearchController.UpdateProfileTask updateProfileTask = new ElasticSearchController.UpdateProfileTask();
+                    updateProfileTask.execute(currentProfile);
+                    //ElasticSearchController.RemoveProfileTask removeProfileTask = new ElasticSearchController.RemoveProfileTask();
+                    //removeProfileTask.execute(currentProfile.getProfileID());
+                    //ElasticSearchController.AddProfileTask addProfileTask = new ElasticSearchController.AddProfileTask();
+                    //addProfileTask.execute(currentProfile);
                 }
             }
         }
@@ -377,12 +380,15 @@ public class MethodsController extends AppCompatActivity {
      */
     protected void updateElasticSearchProfile(Profile profile){
         // Remove old profile that has information missing
-        ElasticSearchController.RemoveProfileTask removeProfileTask = new ElasticSearchController.RemoveProfileTask();
-        removeProfileTask.execute(profile.getProfileID());
+        //ElasticSearchController.RemoveProfileTask removeProfileTask = new ElasticSearchController.RemoveProfileTask();
+        //removeProfileTask.execute(profile.getProfileID());
 
         //add new profile that has the information we want to add
-        ElasticSearchController.AddProfileTask addProfileTask = new ElasticSearchController.AddProfileTask();
-        addProfileTask.execute(profile);
+        //ElasticSearchController.AddProfileTask addProfileTask = new ElasticSearchController.AddProfileTask();
+        //addProfileTask.execute(profile);
+
+        ElasticSearchController.UpdateProfileTask updateProfileTask = new ElasticSearchController.UpdateProfileTask();
+        updateProfileTask.execute(profile);
         loadElasticSearch(); // load the newest addition
 
         //make sure current profile proper
