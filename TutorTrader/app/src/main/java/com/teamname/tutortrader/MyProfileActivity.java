@@ -2,8 +2,10 @@ package com.teamname.tutortrader;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
@@ -14,9 +16,13 @@ public class MyProfileActivity extends MethodsController {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        LinearLayout profileInfo;
         setContentView(R.layout.my_profile);
         checkConnectivity();
 
+        profileInfo = (LinearLayout) findViewById(R.id.profileInfo);
+        profileInfo.setBackgroundResource(R.drawable.apple_righ);
         btn_CurrentBids = (Button) findViewById(R.id.currentBids);
         btn_CurrentBids.setOnClickListener(btnClickListener);
         btn_myProfile = (Button) findViewById(R.id.myProfile);
@@ -49,11 +55,11 @@ public class MyProfileActivity extends MethodsController {
         TextView displayStudentRating = (TextView) findViewById(R.id.studentRating);
 
         //set textviews
-        displayUsername.setText("Username: " + currentProfile.getName());
-        displayEmail.setText("Email: " + currentProfile.getEmail());
-        displayPhone.setText("Phone: " + currentProfile.getPhone());
-        displayTutorRating.setText("Tutor Rating: " + currentProfile.getTutorRating());
-        displayStudentRating.setText("Student Rating: " + currentProfile.getStudentRating());
+        displayUsername.setText(Html.fromHtml("Username: <b>" + currentProfile.getName() + "</b>"));
+        displayEmail.setText(Html.fromHtml("Email: <b>" + currentProfile.getEmail() + "</b>"));
+        displayPhone.setText(Html.fromHtml("Phone: <b>" + currentProfile.getPhone() + "</b>"));
+        displayTutorRating.setText(Html.fromHtml("Tutor Rating: <b>" + currentProfile.getTutorRating() + "</b>"));
+        displayStudentRating.setText(Html.fromHtml("Student Rating: <b>" + currentProfile.getStudentRating() + "</b>"));
 
         //set click listener for edit button
         Button editButton = (Button) findViewById(R.id.editProfile);

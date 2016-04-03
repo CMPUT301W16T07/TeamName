@@ -53,6 +53,7 @@ public class AddSessionActivity extends MethodsController  {
                     Session newSession = new Session(subjectEdit.getText().toString(),descriptionEdit.getText().toString(),currentProfile.getProfileID(), thumbnail);
                     newSession.addThumbnail(thumbnail);
 
+
                     //sessions.add(newSession);
                     if (Connectivity) {
                         ElasticSearchController.AddSessionTask addSessionTask = new ElasticSearchController.AddSessionTask();
@@ -63,9 +64,9 @@ public class AddSessionActivity extends MethodsController  {
                         saveInFile(OFFLINEFILE, tempSessions);
                     }
                     loadElasticSearch(); // load the newest addition
-                    //sessions.add(newSession);
-                    //saveInFile(SESSIONSFILE, sessions);
-                    finish();
+
+                    Intent intent = new Intent(AddSessionActivity.this, MySessionsActivity.class);
+                    startActivity(intent);
 
                 }
             }

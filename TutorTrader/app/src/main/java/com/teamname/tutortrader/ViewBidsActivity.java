@@ -126,8 +126,8 @@ public class ViewBidsActivity extends MethodsController {
         //sessions.get(sessionIndex).getBids().size()
         Session tempSession = sessions.get(sessionIndex);
         Bid acceptedBid = currentBid;
-        acceptedBid.setStatus("accepted");
         tempSession.declineAllBids();
+        acceptedBid.setStatus("accepted");
         for (int i = 0; i < tempSession.getBids().size();i++) {
             if (i==tempSession.getBids().indexOf(currentBid)) {
                 tempSession.getBids().get(i).setStatus("accepted");
