@@ -185,6 +185,29 @@ public class ElasticSearchController {
 
     }
 
+    public static class UpdateProfileTask extends AsyncTask<Profile, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Profile... profiles) {
+            verifyClient();
+            try {
+                //String updater = "{\"from\":0,\"size\":10000,\"query\":{\"match\":{\"" + params[0] + "\":\"" + params[1] + "\"}}}";
+                String newId = profiles[0].getProfileID().toString();
+                JestResult result = client.execute(new Index.Builder(profiles[0])
+                                .index("cmput301w16t07")
+                                .type("profile")
+                                .id(newId)
+                                .build()
+                );
+                // TODO: Something more useful
+                Log.e("TODO", "Delete code worked!");
+
+            } catch (IOException e) {
+                throw new RuntimeException();
+            }
+            return null;
+        }
+    }
         public static void verifyClient() {
             if (client == null) {
                 // TODO: Consider moving this URL in to some config class
@@ -244,7 +267,7 @@ public class ElasticSearchController {
             verifyClient();
 
             for (Profile profile : params) {
-                Index index = new Index.Builder(profile).index("cmput301w16t07").type("profile").build();
+                Index index = new Index.Builder(profile).index("cmput301w16t07").type("profile").id(profile.getProfileID().toString()).build();
 
                 try {
                     DocumentResult execute = client.execute(index);
