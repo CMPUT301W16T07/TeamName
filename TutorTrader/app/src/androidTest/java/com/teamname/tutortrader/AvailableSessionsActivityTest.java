@@ -145,6 +145,8 @@ public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCa
         ElasticSearchController.RemoveSessionTask removeSessionTask = new ElasticSearchController.RemoveSessionTask();
         removeSessionTask.execute(session.getSessionID());
 
+        solo.clickOnMenuItem("Available");
+
         assertFalse(solo.searchText("Math"));
 
     }
