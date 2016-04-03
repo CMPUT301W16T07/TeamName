@@ -3,11 +3,27 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/MySessionsButton"
-        android:id="@+id/allSessionsButton" />
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/MySessionsButton"
+            android:id="@+id/allSessionsButton" />
+
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:text="Map"
+            android:id="@+id/mapButton"
+            android:layout_alignParentRight="true"
+
+            />
+
+
+    </RelativeLayout>
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -87,11 +103,11 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_alignWithParentIfMissing="false"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/viewBidsButton"
-        android:layout_toEndOf="@+id/viewBidsButton"
         android:text="@string/EditButton"
-        android:id="@+id/editButton" />
+        android:id="@+id/editButton"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/deleteButton"
+        android:layout_toStartOf="@+id/deleteButton" />
 
 
     <Button
@@ -100,21 +116,20 @@
         android:text="@string/DeleteButton"
         android:id="@+id/deleteButton"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/editButton"
-        android:layout_toEndOf="@+id/editButton" />
+        android:layout_toLeftOf="@+id/repostButton"
+        android:layout_toStartOf="@+id/repostButton" />
 
         <Button
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_width="100dp"
-            android:text="Map"
-            android:id="@+id/mapButton"
-            android:layout_toRightOf="@+id/deleteButton"
-            android:layout_toEndOf="@+id/deleteButton"
-            />
+            android:text="Repost"
+            android:id="@+id/repostButton"
+            android:layout_gravity="right"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
-
-
-</RelativeLayout>
+    </RelativeLayout>
 
 
 

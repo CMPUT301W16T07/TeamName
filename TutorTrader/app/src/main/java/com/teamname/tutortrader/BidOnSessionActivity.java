@@ -1,12 +1,14 @@
 package com.teamname.tutortrader;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.UUID;
 
@@ -40,6 +42,7 @@ public class BidOnSessionActivity extends MethodsController {
         //loadSessions(SESSIONSFILE);
         selectedSessionIndex = sessions.indexOf(availableSessions.get(index));
         selectedSession = sessions.get(selectedSessionIndex);
+        checkForSelf(selectedSession);
         initializeFields(selectedSessionIndex);
 
 
@@ -49,8 +52,9 @@ public class BidOnSessionActivity extends MethodsController {
         backToAllButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BidOnSessionActivity.this, AvailableSessionsActivity.class);
-                startActivity(intent);
+                finish();
+                //Intent intent = new Intent(BidOnSessionActivity.this, AvailableSessionsActivity.class);
+                //startActivity(intent);
             }
         });
 
@@ -95,15 +99,16 @@ public class BidOnSessionActivity extends MethodsController {
                     UUID profileID = currentProfile.getProfileID();
                     Bid newbid = new Bid(selectedSession.getSessionID(), profileID, bidvalue);
                     selectedSession.addBid(newbid);
-                    selectedSession.setStatus("Pending");
+                    Profile owner = MethodsController.getProfile(selectedSession.getTutorID());
+                    owner.setNewBid(true);
 
-                    //ElasticSessionController.AddSessionTask addSessionTask = new ElasticSessionController.AddSessionTask();
-                    //addSessionTask.execute(selectedSession);
-                    //TODO: update Elastic Search, we have the code to add session bt we need to remove session. Create a removeSessionTask.
-                    //saveInFile(SESSIONSFILE, sessions);
-                    updateElasticSearch(selectedSession); // to add the newest bid
+                    //updates the profile of elastic search
+                    updateElasticSearchProfile(owner);
+
+                    updateElasticSearchSession(selectedSession); // to add the newest bid
                     Intent intent = new Intent(BidOnSessionActivity.this, AvailableSessionsActivity.class);
                     startActivity(intent);
+
                 } catch (Exception err) {
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(BidOnSessionActivity.this);
                     builder1.setMessage("Error invalid input, please use a numerical value");
@@ -125,6 +130,8 @@ public class BidOnSessionActivity extends MethodsController {
      * @param index index of the session in the sessions arraylist is passed in.
      */
     public void initializeFields(int index) {
+        Profile tutor = getProfile(sessions.get(index).getTutorID());
+
         TextView subjectText = (TextView) findViewById(R.id.subjectTextB);
         TextView titleBody = (TextView) findViewById(R.id.titleBodyB);
         TextView descriptionBody = (TextView) findViewById(R.id.descriptionBodyB);
@@ -135,14 +142,35 @@ public class BidOnSessionActivity extends MethodsController {
         TextView bodyStatus = (TextView) findViewById(R.id.bodyStatusB);
 
         subjectText.setText(sessions.get(index).getTitle());
+
         titleBody.setText("Title: "+ sessions.get(index).getTitle());
         descriptionBody.setText("Description: "+sessions.get(index).getDescription());
-        postedByBody.setText("Posted By: "+sessions.get(index).tutor.getName());
-        tutorRatingBody.setText("Tutor Rating: "+sessions.get(index).tutor.getTutorRating());
-        bodyEmail.setText("Email: " + sessions.get(index).tutor.getEmail());
-        bodyPhone.setText("Phone: " +sessions.get(index).tutor.getPhone());
+        postedByBody.setText("Posted By: "+ tutor.getName());
+        tutorRatingBody.setText("Tutor Rating: "+ tutor.getTutorRating());
+        bodyEmail.setText("Email: " + tutor.getEmail());
+        bodyPhone.setText("Phone: " + tutor.getPhone());
         bodyStatus.setText("Status: "+sessions.get(index).getStatus());
 
 
+
+    }
+
+    /**
+     * checks if the selected session is your own session
+     * @param selectedSession
+     */
+    public void checkForSelf(Session selectedSession) {
+        Profile tutor = getProfile(selectedSession.getTutorID());
+        if (tutor == null) throw new AssertionError();
+        if (tutor.getProfileID().equals(currentProfile.getProfileID())) {
+            //Learned from http://developer.android.com/guide/topics/ui/notifiers/toasts.html
+            Context context = getApplicationContext();
+            CharSequence text = "You cannot bid on your own session!";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+            finish();
+        }
     }
 }

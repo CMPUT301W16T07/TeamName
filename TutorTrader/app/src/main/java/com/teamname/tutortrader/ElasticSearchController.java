@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import javax.xml.transform.Result;
@@ -84,7 +85,7 @@ public class ElasticSearchController {
             verifyClient();
 
             for (Session session : params) {
-                Index index = new Index.Builder(session).index("cmput301w16t07").type("session").build();
+                Index index = new Index.Builder(session).index("cmput301w16t07").type("session").id(params[0].getSessionID().toString()).build();
 
                 try {
                     DocumentResult execute = client.execute(index);
@@ -143,6 +144,7 @@ public class ElasticSearchController {
             try {
                 DocumentResult execute = client.execute(delete);
                 if (execute.isSucceeded()) {
+                    Log.e("TODO", "Our delete of session succeded, oh yes!");
                 } else {
                     // TODO: Something more useful
                     Log.e("TODO", "Our delete of session failed, oh no!");
@@ -150,12 +152,62 @@ public class ElasticSearchController {
                 return null;
             } catch (IOException e) {
                 // TODO: Something more useful
+                Log.e("TODO", "Our delete of session failed, at part 2!");
                 e.printStackTrace();
+
             }
             return null;
         }
     }
 
+    public static class UpdateSessionTask extends AsyncTask<Session, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Session... params) {
+            verifyClient();
+            try {
+                //String updater = "{\"from\":0,\"size\":10000,\"query\":{\"match\":{\"" + params[0] + "\":\"" + params[1] + "\"}}}";
+                String newId = params[0].getSessionID().toString();
+                JestResult result = client.execute(new Index.Builder(params[0])
+                                .index("cmput301w16t07")
+                                .type("session")
+                                .id(newId)
+                                .build()
+                );
+                // TODO: Something more useful
+                Log.e("TODO", "Delete code worked!");
+
+            } catch (IOException e) {
+                throw new RuntimeException();
+            }
+            return null;
+        }
+
+    }
+
+    public static class UpdateProfileTask extends AsyncTask<Profile, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Profile... profiles) {
+            verifyClient();
+            try {
+                //String updater = "{\"from\":0,\"size\":10000,\"query\":{\"match\":{\"" + params[0] + "\":\"" + params[1] + "\"}}}";
+                String newId = profiles[0].getProfileID().toString();
+                JestResult result = client.execute(new Index.Builder(profiles[0])
+                                .index("cmput301w16t07")
+                                .type("profile")
+                                .id(newId)
+                                .build()
+                );
+                // TODO: Something more useful
+                Log.e("TODO", "Delete code worked!");
+
+            } catch (IOException e) {
+                throw new RuntimeException();
+            }
+            return null;
+        }
+    }
         public static void verifyClient() {
             if (client == null) {
                 // TODO: Consider moving this URL in to some config class
@@ -172,5 +224,121 @@ public class ElasticSearchController {
             }
         }
 
+    public static class GetProfileTask extends AsyncTask<String, Void, ArrayList<Profile>> {
+
+        @Override
+        protected ArrayList<Profile> doInBackground(String... params) {
+            verifyClient();
+
+            // Base arraylist to hold sessions
+            ArrayList<Profile> newProfiles = new ArrayList<Profile>();
+
+            // The following gets the top "10000" profiles
+            String search_string;
+            if (params[0] == "") {
+                //search_string = "{\"from\":0,\"size\":10000,\"query\":{\"match\":{\"status\":\"available\" }}}";
+                search_string = "{\"from\" : 0, \"size\" : 10000}";//, \"query\":{\"match\":{\"status\":\"available\"}}}";
+            } else {
+                // The following gets the top 10000 sessions matching the string passed in
+                search_string = "{\"from\":0,\"size\":10000,\"query\":{\"match\":{\"" + params[0] + "\":\"" + params[1] + "\"}}}";
+            }
+            Search search = new Search.Builder(search_string)
+                    .addIndex("cmput301w16t07")
+                    .addType("profile")
+                    .build();
+            try {
+                SearchResult execute = client.execute(search);
+                if (execute.isSucceeded()) {
+                    List<Profile> searchedProfile = execute.getSourceAsObjectList(Profile.class);
+                    newProfiles.addAll(searchedProfile);
+                }
+            } catch (IOException e) {
+                throw new RuntimeException();
+            }
+            return newProfiles;
+        }
     }
+
+    public static class AddProfileTask extends AsyncTask<Profile, Void, Void> {
+
+
+        @Override
+        protected Void doInBackground(Profile... params) {
+            verifyClient();
+
+            for (Profile profile : params) {
+                Index index = new Index.Builder(profile).index("cmput301w16t07").type("profile").id(profile.getProfileID().toString()).build();
+
+                try {
+                    DocumentResult execute = client.execute(index);
+                    if (execute.isSucceeded()) {
+
+                    } else {
+                        // TODO: Something more useful
+                        Log.e("TODO", "Our insert of profile failed, oh no!");
+                    }
+                    return null;
+                } catch (IOException e) {
+                    // TODO: Something more useful
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+    }
+
+    /**
+     * must pass in a profile's UUID
+     * from:https://github.com/CMPUT301W16T06/TechNoLogic/blob/master/src/app/src/main/java/ca/ualberta/cs/technologic/ElasticSearchComputer.java
+     */
+    public static class RemoveProfileTask extends AsyncTask<UUID, Void, Void> {
+
+        @Override
+        protected Void doInBackground(UUID... params) {
+            verifyClient();
+            ArrayList<Profile> profileToDelete = new ArrayList<>();
+            List<SearchResult.Hit<Map,Void>> hits = null;
+            String elasticSearchID;
+            String query = "{\"query\":{ \"match\" :{\"ProfileID\":\"" + params[0] + "\"}}}";
+            Search search = new Search.Builder(query)
+                    .addIndex("cmput301w16t07")
+                    .addType("profile")
+                    .build();
+
+            try {
+                SearchResult execute = client.execute(search);
+                if (execute.isSucceeded()) {
+                    List<Profile> searchedProfiles = execute.getSourceAsObjectList(Profile.class);
+                    hits = execute.getHits(Map.class);
+                    profileToDelete.addAll(searchedProfiles);
+                    Log.e("TEST", "Searching for profile to delete");
+                }
+            } catch (IOException e) {
+                throw new RuntimeException();
+            }
+
+
+            SearchResult.Hit hit = hits.get(0);
+            Map source = (Map)hit.source;
+            elasticSearchID = (String) source.get(JestResult.ES_METADATA_ID);
+            Delete delete = new Delete.Builder(elasticSearchID).index("cmput301w16t07").type("profile").build();
+
+            try {
+                DocumentResult execute = client.execute(delete);
+                if (execute.isSucceeded()) {
+                    Log.e("TEST", "Profile deletion succesful");
+                } else {
+                    // TODO: Something more useful
+                    Log.e("TODO", "Our delete of profile failed, oh no!");
+                }
+                return null;
+            } catch (IOException e) {
+                // TODO: Something more useful
+                Log.e("TODO", "Our delete of profile failed, 2nd type of exception");
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+}
 

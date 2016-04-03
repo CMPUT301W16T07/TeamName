@@ -19,6 +19,7 @@ public class CurrentBidsActivity extends MethodsController {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ListView currentBidsList; // view to display the current bids
+        checkConnectivity();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.current_bids);
@@ -40,6 +41,7 @@ public class CurrentBidsActivity extends MethodsController {
         currentBidsList.setBackgroundResource(R.drawable.apple_righ);
         //loadSessions(SESSIONSFILE);
 
+        //loadElasticSearch();
         loadCurrentBids(); // reload the global bids array
         adapter = new CurrentBidsAdapter(this, bids);
         currentBidsList.setAdapter(adapter);

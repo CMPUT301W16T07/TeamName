@@ -8,12 +8,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -40,7 +43,10 @@ import java.util.concurrent.ExecutionException;
 public class MethodsController extends AppCompatActivity {
     //protected static final String SESSIONSFILE = "sessions.sav";
     protected static final String USERFILE = "profile.sav";
+
+    protected static final String OFFLINEFILE = "tempSession.sav";
     protected static final String BIDFILE = "bids.sav";
+
 
     //TODO:load user profile if it exists or make new one.
     protected Profile currentProfile;
@@ -48,7 +54,7 @@ public class MethodsController extends AppCompatActivity {
     protected ArrayList<Session> sessions = new ArrayList<Session>();
     protected ArrayList<Session> availableSessions = new ArrayList<Session>();
     protected ArrayList<Profile> profiles = new ArrayList<Profile>();
-    protected ArrayList<Profile> allProfiles = new ArrayList<>();
+    protected ArrayList<Profile> allProfiles = new ArrayList<>(); // similar to sessions array but for profiles
     protected ArrayList<Bid> bids = new ArrayList<Bid>();
     protected ArrayList<Session> upcomingSessions = new ArrayList<>();
 
@@ -61,43 +67,41 @@ public class MethodsController extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1234;
     protected Bitmap thumbnail;
     protected ImageView newImage;
+    protected Boolean Connectivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Load current profile
-        //ArrayList<Profile> templist = new ArrayList<Profile>();
+        setConnectivity();
         loadProfile(USERFILE);
+
 
         if(profiles.size() == 0) {
             Profile tempProfile = new Profile("Default","Default","Default");
             profiles.add(tempProfile);
-            //ArrayList<Profile> profiles = new ArrayList<Profile>();
-
-            //Intent intent = new Intent(MethodsController.this, CreateProfileActivity.class);
-           // startActivity(intent);
-
-
         }
         currentProfile = profiles.get(0);
-        //loadSessions(SESSIONSFILE);
         loadElasticSearch();
+
+
     }
 
-    protected MethodsController(){
-        /*loadProfile(USERFILE);
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-        //loadSessions(SESSIONSFILE);
-        if(currentProfile == null) {
-            //ArrayList<Profile> profiles = new ArrayList<Profile>();
-            Intent intent = new Intent(MethodsController.this, CreateProfileActivity.class);
-            startActivity(intent);
-            //currentProfile = new Profile("test username","test phone","test email");
-            //profiles.add(currentProfile);
-            //saveProfile(currentProfile);
-        }*/
+//        // refresh current profile
+//        if (!currentProfile.isDefaultUser() && getProfile(currentProfile.getProfileID()) != null){
+//            setCurrentProfile(getProfile(currentProfile.getProfileID())); // in case ratings changed
+//        }
+//
+//        // refresh elastic search
+//        updateElasticSearchProfile(currentProfile);
+//        loadElasticSearch();
     }
+
+    protected MethodsController(){}
 
 
     /**
@@ -110,17 +114,28 @@ public class MethodsController extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             if (v.getId() == R.id.myProfile) {
+
                 Intent intent = new Intent(MethodsController.this, MyProfileActivity.class);
                 startActivity(intent);
+                finish();
             } else if (v.getId() == R.id.availableSessions) {
-                Intent intent = new Intent(MethodsController.this, AvailableSessionsActivity.class);
-                startActivity(intent);
+
+                //Intent intent = new Intent(MethodsController.this, AvailableSessionsActivity.class);
+                //startActivity(intent);
+                //finish();
+                Intent i = new Intent(MethodsController.this, AvailableSessionsActivity.class);
+                // set the new task and clear flags
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
+
             } else if (v.getId() == R.id.currentBids) {
                 Intent intent = new Intent(MethodsController.this, CurrentBidsActivity.class);
                 startActivity(intent);
+                finish();
             } else if (v.getId() == R.id.mySessions) {
                 Intent intent = new Intent(MethodsController.this, MySessionsActivity.class);
                 startActivity(intent);
+                finish();
             }
         }
     };
@@ -133,7 +148,7 @@ public class MethodsController extends AppCompatActivity {
      */
     public void saveInFile(String fileName, ArrayList list){
         try {
-            FileOutputStream fos = openFileOutput(fileName,Context.MODE_PRIVATE);
+            FileOutputStream fos = openFileOutput(fileName, Context.MODE_PRIVATE);
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
             Gson gson = new Gson();
             gson.toJson(list, out);
@@ -164,6 +179,28 @@ public class MethodsController extends AppCompatActivity {
         }
     }
 
+    public ArrayList<Session> loadOffline(){
+        ArrayList<Session> temp = new ArrayList<Session>();
+        try{
+
+            FileInputStream fis = openFileInput(OFFLINEFILE);
+            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+            Gson gson = new Gson();
+            // Took from https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/com/google/gson/Gson.html 01-2016-19
+            Type listType = new TypeToken<ArrayList<Session>>() {}.getType();
+            // Took from https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/com/google/gson/Gson.html 01-2016-19
+            temp = gson.fromJson(in, listType);
+            return temp;
+
+        }catch(FileNotFoundException e){
+            //TODO Auto-generated catch block
+            //currentProfile = new Profile("test username","test phone","test email");
+            //saveProfile(currentProfile);
+            return temp;
+
+        }
+    }
+
     private void loadProfile(String filename){
         try{
             FileInputStream fis = openFileInput(filename);
@@ -182,79 +219,115 @@ public class MethodsController extends AppCompatActivity {
         }
     }
 
+//    /**
+//     * loadSessions in MySessions must load the sessions that are directly owned by the
+//     * current User. To do this, we index the sessions array list, matching only the sessions
+//     * that are owned by the user of interest.
+//     *
+//     * @param filename the name of the file containing all the sessions.
+//     */
+//    public void loadSessions (String filename) {
+//
+//        //ArrayList<Session> allSessions;
+//        //allSessions = new ArrayList<>();
+//        sessionsOfInterest = new ArrayList<Session>();
+//        availableSessions = new ArrayList<>();
+//        try {
+//            FileInputStream fis = openFileInput(filename);
+//            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+//            Gson gson = new Gson();
+//            // Took from https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/com/google/gson/Gson.html 01-2016-19
+//            Type listType = new TypeToken<ArrayList<Session>>() {}.getType();
+//            sessions = gson.fromJson(in, listType);
+//            int size = sessions.size();
+//            UUID currentProfileID = currentProfile.getProfileID();
+//            for (int i = 0; i < size; i++){
+//                //TODO: we need to properly save and load profiles so the proper ProfileID is saved and not randomly generated each time we use the app
+//
+//                UUID tutorProfileID = sessions.get(i).getTutorID();
+//                if (currentProfileID.compareTo(tutorProfileID) == 0) {
+//                    sessionsOfInterest.add(sessions.get(i));
+//
+//                }
+//                if (sessions.get(i).getStatus().equals("available")) {
+//                    availableSessions.add(sessions.get(i));
+//
+//                }
+//            }
+//
+//
+//        } catch (FileNotFoundException e) {
+//            // TODO Auto-generated catch block
+//            sessionsOfInterest = new ArrayList<Session>();
+//
+//        }
+//    }
+
     /**
-     * loadSessions in MySessions must load the sessions that are directly owned by the
-     * current User. To do this, we index the sessions array list, matching only the sessions
-     * that are owned by the user of interest.
-     *
-     * @param filename the name of the file containing all the sessions.
-     */
-    public void loadSessions (String filename) {
-
-        //ArrayList<Session> allSessions;
-        //allSessions = new ArrayList<>();
-        sessionsOfInterest = new ArrayList<Session>();
-        availableSessions = new ArrayList<>();
-        try {
-            FileInputStream fis = openFileInput(filename);
-            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
-            Gson gson = new Gson();
-            // Took from https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/com/google/gson/Gson.html 01-2016-19
-            Type listType = new TypeToken<ArrayList<Session>>() {}.getType();
-            sessions = gson.fromJson(in, listType);
-            int size = sessions.size();
-            UUID currentProfileID = currentProfile.getProfileID();
-            for (int i = 0; i < size; i++){
-                //TODO: we need to properly save and load profiles so the proper ProfileID is saved and not randomly generated each time we use the app
-                UUID tutorProfileID = sessions.get(i).tutor.getProfileID();
-                if (currentProfileID.compareTo(tutorProfileID) == 0) {
-                    sessionsOfInterest.add(sessions.get(i));
-
-                }
-                if (sessions.get(i).getStatus().equals("available")) {
-                    availableSessions.add(sessions.get(i));
-
-                }
-            }
-
-
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            sessionsOfInterest = new ArrayList<Session>();
-
-        }
-    }
-
-    /**
-     *
+     * Loads all sessions from Elastic Search database into proper arrays.
      */
     public void loadElasticSearch () {
 
-        sessionsOfInterest = new ArrayList<Session>();
-        availableSessions = new ArrayList<>();
-        ElasticSearchController.GetSessionsTask getSessionsTask = new ElasticSearchController.GetSessionsTask();
-        getSessionsTask.execute("");
-        try {
-            sessions = getSessionsTask.get();
-            int size = sessions.size();
-            UUID currentProfileID = currentProfile.getProfileID();
-            for (int i = 0; i < size; i++){
-                //TODO: we need to properly save and load profiles so the proper ProfileID is saved and not randomly generated each time we use the app
-                UUID tutorProfileID = sessions.get(i).tutor.getProfileID();
-                if (currentProfileID.compareTo(tutorProfileID) == 0) {
-                    sessionsOfInterest.add(sessions.get(i));
 
+        if(Connectivity) {
+            sessionsOfInterest = new ArrayList<Session>();
+            availableSessions = new ArrayList<>();
+
+            ElasticSearchController.GetProfileTask getProfileTask = new ElasticSearchController.GetProfileTask();
+            getProfileTask.execute("");
+            try {
+                allProfiles = getProfileTask.get();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            //update sessions array
+            ElasticSearchController.GetSessionsTask getSessionsTask = new ElasticSearchController.GetSessionsTask();
+            getSessionsTask.execute("");
+            try {
+                sessions = getSessionsTask.get();
+                int size = sessions.size();
+                UUID currentProfileID = currentProfile.getProfileID();
+                for (int i = 0; i < size; i++) {
+                    //TODO: we need to properly save and load profiles so the proper ProfileID is saved and not randomly generated each time we use the app
+                    UUID tutorProfileID = sessions.get(i).getTutorID();
+                    if (currentProfileID.compareTo(tutorProfileID) == 0) {
+                        sessionsOfInterest.add(sessions.get(i));
+
+                    }
+                    if (sessions.get(i).getStatus().equals("available")) {
+                        availableSessions.add(sessions.get(i));
+
+                    }
                 }
-                if (sessions.get(i).getStatus().equals("available")) {
-                    availableSessions.add(sessions.get(i));
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
+
+            // code to notify peeps of the bids
+            for (int i = 0; i < allProfiles.size(); i++) {
+                if (allProfiles.get(i).getProfileID().equals(currentProfile.getProfileID())) {
+                    if (allProfiles.get(i).isNewBid() == true) {
+                        Notify();
+                        allProfiles.get(i).setNewBid(false);
+
+                        ElasticSearchController.UpdateProfileTask updateProfileTask = new ElasticSearchController.UpdateProfileTask();
+                        updateProfileTask.execute(currentProfile);
+                        //ElasticSearchController.RemoveProfileTask removeProfileTask = new ElasticSearchController.RemoveProfileTask();
+                        //removeProfileTask.execute(currentProfile.getProfileID());
+                        //ElasticSearchController.AddProfileTask addProfileTask = new ElasticSearchController.AddProfileTask();
+                        //addProfileTask.execute(currentProfile);
+                    }
                 }
             }
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
+
+        //end of notify
 
     }
 
@@ -286,7 +359,7 @@ public class MethodsController extends AppCompatActivity {
     }
 
     /**
-     * Checks if the user is logged in. An alert give them the option to go back to avalible sessions
+     * Checks if the user is logged in. An alert give them the option to go back to available sessions
      * or Log in, calling the MyProfile to create a profile
      */
     public void verifyLogin(){
@@ -319,32 +392,49 @@ public class MethodsController extends AppCompatActivity {
 
     }
 
-    /*public void loadFromFile(String fileName){
-        //TODO: Implement this
-    }*/
-
-    private void verifyFields(){
-        //TODO: not needed straight away so don't need to do this yet
-    }
-
-    private void updateStatus(){
-        //TODO: Implement this
-    }
-
     /**
-     * updateElasticSearch will update a given session if information was added to it.
+     * updateElasticSearchSession will update a given session if information was added to it.
      * It does this by removing the old session and adding the new one.
      * @param session session object we wish to update
      */
-    protected void updateElasticSearch(Session session){
+    protected void updateElasticSearchSession(Session session){
+
+        ElasticSearchController.UpdateSessionTask updateSessionTask = new ElasticSearchController.UpdateSessionTask();
+        updateSessionTask.execute(session);
         // Remove old session that has information missing
-        ElasticSearchController.RemoveSessionTask removeSessionTask = new ElasticSearchController.RemoveSessionTask();
-        removeSessionTask.execute(session.getSessionID());
+        //ElasticSearchController.RemoveSessionTask removeSessionTask = new ElasticSearchController.RemoveSessionTask();
+        //removeSessionTask.execute(session.getSessionID());
 
         //add new session that has the information we want to add
-        ElasticSearchController.AddSessionTask addSessionTask = new ElasticSearchController.AddSessionTask();
-        addSessionTask.execute(session);
+       // ElasticSearchController.AddSessionTask addSessionTask = new ElasticSearchController.AddSessionTask();
+        //addSessionTask.execute(session);
+
+       loadElasticSearch(); // load the newest addition
+    }
+
+    /**
+     * updateElasticSearchProfile will update a given profile if information was added to it.
+     * It does this by removing the old profile and adding the new one.
+     * @param profile profile object we wish to update
+     */
+    protected void updateElasticSearchProfile(Profile profile){
+        // Remove old profile that has information missing
+        //ElasticSearchController.RemoveProfileTask removeProfileTask = new ElasticSearchController.RemoveProfileTask();
+        //removeProfileTask.execute(profile.getProfileID());
+
+        //add new profile that has the information we want to add
+        //ElasticSearchController.AddProfileTask addProfileTask = new ElasticSearchController.AddProfileTask();
+        //addProfileTask.execute(profile);
+
+        ElasticSearchController.UpdateProfileTask updateProfileTask = new ElasticSearchController.UpdateProfileTask();
+        updateProfileTask.execute(profile);
         loadElasticSearch(); // load the newest addition
+
+        //make sure current profile proper
+        UUID currentUUID = currentProfile.getProfileID();
+        Profile newCurrent = getProfile(currentUUID);
+        currentProfile = newCurrent;
+        //TODO: maybe need to update the profiles array and save that to local file
     }
 
     public static MethodsController getInstance(){
@@ -362,13 +452,15 @@ public class MethodsController extends AppCompatActivity {
     public void Notify() {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.icon_notification)
+                .setAutoCancel(true)
                 .setContentTitle("Tutor Trader")
-                .setContentText("You have a new notification");
+                .setContentText("Somebody has bid on one of your sessions!");
 
-        Intent resultIntent = new Intent(this, AvailableSessionsActivity.class);
+        Intent resultIntent = new Intent(this, MySessionsActivity.class);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-        stackBuilder.addParentStack(AvailableSessionsActivity.class);
+        stackBuilder.addParentStack(MySessionsActivity.class);
         stackBuilder.addNextIntent(resultIntent);
+
 
         PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -376,6 +468,7 @@ public class MethodsController extends AppCompatActivity {
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         mNotificationManager.notify(1, mBuilder.build());
+
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
@@ -389,6 +482,129 @@ public class MethodsController extends AppCompatActivity {
         }
     }
 
-    //TODO: make getProfile which takes a UUID and returns a list with the profile on it;
+    /**
+     * get profile will return a profile object from elastic search if you pass in a profile UUID
+     * @param uuid the profile's UUID
+     * @return the Profile object
+     */
+    public static Profile getProfile (UUID uuid) {
+
+        ArrayList <Profile> returnedProfile = new ArrayList<>();
+        ElasticSearchController.GetProfileTask getProfileTask = new ElasticSearchController.GetProfileTask();
+        getProfileTask.execute("ProfileID", uuid.toString());
+        try {
+            returnedProfile = getProfileTask.get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (returnedProfile.size() == 1) {
+            return returnedProfile.get(0);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * profileExists will return true if a username exists in the database, false otherwise
+     * @param username the username to check.
+     * @param userProfile the current user's Profile name (since we know that exists already)
+     * @return Boolean.
+     */
+    public static Boolean profileExists (String username, String userProfile) {
+
+        ArrayList <Profile> returnedProfile = new ArrayList<>();
+        ElasticSearchController.GetProfileTask getProfileTask = new ElasticSearchController.GetProfileTask();
+        getProfileTask.execute("name", username);
+
+        // search the database
+        try {
+            returnedProfile = getProfileTask.get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // if we found a match
+        if (returnedProfile.size() == 1) {
+
+            // make sure it isn't the current profile
+            return (!returnedProfile.get(0).getName().equals(userProfile));
+
+        // if we didn't find a match, profile doesn't exist
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * get session will return a session object from elastic search if you pass in a session UUID
+     * @param uuid the session's UUID
+     * @return the Session object
+     */
+    static public Session getSession (UUID uuid) {
+        ArrayList <Session> returnedSession = new ArrayList<>();
+        ElasticSearchController.GetSessionsTask getSessionsTask = new ElasticSearchController.GetSessionsTask();
+        getSessionsTask.execute("sessionID", uuid.toString());
+        try {
+            returnedSession = getSessionsTask.get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (returnedSession.size() == 1) {
+            return returnedSession.get(0);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * http://stackoverflow.com/questions/5474089/how-to-check-currently-internet-connection-is-available-or-not-in-android
+     * retruns true if connected to internet
+     * @return
+     */
+    public void checkConnectivity(){
+
+        setConnectivity();
+        if(!Connectivity){
+            Toast.makeText(MethodsController.this, "No Internet! \n continuing in offline mode", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(MethodsController.this, MySessionsActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    public void setConnectivity(){
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            Connectivity = Boolean.TRUE;
+            //Upload offline save file
+            ArrayList<Session> toUpload = loadOffline();
+            if(toUpload.size() > 0 ) {
+                for (int i = 0; i < toUpload.size(); i++) {
+                    Session session = toUpload.get(i);
+                    ElasticSearchController.AddSessionTask addSessionTask = new ElasticSearchController.AddSessionTask();
+                    addSessionTask.execute(session);
+                    //loadElasticSearch();
+
+                }
+                toUpload.clear();
+                saveInFile(OFFLINEFILE,toUpload);
+            }
+
+        }else{
+            Connectivity = Boolean.FALSE;
+        }
+
+
+
+    }
+
+
 
 }

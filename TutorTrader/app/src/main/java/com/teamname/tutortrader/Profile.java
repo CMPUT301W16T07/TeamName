@@ -11,12 +11,22 @@ import java.util.UUID;
 public class Profile {
 
     private UUID ProfileID;
-    private String name = null;
+    private String name;
     private String phone;
     private String email;
     private ArrayList<Double> tutorRatings; // an array of all tutor ratings
     private ArrayList<Double> studentRatings; // an array of all student ratings
     private boolean defaultUser = Boolean.TRUE;
+
+    private boolean newBid = false;
+
+    public boolean isNewBid() {
+        return newBid;
+    }
+
+    public void setNewBid(boolean newBid) {
+        this.newBid = newBid;
+    }
 
     //private static final Profile instance = new Profile();
 

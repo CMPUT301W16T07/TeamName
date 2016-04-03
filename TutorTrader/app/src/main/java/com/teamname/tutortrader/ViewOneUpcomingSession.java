@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 public class ViewOneUpcomingSession extends MethodsController {
@@ -47,7 +48,11 @@ public class ViewOneUpcomingSession extends MethodsController {
                     builder.setTitle("Rate Tutor")
                             .setItems(items, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    //TODO: get the tutor's info then add rating to it
+                                    Profile wantedProfile = getProfile(sessionsOfInterest.get(index_r).getTutorID());
+                                    Double rating = (double)which + 1;
+                                    wantedProfile.addTutorRating(rating);
+                                    updateElasticSearchProfile(wantedProfile);
+                                    loadElasticSearch();
 
                                 }
                             });
@@ -61,6 +66,8 @@ public class ViewOneUpcomingSession extends MethodsController {
      * @param index the index of the session in the sessions arraylist is passed in.
      */
     public void initializeFields(int index) {
+        Profile tutor = getProfile(sessionsOfInterest.get(index).getTutorID());
+
         TextView titleBody = (TextView) findViewById(R.id.upcomingOneTitleBody);
         TextView descriptionBody = (TextView) findViewById(R.id.upcomingOneDescriptionBody);
         TextView postedByBody = (TextView) findViewById(R.id.upcomingOnePostedByBody);
@@ -73,9 +80,9 @@ public class ViewOneUpcomingSession extends MethodsController {
         sessionImage.setImageBitmap(sessionsOfInterest.get(index).getThumbnail());
         titleBody.setText("Title: " + sessionsOfInterest.get(index).getTitle());
         descriptionBody.setText("Description: "+sessionsOfInterest.get(index).getDescription());
-        postedByBody.setText("Posted By: "+sessionsOfInterest.get(index).tutor.getName());
-        bodyEmail.setText("Email: " + sessionsOfInterest.get(index).tutor.getEmail());
-        bodyPhone.setText("Phone" + sessionsOfInterest.get(index).tutor.getPhone());
+        postedByBody.setText("Posted By: "+tutor.getName());
+        bodyEmail.setText("Email: " + tutor.getEmail());
+        bodyPhone.setText("Phone" + tutor.getPhone());
         bodyStatus.setText("Status: You won the bid!");
     }
 

@@ -10,13 +10,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+
 import com.google.android.gms.maps.model.LatLng;
+
+import java.util.ArrayList;
+
 
 /**
  *
  * The activity for adding new tutor sessions as a user.
  */
 public class AddSessionActivity extends MethodsController  {
+
 
    private LatLng tempPoint;
 
@@ -56,16 +61,24 @@ public class AddSessionActivity extends MethodsController  {
                     EditText descriptionEdit = (EditText) findViewById(R.id.descriptionEdit);
                     // TODO: implement Tutor
 
-                    Session newSession = new Session(subjectEdit.getText().toString(),descriptionEdit.getText().toString(),currentProfile, thumbnail, tempPoint);
+                    Session newSession = new Session(subjectEdit.getText().toString(),descriptionEdit.getText().toString(),currentProfile.getProfileID(), thumbnail, tempPoint);
+
                     newSession.addThumbnail(thumbnail);
+
                     //sessions.add(newSession);
-                    ElasticSearchController.AddSessionTask addSessionTask = new ElasticSearchController.AddSessionTask();
-                    addSessionTask.execute(newSession);
+                    if (Connectivity) {
+                        ElasticSearchController.AddSessionTask addSessionTask = new ElasticSearchController.AddSessionTask();
+                        addSessionTask.execute(newSession);
+                    }else{
+                         ArrayList<Session> tempSessions = loadOffline();
+                        tempSessions.add(newSession);
+                        saveInFile(OFFLINEFILE, tempSessions);
+                    }
                     loadElasticSearch(); // load the newest addition
                     //sessions.add(newSession);
                     //saveInFile(SESSIONSFILE, sessions);
-                    Intent intent = new Intent(AddSessionActivity.this, MySessionsActivity.class);
-                    startActivity(intent);
+                    finish();
+
                 }
             }
         });

@@ -10,10 +10,13 @@ import android.widget.TextView;
  * The activity that allows a user to view their profile.
  */
 public class MyProfileActivity extends MethodsController {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_profile);
+        checkConnectivity();
+
         btn_CurrentBids = (Button) findViewById(R.id.currentBids);
         btn_CurrentBids.setOnClickListener(btnClickListener);
         btn_myProfile = (Button) findViewById(R.id.myProfile);
@@ -27,10 +30,15 @@ public class MyProfileActivity extends MethodsController {
         TextView activityTitle = (TextView) findViewById(R.id.activityTitle);
         activityTitle.setText(R.string.MyProfileButton);
 
+
         if (currentProfile.isDefaultUser()){
             //create new profile
             Intent intent = new Intent(MyProfileActivity.this, CreateProfileActivity.class);
             startActivity(intent);
+        }
+
+        if ((Connectivity)&&(getProfile(currentProfile.getProfileID()) != null)) {
+            setCurrentProfile(getProfile(currentProfile.getProfileID())); // in case ratings changed
         }
 
         //get textviews
@@ -52,16 +60,11 @@ public class MyProfileActivity extends MethodsController {
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                checkConnectivity();
                Intent intent = new Intent(MyProfileActivity.this, EditProfileActivity.class );
                startActivity(intent);
 
             }
         });
-
-
-
-
-
     }
 }

@@ -37,8 +37,9 @@ public class ViewOneSessionActivity extends MethodsController {
             @Override
             public void onClick(View v) {
                 //TODO: we should pass the data entry so the fields can be filled in
-                Intent intent = new Intent(ViewOneSessionActivity.this, MySessionsActivity.class);
-                startActivity(intent);
+                finish();
+                //Intent intent = new Intent(ViewOneSessionActivity.this, MySessionsActivity.class);
+                //startActivity(intent);
             }
         });
 
@@ -94,16 +95,47 @@ public class ViewOneSessionActivity extends MethodsController {
             }
         });
 
+
         Button mapButton = (Button) findViewById(R.id.mapButton);
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ViewOneSessionActivity.this,ViewMapsActivity.class);
+                Intent intent = new Intent(ViewOneSessionActivity.this, ViewMapsActivity.class);
 
                 Bundle place = new Bundle();
-                place.putParcelable("place",sessionsOfInterest.get(index_r).getLocation());
+                place.putParcelable("place", sessionsOfInterest.get(index_r).getLocation());
                 intent.putExtras(place);
                 startActivity(intent);
+            }
+        });
+
+
+        Button repostButton = (Button) findViewById(R.id.repostButton);
+        repostButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ViewOneSessionActivity.this);
+                builder.setMessage("Reposting this session means all bids will be removed and the status will be set to available do you wish to continue?")
+                .setCancelable(false)
+                        // This will repost the session of interest
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                sessionsOfInterest.get(index_r).declineAllBids();
+                                sessionsOfInterest.get(index_r).deleteAllBids();
+                                sessionsOfInterest.get(index_r).setStatus("available");
+                                updateElasticSearchSession(sessionsOfInterest.get(index_r));
+                                loadElasticSearch();
+                                Intent intent = new Intent(ViewOneSessionActivity.this, MySessionsActivity.class);
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
 
             }
         });
@@ -114,6 +146,8 @@ public class ViewOneSessionActivity extends MethodsController {
      * @param index the index of the session in the sessions arraylist is passed in.
      */
     public void initializeFields(int index) {
+        Profile tutor = getProfile(sessionsOfInterest.get(index).getTutorID());
+
         TextView titleBody = (TextView) findViewById(R.id.titleBody);
         TextView descriptionBody = (TextView) findViewById(R.id.descriptionBody);
         TextView postedByBody = (TextView) findViewById(R.id.postedByBody);
@@ -124,11 +158,13 @@ public class ViewOneSessionActivity extends MethodsController {
         ImageView sessionImage = (ImageView) findViewById(R.id.sessionImage);
 
         sessionImage.setImageBitmap(sessionsOfInterest.get(index).getThumbnail());
-        titleBody.setText("Title: "+ sessionsOfInterest.get(index).getTitle());
-        descriptionBody.setText("Description: "+sessionsOfInterest.get(index).getDescription());
-        postedByBody.setText("Posted By: "+sessionsOfInterest.get(index).tutor.getName());
-        bodyEmail.setText("Email: " + sessionsOfInterest.get(index).tutor.getEmail());
-        bodyPhone.setText("Phone" +sessionsOfInterest.get(index).tutor.getPhone());
-        bodyStatus.setText("Status: "+sessionsOfInterest.get(index).getStatus());
+        titleBody.setText("Title: " + sessionsOfInterest.get(index).getTitle());
+        descriptionBody.setText("Description: " + sessionsOfInterest.get(index).getDescription());
+        postedByBody.setText("Posted By: "+ tutor.getName());
+        bodyEmail.setText("Email: " + tutor.getEmail());
+        bodyPhone.setText("Phone" + tutor.getPhone());
+        bodyStatus.setText("Status: " + sessionsOfInterest.get(index).getStatus());
     }
+
+
 }

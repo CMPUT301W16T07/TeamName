@@ -21,8 +21,8 @@ import java.util.UUID;
 public class Session {
     private String title;
     private String description;
-    protected Profile tutor;
     private String status;
+    private UUID tutorID;
     private UUID sessionID;
     private ArrayList<Bid> bids;
     protected transient Bitmap thumbnail;
@@ -32,11 +32,11 @@ public class Session {
 
 
 
-    public Session(String title, String description, Profile tutor, Bitmap thumbnail,LatLng location) {
+    public Session(String title, String description, UUID tutorID, Bitmap thumbnail,LatLng location) {
         this.title = title;
         this.description = description;
         this.status = "available";
-        this.tutor = tutor;
+        this.tutorID = tutorID;
         this.sessionID = UUID.randomUUID();
         this.bids = new ArrayList<Bid>();
         this.thumbnail = thumbnail;
@@ -44,27 +44,31 @@ public class Session {
 
     }
 
-    public Session(String title, String description, Profile tutor, Bitmap thumbnail) {
+    public Session(String title, String description, UUID tutorID, Bitmap thumbnail) {
         this.title = title;
         this.description = description;
         this.status = "available";
-        this.tutor = tutor;
+        this.tutorID = tutorID;
         this.sessionID = UUID.randomUUID();
         this.bids = new ArrayList<Bid>();
         this.thumbnail = thumbnail;
 
     }
 
-    public Session(String title, String description, Profile tutor) {
+    public Session(String title, String description, UUID tutorID) {
+
         this.title = title;
         this.description = description;
         this.status = "available";
-        this.tutor = tutor;
+        this.tutorID = tutorID;
         this.sessionID = UUID.randomUUID();
         this.bids = new ArrayList<Bid>();
         this.thumbnail = null;
     }
 
+    public UUID getTutorID() {
+        return tutorID;
+    }
 
     /**
      * When creates a new bid the bid is passed into addBid for the specific session.
@@ -131,6 +135,9 @@ public class Session {
         for (int i=0; i< bids.size(); i++) {
             bids.get(i).setStatus("declined");
         }
+    }
+    public void deleteAllBids () {
+        bids.clear();
     }
 
     @Override
