@@ -99,7 +99,7 @@ public class Profile {
                 sum = sum + tutorRatings.get(i);
             }
         }
-        return sum;
+        return sum/tutorRatings.size();
     }
 
     /**
@@ -114,7 +114,7 @@ public class Profile {
                 sum = sum + studentRatings.get(i);
             }
         }
-        return sum;
+        return sum/studentRatings.size();
     }
 
     public void addTutorRating (double rating) {

@@ -22,17 +22,16 @@ public class ViewBidsActivity extends MethodsController {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_bids);
         Intent intent = getIntent();
+
         /*
             The index of the entry that was clicked in the list of entries displayed on the main
             screen is passed through the intent. Here is where we access it
         */
-        final String index_receive = intent.getStringExtra("index");
-        final int index_r = Integer.parseInt(index_receive);
+        final int index_r = intent.getIntExtra("index", 0);
 
         // populates the list of all bids
         allBidsList = (ListView) findViewById(R.id.bidsListView);
         allBidsList.setBackgroundResource(R.drawable.black_chalkboard);
-        //loadSessions(SESSIONSFILE);
         loadElasticSearch();
         adapter = new CurrentBidsOnMySessionsAdapter(this, sessionsOfInterest.get(index_r).getBids());
         allBidsList.setAdapter(adapter);
@@ -48,7 +47,9 @@ public class ViewBidsActivity extends MethodsController {
         sessionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent intent = new Intent(ViewBidsActivity.this, ViewOneSessionActivity.class);
+                intent.putExtra("index", index_r);
+                startActivity(intent);
             }
         });
 
@@ -76,12 +77,18 @@ public class ViewBidsActivity extends MethodsController {
                             .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     Integer index = sessions.indexOf(sessionsOfInterest.get(index_r));
-                                    Session tempSession = sessions.get(index);
-                                    tempSession.setStatus("booked");
-                                    updateElasticSearchSession(tempSession);
-                                    //availableSessions.remove(index);
-                                    notifyBidders(currentBid, index);
-                                    //saveInFile(SESSIONSFILE, sessions);
+                                    sessionsOfInterest.get(index_r).setStatus("booked");
+                                    sessions.get(index).declineAllBids();
+                                    for (int i = 0; i < sessions.get(index).getBids().size(); i++) {
+                                        if (i==sessions.get(index).getBids().indexOf(currentBid)) {
+                                            sessions.get(index).getBids().get(i).setStatus("accepted");
+                                        } else {
+                                            sessions.get(index).getBids().get(i).setStatus("declined");
+                                        }
+                                    }
+                                    sessions.get(index).getBids().clear();
+                                    sessions.get(index).getBids().add(currentBid);
+                                    updateElasticSearchSession(sessionsOfInterest.get(index_r));
                                     adapter.notifyDataSetChanged();
                                 }
                             })
@@ -109,41 +116,5 @@ public class ViewBidsActivity extends MethodsController {
                 }
             }
         });
-
-
-    }
-
-
-
-    /**
-     * notifyBidders will notify all bidders who were declined, and remove those bids from the sessions
-     * bids. It will then notify the successful bidder and keep it in the list.
-     * //@param bidsList the list of bids for the session of interest
-     * @param currentBid the bid object of the accepted bid within a sessions bids
-     * @param sessionIndex the index of the session of interest in the list of all sessions.
-     */
-    private void notifyBidders(Bid currentBid, Integer sessionIndex) {
-        //sessions.get(sessionIndex).getBids().size()
-        Session tempSession = sessions.get(sessionIndex);
-        Bid acceptedBid = currentBid;
-        tempSession.declineAllBids();
-        acceptedBid.setStatus("accepted");
-        for (int i = 0; i < tempSession.getBids().size();i++) {
-            if (i==tempSession.getBids().indexOf(currentBid)) {
-                tempSession.getBids().get(i).setStatus("accepted");
-                acceptedBid = tempSession.getBids().get(i);
-
-                //TODO: notify winning bidder
-            } else {
-                // TODO: alert bidder that it has been declined
-                tempSession.getBids().get(i).setStatus("declined"); // probably dont need this line
-               // sessions.get(sessionIndex).getBids().remove(sessions.get(sessionIndex).getBids().get(i));
-            }
-
-        }
-        tempSession.getBids().clear();
-        tempSession.getBids().add(acceptedBid);
-        updateElasticSearchSession(tempSession);
-        //saveInFile(SESSIONSFILE, sessions);
     }
 }
