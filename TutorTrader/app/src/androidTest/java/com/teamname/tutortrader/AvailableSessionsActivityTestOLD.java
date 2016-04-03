@@ -45,7 +45,7 @@ public class AvailableSessionsActivityTestOLD extends ActivityInstrumentationTes
      * <p/>
      * To test, we add 2 new sessions and then we check if they are there
      * We assume that sessions.add works
-     * @see ActivitySessionActivityTest
+     * @see AvailableSessionsActivityTest
      */
 
     public void testViewSessions() throws Exception {
