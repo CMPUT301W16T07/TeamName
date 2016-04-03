@@ -73,8 +73,9 @@ public class MethodsController extends AppCompatActivity {
 
         //Load current profile
         //ArrayList<Profile> templist = new ArrayList<Profile>();
-        loadProfile(USERFILE);
         setConnectivity();
+        loadProfile(USERFILE);
+
 
         if(profiles.size() == 0) {
             Profile tempProfile = new Profile("Default","Default","Default");
@@ -88,7 +89,10 @@ public class MethodsController extends AppCompatActivity {
         }
         currentProfile = profiles.get(0);
         //loadSessions(SESSIONSFILE);
+
         loadElasticSearch();
+
+
     }
 
     protected MethodsController(){
@@ -263,42 +267,44 @@ public class MethodsController extends AppCompatActivity {
      */
     public void loadElasticSearch () {
 
-        sessionsOfInterest = new ArrayList<Session>();
-        availableSessions = new ArrayList<>();
+        if(Connectivity) {
+            sessionsOfInterest = new ArrayList<Session>();
+            availableSessions = new ArrayList<>();
 
-        ElasticSearchController.GetProfileTask getProfileTask = new ElasticSearchController.GetProfileTask();
-        getProfileTask.execute("");
-        try {
-            allProfiles = getProfileTask.get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        //update sessions array
-        ElasticSearchController.GetSessionsTask getSessionsTask = new ElasticSearchController.GetSessionsTask();
-        getSessionsTask.execute("");
-        try {
-            sessions = getSessionsTask.get();
-            int size = sessions.size();
-            UUID currentProfileID = currentProfile.getProfileID();
-            for (int i = 0; i < size; i++){
-                //TODO: we need to properly save and load profiles so the proper ProfileID is saved and not randomly generated each time we use the app
-                UUID tutorProfileID = sessions.get(i).getTutorID();
-                if (currentProfileID.compareTo(tutorProfileID) == 0) {
-                    sessionsOfInterest.add(sessions.get(i));
-
-                }
-                if (sessions.get(i).getStatus().equals("available")) {
-                    availableSessions.add(sessions.get(i));
-
-                }
+            ElasticSearchController.GetProfileTask getProfileTask = new ElasticSearchController.GetProfileTask();
+            getProfileTask.execute("");
+            try {
+                allProfiles = getProfileTask.get();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+
+            //update sessions array
+            ElasticSearchController.GetSessionsTask getSessionsTask = new ElasticSearchController.GetSessionsTask();
+            getSessionsTask.execute("");
+            try {
+                sessions = getSessionsTask.get();
+                int size = sessions.size();
+                UUID currentProfileID = currentProfile.getProfileID();
+                for (int i = 0; i < size; i++) {
+                    //TODO: we need to properly save and load profiles so the proper ProfileID is saved and not randomly generated each time we use the app
+                    UUID tutorProfileID = sessions.get(i).getTutorID();
+                    if (currentProfileID.compareTo(tutorProfileID) == 0) {
+                        sessionsOfInterest.add(sessions.get(i));
+
+                    }
+                    if (sessions.get(i).getStatus().equals("available")) {
+                        availableSessions.add(sessions.get(i));
+
+                    }
+                }
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
     }

@@ -41,7 +41,7 @@ public class AvailableSessionsActivity extends MethodsController {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.available_sessions);
 
-        checkConnectivity();
+
 
 
 
@@ -170,6 +170,8 @@ public class AvailableSessionsActivity extends MethodsController {
                 startActivity(intent);
             }
         });
+
+        checkConnectivity();
 
     }
 
