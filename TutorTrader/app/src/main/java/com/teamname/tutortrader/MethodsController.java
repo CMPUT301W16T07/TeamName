@@ -560,6 +560,7 @@ public class MethodsController extends AppCompatActivity {
                     Session session = toUpload.get(i);
                     ElasticSearchController.AddSessionTask addSessionTask = new ElasticSearchController.AddSessionTask();
                     addSessionTask.execute(session);
+                    loadElasticSearch();
 
                 }
                 toUpload.clear();
