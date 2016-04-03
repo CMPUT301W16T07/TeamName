@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:orientation="vertical" android:layout_width="match_parent"
-android:layout_height="match_parent"
-    android:weightSum="1">
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary" >
 
     <!-- Menubar -->
     <include layout="@layout/menubar"/>
@@ -11,12 +11,11 @@ android:layout_height="match_parent"
     <ListView
         android:layout_width="wrap_content"
         android:id="@+id/sessionList"
-        android:layout_height="0dp"
+        android:layout_height="382dp"
         android:layout_alignParentEnd="true"
         android:layout_gravity="left"
-        android:layout_weight="0.87"
         android:divider="@null"
-        android:dividerHeight="0dp"></ListView>
+        android:dividerHeight="0dp" />
 
     <Button
         android:layout_width="match_parent"
