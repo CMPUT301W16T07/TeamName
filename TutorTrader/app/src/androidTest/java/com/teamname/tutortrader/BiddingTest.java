@@ -50,7 +50,9 @@ public class BiddingTest extends ActivityInstrumentationTestCase2 {
         Bitmap.Config conf = Bitmap.Config.ARGB_8888;
         Bitmap bm1 = Bitmap.createBitmap(1,2, conf);
         Profile profile = new Profile("Name", "Phone", "Email");
-        Session session = new Session("Math", "Tutor for linear Algebra for all university levels",profile,bm1);
+
+        Session session = new Session("Math", "Tutor for linear Algebra for all university levels", profile.getProfileID(), bm1);
+        
         UUID profileID = profile.getProfileID();
         float bidvalue = Float.valueOf(12); // valid amount
         Bid newbid = new Bid(session.getSessionID(), profileID, bidvalue);

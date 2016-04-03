@@ -18,10 +18,6 @@ import java.util.ArrayList;
  */
 public class AddSessionActivity extends MethodsController  {
 
-    //final MethodsController instance = MethodsController.getInstance();
-    //final Profile currentProfile = instance.getCurrentProfile();
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,10 +50,9 @@ public class AddSessionActivity extends MethodsController  {
                 if (valid) {
                     EditText subjectEdit = (EditText) findViewById(R.id.subjectEdit);
                     EditText descriptionEdit = (EditText) findViewById(R.id.descriptionEdit);
-                    // TODO: implement Tutor
-
                     Session newSession = new Session(subjectEdit.getText().toString(),descriptionEdit.getText().toString(),currentProfile.getProfileID(), thumbnail);
                     newSession.addThumbnail(thumbnail);
+
                     //sessions.add(newSession);
                     if (Connectivity) {
                         ElasticSearchController.AddSessionTask addSessionTask = new ElasticSearchController.AddSessionTask();
@@ -70,8 +65,8 @@ public class AddSessionActivity extends MethodsController  {
                     loadElasticSearch(); // load the newest addition
                     //sessions.add(newSession);
                     //saveInFile(SESSIONSFILE, sessions);
-                    Intent intent = new Intent(AddSessionActivity.this, MySessionsActivity.class);
-                    startActivity(intent);
+                    finish();
+
                 }
             }
         });

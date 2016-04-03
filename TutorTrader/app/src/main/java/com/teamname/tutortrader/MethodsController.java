@@ -307,6 +307,22 @@ public class MethodsController extends AppCompatActivity {
             }
         }
 
+        //code to notify peeps of the bids
+        for(int i = 0; i < allProfiles.size(); i++) {
+            if (allProfiles.get(i).getProfileID().compareTo(currentProfile.getProfileID()) == 0) {
+                if ( allProfiles.get(i).isNewBid() == true) {
+                    Notify();
+                    allProfiles.get(i).setNewBid(false);
+                    ElasticSearchController.RemoveProfileTask removeProfileTask = new ElasticSearchController.RemoveProfileTask();
+                    removeProfileTask.execute(currentProfile.getProfileID());
+                    ElasticSearchController.AddProfileTask addProfileTask = new ElasticSearchController.AddProfileTask();
+                    addProfileTask.execute(currentProfile);
+                }
+            }
+        }
+
+        //end of notify
+
     }
 
     /**
@@ -436,13 +452,15 @@ public class MethodsController extends AppCompatActivity {
     public void Notify() {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.icon_notification)
+                .setAutoCancel(true)
                 .setContentTitle("Tutor Trader")
-                .setContentText("You have a new notification");
+                .setContentText("Somebody has bid on one of your sessions!");
 
-        Intent resultIntent = new Intent(this, AvailableSessionsActivity.class);
+        Intent resultIntent = new Intent(this, MySessionsActivity.class);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-        stackBuilder.addParentStack(AvailableSessionsActivity.class);
+        stackBuilder.addParentStack(MySessionsActivity.class);
         stackBuilder.addNextIntent(resultIntent);
+
 
         PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -450,6 +468,7 @@ public class MethodsController extends AppCompatActivity {
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         mNotificationManager.notify(1, mBuilder.build());
+
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
