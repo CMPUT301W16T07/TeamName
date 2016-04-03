@@ -72,7 +72,7 @@ public class EditSessionActivity extends MethodsController {
                 EditText descriptionEdit = (EditText) findViewById(R.id.descriptionEdit);
                 valid = verifyFields();
                 if (valid) {
-                    // Remove old session
+                    //Remove old session
                     ElasticSearchController.RemoveSessionTask removeSessionTask = new ElasticSearchController.RemoveSessionTask();
                     removeSessionTask.execute(sessionsOfInterest.get(index_r).getSessionID());
 
@@ -81,6 +81,7 @@ public class EditSessionActivity extends MethodsController {
 
                     ElasticSearchController.AddSessionTask addSessionTask = new ElasticSearchController.AddSessionTask();
                     addSessionTask.execute(newSession);
+
                     loadElasticSearch(); // load the newest addition
                     finish();
                 }
