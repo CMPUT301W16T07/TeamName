@@ -38,8 +38,8 @@ public class BidOnSessionActivity extends MethodsController {
             The index of the entry that was clicked in the list of entries displayed on the main
             screen is passed through the intent. Here is where we access it
         */
-        final String index_receive = intent.getStringExtra("index");
-        final int index = Integer.parseInt(index_receive);
+        final int index = intent.getIntExtra("index", 0);
+
         loadElasticSearch();
         selectedSessionIndex = sessions.indexOf(availableSessions.get(index));
         selectedSession = sessions.get(selectedSessionIndex);
@@ -53,7 +53,8 @@ public class BidOnSessionActivity extends MethodsController {
         backToAllButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent intent = new Intent(BidOnSessionActivity.this, AvailableSessionsActivity.class);
+                startActivity(intent);
             }
         });
 
