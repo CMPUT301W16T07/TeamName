@@ -48,9 +48,6 @@ public class CreateProfileActivity extends MethodsController{
                     setResult(RESULT_OK);
                     Intent intent = new Intent(CreateProfileActivity.this, MyProfileActivity.class);
                     startActivity(intent);
-                    //finish();
-
-
                 }
             }
         });
@@ -60,7 +57,6 @@ public class CreateProfileActivity extends MethodsController{
             public void onClick(View v) {
                 Intent intent = new Intent(CreateProfileActivity.this, AvailableSessionsActivity.class);
                 startActivity(intent);
-                //finish();
             }
         });
 

@@ -34,7 +34,6 @@ public class CurrentBidsOnMySessionsAdapter extends ArrayAdapter<Bid> {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View currentBidView = inflater.inflate(R.layout.current_bids_on_my_sessions_list_item, parent, false);
 
-        TextView sessionView = (TextView) currentBidView.findViewById(R.id.sessionTitle);
         TextView amountView = (TextView) currentBidView.findViewById(R.id.amount);
         TextView statusView = (TextView) currentBidView.findViewById(R.id.status);
         TextView ratingView = (TextView) currentBidView.findViewById(R.id.rating);

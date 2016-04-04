@@ -12,10 +12,8 @@ import java.util.UUID;
 
 /**
  * Holds information for individual tutor sessions.
- */
-
-/**
- * Session object class
+ *
+ * Session object class.
  *
  */
 public class Session {
@@ -28,8 +26,6 @@ public class Session {
     protected transient Bitmap thumbnail;
     protected String thumbnailBase64;
     private LatLng location;
-
-
 
 
     public Session(String title, String description, UUID tutorID, Bitmap thumbnail,LatLng location) {
@@ -115,12 +111,9 @@ public class Session {
         return status;
     }
 
-    //fixed issue: == used .equals() instead
-    public void setStatus(String status) {//} throws InvalidStatusException {
+    public void setStatus(String status) {
         if ((status.equals("available"))|| (status.equals("bidded"))|| (status.equals("booked"))) {
             this.status = status;
-        } else {
-            //throw new InvalidStatusException();
         }
     }
 
@@ -163,9 +156,5 @@ public class Session {
             thumbnail = BitmapFactory.decodeByteArray(decodeString, 0, decodeString.length);
         }
         return thumbnail;
-    }
-
-    public void setThumbnail(Bitmap thumbnail) {
-        this.thumbnail = thumbnail;
     }
 }

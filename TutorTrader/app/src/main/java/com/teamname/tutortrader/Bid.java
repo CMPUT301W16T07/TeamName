@@ -26,10 +26,6 @@ public class Bid {
         this.status = "Pending";
     }
 
-    public UUID getBidID() {
-        return bidID;
-    }
-
     public UUID getBidder() {
         return bidder;
     }
@@ -42,21 +38,15 @@ public class Bid {
         return amount;
     }
 
-    public void setAmount(Float amount) {
-        this.amount = amount;
-    }
-
     public String getStatus() {
         return status;
     }
 
     // set status if status is valid
-    //fixed issue: == used .equals() instead
-    public void setStatus(String status) {//throws InvalidStatusException {
+
+    public void setStatus(String status) {
         if ((status.equals("pending"))|| (status.equals("accepted")) || (status.equals("declined"))) {
             this.status = status;
-        } else {
-           // throw new InvalidStatusException();
         }
     }
 

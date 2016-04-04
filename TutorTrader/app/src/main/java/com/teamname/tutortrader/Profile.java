@@ -1,6 +1,5 @@
 package com.teamname.tutortrader;
 
-import android.print.PageRange;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -29,7 +28,6 @@ public class Profile {
     }
 
     //private static final Profile instance = new Profile();
-
 
     public boolean isDefaultUser() {
         return defaultUser;
@@ -102,7 +100,7 @@ public class Profile {
         if (sum == 0) {
             return "Unrated";
         } else {
-            return String.valueOf(sum / tutorRatings.size());
+            return String.format("%.2g%n", sum / tutorRatings.size());
         }
     }
 
@@ -121,7 +119,7 @@ public class Profile {
         if (sum == 0) {
             return "Unrated";
         } else {
-            return String.valueOf(sum / studentRatings.size());
+            return String.format("%.2g%n", sum / studentRatings.size());
         }
     }
 

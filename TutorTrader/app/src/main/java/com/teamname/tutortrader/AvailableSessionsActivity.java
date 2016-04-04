@@ -10,16 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStreamReader;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -31,16 +23,14 @@ public class AvailableSessionsActivity extends MethodsController {
     private ListView oldSessions;
     private ArrayAdapter adapter;
     protected EditText query;
+    ArrayList<Session> searchedSessions;
+    Boolean isSearchedList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //ListView sessionsList;
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.available_sessions);
-
-
-        //sessionsList = (ListView) findViewById(R.id.sessionList);
-        //sessionsList.setBackgroundResource(R.drawable.apple_righ);
 
         btn_CurrentBids = (Button) findViewById(R.id.currentBids);
         btn_CurrentBids.setOnClickListener(btnClickListener);
@@ -51,6 +41,8 @@ public class AvailableSessionsActivity extends MethodsController {
         btn_availableSession = (Button) findViewById(R.id.availableSessions);
         btn_availableSession.setOnClickListener(btnClickListener);
 
+        isSearchedList = false;
+
         // set activity title
         TextView activityTitle = (TextView) findViewById(R.id.activityTitle);
         activityTitle.setText(R.string.AvailableSessionsButton);
@@ -60,20 +52,6 @@ public class AvailableSessionsActivity extends MethodsController {
         oldSessions.setBackgroundResource(R.drawable.apple_righ);
         loadElasticSearch();
 
-        /**
-         * Following work was redacted as elastic search made it obsolete
-         */
-        //loadSessions(SESSIONSFILE);
-        //ElasticSessionController.getLatestSessions();
-        //available sessions will only contain available sessions that are not booked
-        /*ArrayList<Session> availableSessions = new ArrayList<>();
-        for (int i=0;i<sessions.size();i++) {
-            if (!sessions.get(i).getStatus().equals("booked")) {
-                availableSessions.add(sessions.get(i));
-            }
-        }*/
-
-        //adapter = new AvailableSessionsAdapter(this, sessions);
         adapter = new AvailableSessionsAdapter(this, availableSessions);
         oldSessions.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -85,14 +63,14 @@ public class AvailableSessionsActivity extends MethodsController {
          * descriptions. It also does not add sessions twice if the search
          * word is in the Title and description
          */
-        Button searchbutton = (Button) findViewById(R.id.searchButton);
+        final Button searchbutton = (Button) findViewById(R.id.searchButton);
         query = (EditText) findViewById(R.id.searchtext);
 
         searchbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 setResult(RESULT_OK);
-                ArrayList<Session> searchedSessions = new ArrayList<Session>();
+                searchedSessions = new ArrayList<Session>();
                 ArrayList<Session> tempsearchedSessions = new ArrayList<Session>();
                 String searchstring = query.getText().toString();
                 if (searchstring.length() != 0) {  //Check if they are searching anything
@@ -115,6 +93,7 @@ public class AvailableSessionsActivity extends MethodsController {
                         e.printStackTrace();
                     }
                     if (searchedSessions.size() == 0) {
+                        isSearchedList = false;
                         searchedSessions.addAll(tempsearchedSessions);
                     }
                     for (int i = 0; i < tempsearchedSessions.size(); i++) {
@@ -129,16 +108,16 @@ public class AvailableSessionsActivity extends MethodsController {
                         }
                     }
                     adapter = new AvailableSessionsAdapter(AvailableSessionsActivity.this, searchedSessions);
+                    isSearchedList = true;
                     oldSessions.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 } else {
                     loadElasticSearch();
                     adapter = new AvailableSessionsAdapter(AvailableSessionsActivity.this, availableSessions);
+                    isSearchedList = false;
                     oldSessions.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
-
                 }
-
             }
 
         });
@@ -147,10 +126,21 @@ public class AvailableSessionsActivity extends MethodsController {
         oldSessions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Integer properIndex = -1;
+                if (isSearchedList) {
+                    UUID clickedSessionID = searchedSessions.get(position).getSessionID();
+                    for (int i=0; i<searchedSessions.size();i++) {
+                        if (sessions.get(i).getSessionID().equals(clickedSessionID)) {
+                            properIndex = i;
+                        }
+                    }
+                } else {
+                    properIndex = position;
+                }
+
                 Intent intent = new Intent(AvailableSessionsActivity.this, BidOnSessionActivity.class);
-                String index = String.valueOf(position);
                 // http://stackoverflow.com/questions/2091465/how-do-i-pass-data-between-activities-on-android
-                intent.putExtra("index", index);
+                intent.putExtra("index", properIndex);
                 startActivity(intent);
             }
         });
@@ -158,13 +148,6 @@ public class AvailableSessionsActivity extends MethodsController {
         checkConnectivity();
 
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_tutor_trade, menu);
-//        return true;
-//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

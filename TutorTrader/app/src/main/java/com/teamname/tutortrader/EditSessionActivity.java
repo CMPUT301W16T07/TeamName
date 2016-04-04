@@ -17,7 +17,7 @@ import com.google.android.gms.maps.model.LatLng;
  * that they previously created.
  */
 public class EditSessionActivity extends MethodsController {
-//Bitmap thumbnail;
+
     Integer sessions_index;
     private LatLng tempPoint;
     @Override
@@ -123,14 +123,10 @@ public class EditSessionActivity extends MethodsController {
      * @return boolean variable true if valid, false if invalid
      */
     public boolean verifyFields () {
-        //Boolean validFields = false;
         EditText subjectEdit = (EditText) findViewById(R.id.subjectEdit);
         EditText descriptionEdit = (EditText) findViewById(R.id.descriptionEdit);
 
-        if ((!subjectEdit.getText().toString().equals("")) && (!descriptionEdit.getText().toString().equals(""))) {
-            return true;
-        }
-        return false;
+        return ((!subjectEdit.getText().toString().equals("")) && (!descriptionEdit.getText().toString().equals("")));
     }
 
     /**
@@ -146,7 +142,6 @@ public class EditSessionActivity extends MethodsController {
         sessionImage.setImageBitmap(sessionsOfInterest.get(index).getThumbnail());
         subjectEdit.setText(sessionsOfInterest.get(index).getTitle());
         descriptionEdit.setText(sessionsOfInterest.get(index).getDescription());
-
     }
 
     @Override
@@ -157,7 +152,6 @@ public class EditSessionActivity extends MethodsController {
             thumbnail = (Bitmap)extras.get("data");
             sessions.get(sessions_index).addThumbnail(thumbnail);
             updateElasticSearchSession(sessions.get(sessions_index));
-            //saveInFile(SESSIONSFILE, sessions);
             newImage.setImageBitmap(sessions.get(sessions_index).getThumbnail());
         }
 

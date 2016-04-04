@@ -50,8 +50,6 @@ public class CurrentBidsActivityTest extends ActivityInstrumentationTestCase2{
         solo.typeText(0, "2");
         solo.clickOnButton(2);
 
-       // ElasticSearchController.GetSessionsTask sessionsTask = new ElasticSearchController.GetSessionsTask();
-        //sessionsTask.execute("id", session.getSessionID().toString());
         session = MethodsController.getSession(session.getSessionID());
         solo.clickOnMenuItem("Current");
         session = MethodsController.getSession(session.getSessionID());

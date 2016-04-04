@@ -4,8 +4,6 @@ import android.graphics.Bitmap;
 import android.test.ActivityInstrumentationTestCase2;
 import com.robotium.solo.Solo;
 
-import java.util.regex.Pattern;
-
 
 /**
  * This will test both the API and the code to see if we can add sessions, view sessions
@@ -58,14 +56,14 @@ public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCa
         Profile profile = new Profile("Test tutor", "test@test.test", "780-666-6666");
         Bitmap.Config conf = Bitmap.Config.ARGB_8888;
         Bitmap bm1 = Bitmap.createBitmap(1, 2, conf);
-        Session session = new Session("Math", "Tutor for linear Algebra for all university levels", profile.getProfileID(), bm1);
+        Session session = new Session("TESTING", "Tutor for linear Algebra for all university levels", profile.getProfileID(), bm1);
 
         ElasticSearchController.AddProfileTask profileTask = new ElasticSearchController.AddProfileTask();
         profileTask.execute(profile);
         ElasticSearchController.AddSessionTask addSessionTask = new ElasticSearchController.AddSessionTask();
         addSessionTask.execute(session);
         solo.clickOnMenuItem("Available");
-        assertTrue(solo.searchText("Math"));
+        assertTrue(solo.searchText("TESTING"));
         assertEquals("this is the title we expected", session.getTitle(), "Math");
         assertEquals("this is the description we expected", session.getDescription(),
                 "Tutor for linear Algebra for all university levels");
@@ -81,7 +79,7 @@ public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCa
          * bring up a new screen with the search results.
          */
 
-        solo.typeText(0, "Math");
+        solo.typeText(0, "TESTING");
         solo.clickOnButton("Search");
 
         assertTrue(solo.searchText("Math", 2));
@@ -97,13 +95,10 @@ public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCa
          */
 
         solo.assertCurrentActivity("right activity", AvailableSessionsActivity.class);
-        //solo.clickOnMenuItem("Profile");
-        //solo.sleep(2000);
-        //solo.clickOnMenuItem("Available");
-        solo.clickOnText("Math");
+        solo.clickOnText("TESTING");
         solo.assertCurrentActivity("switched sessions", BidOnSessionActivity.class);
-        solo.clickOnText("Math");
-        assertTrue(solo.searchText("Math"));
+        solo.clickOnText("TESTING");
+        assertTrue(solo.searchText("TESTING"));
         assertTrue(solo.searchText("Tutor for linear Algebra for all university levels"));
         assertTrue(solo.searchText("Test tutor"));
         assertTrue(solo.searchText("780-666-6666"));

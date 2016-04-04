@@ -103,9 +103,6 @@ public class ViewBidsActivity extends MethodsController {
                                     sessions.get(index).getBids().get(positionCopy).setStatus("declined");
                                     Bid tempObject = sessions.get(index).getBids().get(positionCopy);
                                     sessions.get(index).getBids().remove(tempObject);
-
-                                    //TODO: notify bidder on decline
-                                    //saveInFile(SESSIONSFILE, sessions);
                                     updateElasticSearchSession(sessions.get(index));
                                     adapter.notifyDataSetChanged();
                                 }

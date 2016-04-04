@@ -1,6 +1,5 @@
 package com.teamname.tutortrader;
 
-// getting rid of unused imports
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -66,9 +65,6 @@ public class AddSessionActivity extends MethodsController  {
 
                     newSession.addThumbnail(thumbnail);
 
-
-
-                    //sessions.add(newSession);
                     if (Connectivity) {
                         ElasticSearchController.AddSessionTask addSessionTask = new ElasticSearchController.AddSessionTask();
                         addSessionTask.execute(newSession);
@@ -99,12 +95,8 @@ public class AddSessionActivity extends MethodsController  {
                 }else{
                     Toast.makeText(AddSessionActivity.this,"You need internet to add a location.",Toast.LENGTH_LONG).show();
                 }
-
-
             }
         });
-
-
 
     }
 
