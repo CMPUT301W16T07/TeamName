@@ -47,9 +47,9 @@
     <string name="RepostButton">Repost</string>
 
     <!-- Bid Fields/Buttons -->
-    <string name="BidButton">Bid</string>
+    <string name="BidButton">Submit Bid</string>
     <string name="ViewBidsField">View Bids</string>
-    <string name="EnterBidField">Enter your bid here ($/hour): </string>
+    <string name="EnterBidField">Enter your bid here ($/hour) </string>
     <string name="BidsOnMySessionsField">Bids On My Sessions</string>
     <string name="ClearDeclinedBidsField">Clear Declined Bids</string>
     <string name="upcomingSessions">Upcoming Sessions</string>

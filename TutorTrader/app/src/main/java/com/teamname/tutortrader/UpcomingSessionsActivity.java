@@ -26,7 +26,6 @@ public class UpcomingSessionsActivity extends MethodsController {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.upcoming_sessions);
         ListView upcomingSessionsList = (ListView) findViewById(R.id.upcomingSessionsList);
-        upcomingSessionsList.setBackgroundResource(R.drawable.apple_righ);
 
         //loadSessions(SESSIONSFILE);
         loadElasticSearch();

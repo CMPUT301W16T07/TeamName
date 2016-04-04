@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -78,12 +79,12 @@ public class ViewOneUpcomingSession extends MethodsController {
         ImageView sessionImage = (ImageView) findViewById(R.id.upcomingOneSessionImage);
 
         sessionImage.setImageBitmap(sessionsOfInterest.get(index).getThumbnail());
-        titleBody.setText("Title: " + sessionsOfInterest.get(index).getTitle());
-        descriptionBody.setText("Description: "+sessionsOfInterest.get(index).getDescription());
-        postedByBody.setText("Posted By: "+tutor.getName());
-        bodyEmail.setText("Email: " + tutor.getEmail());
-        bodyPhone.setText("Phone" + tutor.getPhone());
-        bodyStatus.setText("Status: You won the bid!");
+        titleBody.setText(Html.fromHtml("Title: <b>" + sessionsOfInterest.get(index).getTitle() + "</b>"));
+        descriptionBody.setText(Html.fromHtml("Description: <b>"+sessionsOfInterest.get(index).getDescription() + "</b>"));
+        postedByBody.setText(Html.fromHtml("Posted By: <b>"+tutor.getName() + "</b>"));
+        bodyEmail.setText(Html.fromHtml("Email: <b> " + tutor.getEmail() + "</b>"));
+        bodyPhone.setText(Html.fromHtml("Phone: <b>" + tutor.getPhone() + "</b>"));
+        bodyStatus.setText(Html.fromHtml("Status: <b>You won the bid!</b>"));
     }
 
 }
