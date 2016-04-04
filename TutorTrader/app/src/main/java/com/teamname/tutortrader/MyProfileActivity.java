@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 /**
  * The activity that allows a user to view their profile.
+ * It also give the option to edit the profile as well.
  */
 public class MyProfileActivity extends MethodsController {
 

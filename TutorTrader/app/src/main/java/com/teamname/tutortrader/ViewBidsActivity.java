@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 public class ViewBidsActivity extends MethodsController {
 
-    private ArrayAdapter<Bid> adapter;
+    private CurrentBidsOnMySessionsAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

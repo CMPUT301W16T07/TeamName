@@ -48,7 +48,6 @@ public class ElasticSearchController {
             // The following gets the top "10000" sessions
             String search_string;
             if (params[0] == "") {
-                //search_string = "{\"from\":0,\"size\":10000,\"query\":{\"match\":{\"status\":\"available\" }}}";
                 search_string = "{\"from\" : 0, \"size\" : 10000}";//, \"query\":{\"match\":{\"status\":\"available\"}}}";
             } else {
                 // The following gets the top 10000 sessions matching the string passed in
@@ -83,15 +82,8 @@ public class ElasticSearchController {
 
                 try {
                     DocumentResult execute = client.execute(index);
-                    if (execute.isSucceeded()) {
-
-                    } else {
-                        // TODO: Something more useful
-                        Log.e("TODO", "Our insert of session failed, oh no!");
-                    }
                     return null;
                 } catch (IOException e) {
-                    // TODO: Something more useful
                     e.printStackTrace();
                 }
             }
@@ -123,7 +115,6 @@ public class ElasticSearchController {
                     List<Session> searchedSessions = execute.getSourceAsObjectList(Session.class);
                     hits = execute.getHits(Map.class);
                     sessionToDelete.addAll(searchedSessions);
-                    Log.e("TEST", "Searching for session to delete");
                 }
             } catch (IOException e) {
                 throw new RuntimeException();
@@ -137,18 +128,9 @@ public class ElasticSearchController {
 
             try {
                 DocumentResult execute = client.execute(delete);
-                if (execute.isSucceeded()) {
-                    Log.e("TODO", "Our delete of session succeded, oh yes!");
-                } else {
-                    // TODO: Something more useful
-                    Log.e("TODO", "Our delete of session failed, oh no!");
-                }
                 return null;
             } catch (IOException e) {
-                // TODO: Something more useful
-                Log.e("TODO", "Our delete of session failed, at part 2!");
                 e.printStackTrace();
-
             }
             return null;
         }
@@ -168,8 +150,6 @@ public class ElasticSearchController {
                                 .id(newId)
                                 .build()
                 );
-                // TODO: Something more useful
-                Log.e("TODO", "Delete code worked!");
 
             } catch (IOException e) {
                 throw new RuntimeException();
@@ -185,7 +165,6 @@ public class ElasticSearchController {
         protected Void doInBackground(Profile... profiles) {
             verifyClient();
             try {
-                //String updater = "{\"from\":0,\"size\":10000,\"query\":{\"match\":{\"" + params[0] + "\":\"" + params[1] + "\"}}}";
                 String newId = profiles[0].getProfileID().toString();
                 JestResult result = client.execute(new Index.Builder(profiles[0])
                                 .index("cmput301w16t07")
@@ -193,8 +172,6 @@ public class ElasticSearchController {
                                 .id(newId)
                                 .build()
                 );
-                // TODO: Something more useful
-                Log.e("TODO", "Delete code worked!");
 
             } catch (IOException e) {
                 throw new RuntimeException();
@@ -204,9 +181,7 @@ public class ElasticSearchController {
     }
         public static void verifyClient() {
             if (client == null) {
-                // TODO: Consider moving this URL in to some config class
                 DroidClientConfig.Builder builder = new DroidClientConfig.Builder("http://cmput301.softwareprocess.es:8080/");
-                //builder.discoveryEnabled(true);
                 DroidClientConfig config = builder.build();
 
                 JestClientFactory factory = new JestClientFactory();
@@ -230,7 +205,6 @@ public class ElasticSearchController {
             // The following gets the top "10000" profiles
             String search_string;
             if (params[0] == "") {
-                //search_string = "{\"from\":0,\"size\":10000,\"query\":{\"match\":{\"status\":\"available\" }}}";
                 search_string = "{\"from\" : 0, \"size\" : 10000}";//, \"query\":{\"match\":{\"status\":\"available\"}}}";
             } else {
                 // The following gets the top 10000 sessions matching the string passed in
@@ -265,12 +239,6 @@ public class ElasticSearchController {
 
                 try {
                     DocumentResult execute = client.execute(index);
-                    if (execute.isSucceeded()) {
-
-                    } else {
-                        // TODO: Something more useful
-                        Log.e("TODO", "Our insert of profile failed, oh no!");
-                    }
                     return null;
                 } catch (IOException e) {
                     // TODO: Something more useful
@@ -319,16 +287,8 @@ public class ElasticSearchController {
 
             try {
                 DocumentResult execute = client.execute(delete);
-                if (execute.isSucceeded()) {
-                    Log.e("TEST", "Profile deletion succesful");
-                } else {
-                    // TODO: Something more useful
-                    Log.e("TODO", "Our delete of profile failed, oh no!");
-                }
                 return null;
             } catch (IOException e) {
-                // TODO: Something more useful
-                Log.e("TODO", "Our delete of profile failed, 2nd type of exception");
                 e.printStackTrace();
             }
             return null;

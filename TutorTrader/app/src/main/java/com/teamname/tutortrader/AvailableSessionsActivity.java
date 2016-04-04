@@ -21,7 +21,7 @@ import java.util.concurrent.ExecutionException;
 public class AvailableSessionsActivity extends MethodsController {
 
     private ListView oldSessions;
-    private ArrayAdapter adapter;
+    private AvailableSessionsAdapter adapter;
     protected EditText query;
     ArrayList<Session> searchedSessions;
     Boolean isSearchedList;
@@ -173,12 +173,9 @@ public class AvailableSessionsActivity extends MethodsController {
     @Override
     protected void onStart() {
         super.onStart();
-        //ElasticSessionController.GetSessionsTask loadTask = new ElasticSessionController.GetSessionsTask();
-        //loadTask.execute("");
-        //adapter = new ArrayAdapter<Session>(this, R.layout.session_list_item);
+
         oldSessions = (ListView) findViewById(R.id.sessionList);
 
-        //loadFromFile(SESSIONSFILE);
         loadElasticSearch();
         adapter = new AvailableSessionsAdapter(this, availableSessions);
         oldSessions.setAdapter(adapter);
@@ -187,31 +184,4 @@ public class AvailableSessionsActivity extends MethodsController {
 
 
     }
-
-
-    /**
-     * loadFromFile in Availible must load all session.
-     *
-     * @param filename the name of the file containing all the sessions.
-     *
-    private void loadFromFile (String filename) {
-
-        try {
-            FileInputStream fis = openFileInput(SESSIONSFILE);
-            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
-            Gson gson = new Gson();
-            // Took from https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/com/google/gson/Gson.html 01-2016-19
-            Type listType = new TypeToken<ArrayList<Session>>() {
-            }.getType();
-            sessions = gson.fromJson(in, listType);
-
-
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-
-        }
-    }*/
-
-
-
 }
