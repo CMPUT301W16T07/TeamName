@@ -21,7 +21,7 @@ import java.util.concurrent.ExecutionException;
 public class AvailableSessionsActivity extends MethodsController {
 
     private ListView oldSessions;
-    private ArrayAdapter adapter;
+    private AvailableSessionsAdapter adapter;
     protected EditText query;
     ArrayList<Session> searchedSessions;
     Boolean isSearchedList;
