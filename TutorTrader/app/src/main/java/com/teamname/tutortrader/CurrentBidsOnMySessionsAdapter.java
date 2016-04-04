@@ -42,7 +42,7 @@ public class CurrentBidsOnMySessionsAdapter extends ArrayAdapter<Bid> {
         Profile student = MethodsController.getProfile(arrayList.get(index).getBidder());
         String amountString = "Bid: <b>$" + arrayList.get(index).getAmount() + "</b> per hour.";
         String statusString = "Bid Status: <b>" + arrayList.get(index).getStatus() + "</b>.";
-        String ratingString = "Student Rating: <b>" + student.getStudentRating() +"</b>.";
+        String ratingString = "Student Rating: <b>" + student.getStudentRating() +"</b>";
 
         amountView.setText(Html.fromHtml(amountString));
         statusView.setText(Html.fromHtml(statusString));

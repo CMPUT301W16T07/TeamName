@@ -136,15 +136,16 @@ public class ViewOneSessionActivity extends MethodsController {
                                     // get the winning bid
                                     Bid winningBid = null;
                                     // to get the accepted bidders ID
-                                    for (int i=0; i<sessionsOfInterest.get(index_r).getBids().size();i++){
+                                    winningBid = sessionsOfInterest.get(index_r).getBids().get(0);
+                                    /*for (int i=0; i<sessionsOfInterest.get(index_r).getBids().size();i++){
                                         if (sessionsOfInterest.get(index_r).getBids().get(i).equals("accepted")) {
                                             winningBid = sessionsOfInterest.get(index_r).getBids().get(i);
                                             break;
                                         }
-                                    }
+                                    }*/
                                     Profile studentProfile = getProfile(winningBid.getBidder());
                                     Double rating = (double)which + 1;
-                                    studentProfile.addTutorRating(rating);
+                                    studentProfile.addStudentRating(rating);
                                     updateElasticSearchProfile(studentProfile);
                                     loadElasticSearch();
                                 }
