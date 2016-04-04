@@ -70,7 +70,6 @@ public class MySessionsActivity extends MethodsController {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MySessionsActivity.this, ViewOneSessionActivity.class);
-                Session session = sessionsOfInterest.get(position);
                 // http://stackoverflow.com/questions/2091465/how-do-i-pass-data-between-activities-on-android
                 intent.putExtra("index", position);
                 startActivity(intent);

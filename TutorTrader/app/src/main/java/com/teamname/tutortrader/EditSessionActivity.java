@@ -22,8 +22,8 @@ public class EditSessionActivity extends MethodsController {
         setContentView(R.layout.edit_session);
 
         Intent intent = getIntent();
-        final String index_receive = intent.getStringExtra("index");
-        final int index_r = Integer.parseInt(index_receive);
+        final Integer index_r = intent.getIntExtra("index", 0);
+
         initializeFields(index_r);
         sessions_index = sessions.indexOf(sessionsOfInterest.get(index_r));
 
@@ -72,18 +72,11 @@ public class EditSessionActivity extends MethodsController {
                 EditText descriptionEdit = (EditText) findViewById(R.id.descriptionEdit);
                 valid = verifyFields();
                 if (valid) {
-                    //Remove old session
-                    ElasticSearchController.RemoveSessionTask removeSessionTask = new ElasticSearchController.RemoveSessionTask();
-                    removeSessionTask.execute(sessionsOfInterest.get(index_r).getSessionID());
-
-                    Session newSession = new Session(subjectEdit.getText().toString(),descriptionEdit.getText().toString(),currentProfile.getProfileID(),thumbnail);
-                    newSession.addThumbnail(thumbnail); //must add this line to properly attach image
-
-                    ElasticSearchController.AddSessionTask addSessionTask = new ElasticSearchController.AddSessionTask();
-                    addSessionTask.execute(newSession);
-
-                    loadElasticSearch(); // load the newest addition
-                    finish();
+                    sessionsOfInterest.get(index_r).setTitle(subjectEdit.getText().toString());
+                    sessionsOfInterest.get(index_r).setDescription(descriptionEdit.getText().toString());
+                    updateElasticSearchSession(sessionsOfInterest.get(index_r));
+                    Intent intent = new Intent(EditSessionActivity.this, MySessionsActivity.class);
+                    startActivity(intent);
                 }
             }
         });
