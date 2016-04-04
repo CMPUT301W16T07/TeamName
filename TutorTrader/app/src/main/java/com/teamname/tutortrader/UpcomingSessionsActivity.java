@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * UpcomingSessionsActivity displays sessions that the user has bid on and
@@ -17,7 +18,7 @@ import java.util.ArrayList;
  *
  */
 public class UpcomingSessionsActivity extends MethodsController {
-
+    private ArrayList<Bid> acceptedBids = new ArrayList<>();
     private CurrentBidsAdapter adapter; // current bids adapter
 
     @Override
@@ -31,7 +32,7 @@ public class UpcomingSessionsActivity extends MethodsController {
         loadElasticSearch();
         loadCurrentBids();
         // TODO: instead of displaying bids we need to display the session that the bid is for.
-        ArrayList<Bid> acceptedBids = new ArrayList<>();
+        acceptedBids = new ArrayList<>();
         for (int i =0; i<bids.size(); i++) {
             if (bids.get(i).getStatus().equals("accepted")){
                 //upcomingSessions.add(bids.get(i).getBidder())
@@ -52,13 +53,19 @@ public class UpcomingSessionsActivity extends MethodsController {
             }
         });
 
-        //TODO: this will launch an activity that displays the session (Very similar to ViewOneSession)
         upcomingSessionsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //TODO: make a mock ViewOneSessionActivity that will give options to show close, reopen and rate
                 Intent intent = new Intent(UpcomingSessionsActivity.this, ViewOneUpcomingSession.class);
-                String index = String.valueOf(position);
+                Session clickedSession = getSession(acceptedBids.get(position).getSessionID());
+                UUID clickedSessionID = clickedSession.getSessionID();
+                int wantedIndex = -1;
+                for (int i=0; i<sessions.size();i++) {
+                    if (sessions.get(i).getSessionID().equals(clickedSessionID)) {
+                        wantedIndex = i;
+                    }
+                }
+                String index = String.valueOf(wantedIndex);
                 // http://stackoverflow.com/questions/2091465/how-do-i-pass-data-between-activities-on-android
                 intent.putExtra("index", index);
                 startActivity(intent);

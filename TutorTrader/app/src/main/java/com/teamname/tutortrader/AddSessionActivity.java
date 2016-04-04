@@ -54,6 +54,7 @@ public class AddSessionActivity extends MethodsController  {
                     newSession.addThumbnail(thumbnail);
 
 
+
                     //sessions.add(newSession);
                     if (Connectivity) {
                         ElasticSearchController.AddSessionTask addSessionTask = new ElasticSearchController.AddSessionTask();
@@ -64,6 +65,7 @@ public class AddSessionActivity extends MethodsController  {
                         saveInFile(OFFLINEFILE, tempSessions);
                     }
                     loadElasticSearch(); // load the newest addition
+
 
                     Intent intent = new Intent(AddSessionActivity.this, MySessionsActivity.class);
                     startActivity(intent);
