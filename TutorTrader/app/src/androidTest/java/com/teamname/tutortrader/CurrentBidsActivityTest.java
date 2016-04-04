@@ -50,10 +50,22 @@ public class CurrentBidsActivityTest extends ActivityInstrumentationTestCase2{
         solo.typeText(0, "2");
         solo.clickOnButton(2);
 
+       // ElasticSearchController.GetSessionsTask sessionsTask = new ElasticSearchController.GetSessionsTask();
+        //sessionsTask.execute("id", session.getSessionID().toString());
+        session = MethodsController.getSession(session.getSessionID());
         solo.clickOnMenuItem("Current");
-
-        solo.clickOnButton(4);
-        solo.sleep(4000);
+        session = MethodsController.getSession(session.getSessionID());
+        Bid bid = session.getBids().get(0);
+        bid.setStatus("accepted");
+        session.setStatus("booked");
+        ElasticSearchController.UpdateSessionTask sessionTask = new ElasticSearchController.UpdateSessionTask();
+        sessionTask.execute(session);
+        solo.clickOnMenuItem("Current");
+        assertTrue(solo.searchText("accepted"));
+        solo.clickOnButton("Upcoming");
+        assertTrue(solo.searchText("Math"));
+        solo.clickOnButton("Back");
+        solo.sleep(1000);
         Profile owner = MethodsController.getProfile(session.getTutorID());
         ElasticSearchController.RemoveProfileTask removeProfileTask = new ElasticSearchController.RemoveProfileTask();
         removeProfileTask.execute(owner.getProfileID());

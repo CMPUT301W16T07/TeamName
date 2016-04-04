@@ -103,12 +103,11 @@ public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCa
         solo.clickOnText("Math");
         solo.assertCurrentActivity("switched sessions", BidOnSessionActivity.class);
         solo.clickOnText("Math");
-       // assertTrue(solo.waitForText("Math",1,1000));
-        //assertTrue(solo.searchText("Math"));
-        //assertTrue(solo.searchText("Tutor for linear Algebra for all university levels"));
-        //assertTrue(solo.searchText("Test tutor"));
-        //assertTrue(solo.searchText("780-666-6666"));
-        //assertTrue(solo.searchText("test@test.test"));
+        assertTrue(solo.searchText("Math"));
+        assertTrue(solo.searchText("Tutor for linear Algebra for all university levels"));
+        assertTrue(solo.searchText("Test tutor"));
+        assertTrue(solo.searchText("780-666-6666"));
+        assertTrue(solo.searchText("test@test.test"));
 
 
         /**
