@@ -1,13 +1,13 @@
 package com.teamname.tutortrader;
 
-import android.app.Activity;
-import android.graphics.Bitmap;
 import android.test.ActivityInstrumentationTestCase2;
-import android.widget.Button;
 
 import com.robotium.solo.Solo;
 
 /**
+ *
+ * Tests the MyProfileActivity Class.
+ *
  * Created by abrosda on 4/3/16.
  */
 public class MyProfilesActivityTest extends ActivityInstrumentationTestCase2 {

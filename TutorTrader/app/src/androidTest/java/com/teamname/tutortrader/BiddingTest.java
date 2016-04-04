@@ -3,10 +3,6 @@ package com.teamname.tutortrader;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.test.ActivityInstrumentationTestCase2;
-import android.test.UiThreadTest;
-import android.widget.Button;
-
-import java.util.ArrayList;
 import java.util.UUID;
 
 /**

@@ -1,20 +1,18 @@
 package com.teamname.tutortrader;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.UUID;
-import java.util.concurrent.ExecutionException;
-
+/**
+ * Allows student to view details about a single session they have booked.
+ */
 public class ViewOneUpcomingSession extends MethodsController {
 
     @Override
@@ -25,8 +23,6 @@ public class ViewOneUpcomingSession extends MethodsController {
         Intent intent = getIntent();
 
         final int index_r = intent.getIntExtra("index",0);
-        final String index_receive = String.valueOf(index_r);
-        //loadSessions(SESSIONSFILE);
         loadElasticSearch();
         initializeFields(index_r);
 
@@ -43,8 +39,6 @@ public class ViewOneUpcomingSession extends MethodsController {
             @Override
             public void onClick(View v) {
                 final CharSequence[] items = {"1","2","3","4","5"};
-                //@Override
-                //public Dialog onCreateDialog(Bundle savedInstanceState) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(ViewOneUpcomingSession.this);
                     builder.setTitle("Rate Tutor")
                             .setItems(items, new DialogInterface.OnClickListener() {

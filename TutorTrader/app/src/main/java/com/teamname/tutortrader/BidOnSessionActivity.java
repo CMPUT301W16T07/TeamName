@@ -41,7 +41,6 @@ public class BidOnSessionActivity extends MethodsController {
         final String index_receive = intent.getStringExtra("index");
         final int index = Integer.parseInt(index_receive);
         loadElasticSearch();
-        //loadSessions(SESSIONSFILE);
         selectedSessionIndex = sessions.indexOf(availableSessions.get(index));
         selectedSession = sessions.get(selectedSessionIndex);
         checkForSelf(selectedSession);
@@ -50,15 +49,11 @@ public class BidOnSessionActivity extends MethodsController {
         ImageView viewImage = (ImageView) findViewById(R.id.sessionImage);
         viewImage.setImageBitmap(selectedSession.getThumbnail());
 
-        //super.onCreate(savedInstanceState);
-        //setContentView(R.layout.bid_on_session);
         Button backToAllButton = (Button) findViewById(R.id.allSessionsButton);
         backToAllButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
-                //Intent intent = new Intent(BidOnSessionActivity.this, AvailableSessionsActivity.class);
-                //startActivity(intent);
             }
         });
 

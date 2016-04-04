@@ -32,14 +32,10 @@ public class ViewOneSessionActivity extends MethodsController {
         loadElasticSearch();
         initializeFields(index_r);
 
-        //allBidsList.setBackgroundResource(R.drawable.black_chalkboard);
-
         Button allSessionsButton = (Button) findViewById(R.id.allSessionsButton);
         allSessionsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: we should pass the data entry so the fields can be filled in
-                //finish();
                 Intent intent = new Intent(ViewOneSessionActivity.this, MySessionsActivity.class);
                 startActivity(intent);
             }
@@ -158,12 +154,6 @@ public class ViewOneSessionActivity extends MethodsController {
                                     Bid winningBid = null;
                                     // to get the accepted bidders ID
                                     winningBid = sessionsOfInterest.get(index_r).getBids().get(0);
-                                    /*for (int i=0; i<sessionsOfInterest.get(index_r).getBids().size();i++){
-                                        if (sessionsOfInterest.get(index_r).getBids().get(i).equals("accepted")) {
-                                            winningBid = sessionsOfInterest.get(index_r).getBids().get(i);
-                                            break;
-                                        }
-                                    }*/
                                     Profile studentProfile = getProfile(winningBid.getBidder());
                                     Double rating = (double)which + 1;
                                     studentProfile.addStudentRating(rating);
@@ -175,7 +165,6 @@ public class ViewOneSessionActivity extends MethodsController {
                     alert.show();
 
                 } else {
-                    // TODO: prompt saying you cant rate until session is booked
                     //Learned from http://developer.android.com/guide/topics/ui/notifiers/toasts.html
                     Context context = getApplicationContext();
                     CharSequence text = "Rating can only be done once session is booked!";
@@ -213,8 +202,5 @@ public class ViewOneSessionActivity extends MethodsController {
         bodyEmail.setText(Html.fromHtml("Email: <b>" + tutor.getEmail() + "</b>"));
         bodyPhone.setText(Html.fromHtml("Phone: <b>" + tutor.getPhone() + "</b>"));
         bodyStatus.setText(Html.fromHtml("Status: <b>"+sessionsOfInterest.get(index).getStatus() + "</b>"));
-
     }
-
-
 }

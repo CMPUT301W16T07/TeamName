@@ -39,9 +39,7 @@ public class CurrentBidsActivity extends MethodsController {
         // populates the list of all bids
         currentBidsList = (ListView) findViewById(R.id.currentBidsList);
         currentBidsList.setBackgroundResource(R.drawable.apple_righ);
-        //loadSessions(SESSIONSFILE);
 
-        //loadElasticSearch();
         loadCurrentBids(); // reload the global bids array
         adapter = new CurrentBidsAdapter(this, bids);
         currentBidsList.setAdapter(adapter);
@@ -54,8 +52,6 @@ public class CurrentBidsActivity extends MethodsController {
                 loadCurrentBids();
                 Intent intent = new Intent(CurrentBidsActivity.this, UpcomingSessionsActivity.class);
                 startActivity(intent);
-                // TODO: make it show all the bids that have been accepted
-
             }
         });
     }

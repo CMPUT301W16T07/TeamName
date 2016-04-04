@@ -2,7 +2,6 @@ package com.teamname.tutortrader;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -27,14 +26,11 @@ public class UpcomingSessionsActivity extends MethodsController {
         setContentView(R.layout.upcoming_sessions);
         ListView upcomingSessionsList = (ListView) findViewById(R.id.upcomingSessionsList);
 
-        //loadSessions(SESSIONSFILE);
         loadElasticSearch();
         loadCurrentBids();
-        // TODO: instead of displaying bids we need to display the session that the bid is for.
         acceptedBids = new ArrayList<>();
         for (int i =0; i<bids.size(); i++) {
             if (bids.get(i).getStatus().equals("accepted")){
-                //upcomingSessions.add(bids.get(i).getBidder())
                 acceptedBids.add(bids.get(i));
             }
         }
@@ -64,7 +60,6 @@ public class UpcomingSessionsActivity extends MethodsController {
                         wantedIndex = i;
                     }
                 }
-                //String index = String.valueOf(wantedIndex);
                 // http://stackoverflow.com/questions/2091465/how-do-i-pass-data-between-activities-on-android
                 intent.putExtra("index", wantedIndex);
                 startActivity(intent);

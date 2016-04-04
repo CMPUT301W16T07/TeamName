@@ -2,8 +2,6 @@ package com.teamname.tutortrader;
 
 import android.test.ActivityInstrumentationTestCase2;
 
-import java.util.ArrayList;
-
 /**
  * Created by taylorarnett on 2016-03-28.
  */

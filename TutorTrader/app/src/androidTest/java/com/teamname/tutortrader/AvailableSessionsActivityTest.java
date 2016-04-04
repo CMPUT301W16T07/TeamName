@@ -4,8 +4,6 @@ import android.graphics.Bitmap;
 import android.test.ActivityInstrumentationTestCase2;
 import com.robotium.solo.Solo;
 
-import java.util.regex.Pattern;
-
 
 /**
  * This will test both the API and the code to see if we can add sessions, view sessions

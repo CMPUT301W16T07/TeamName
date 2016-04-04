@@ -12,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 /**
  * The activity that allows users to view a list of all
@@ -76,7 +75,6 @@ public class MySessionsActivity extends MethodsController {
         });
 
         //Selecting a session from list
-        // TODO: pass the index of the list item to fill fields in the ViewOneSession activity
         /*
             http://stackoverflow.com/questions/2468100/android-listview-click-howto
             If user clicks on an entry in the listview, the index of the entry clicked is

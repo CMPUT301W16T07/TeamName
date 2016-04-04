@@ -1,6 +1,5 @@
 package com.teamname.tutortrader;
 
-import android.print.PageRange;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -29,7 +28,6 @@ public class Profile {
     }
 
     //private static final Profile instance = new Profile();
-
 
     public boolean isDefaultUser() {
         return defaultUser;

@@ -4,9 +4,6 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.graphics.Bitmap;
 import android.test.ActivityInstrumentationTestCase2;
-import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.robotium.solo.Solo;
