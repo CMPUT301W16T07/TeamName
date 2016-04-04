@@ -80,7 +80,7 @@ public class EditSessionActivity extends MethodsController {
                     ElasticSearchController.RemoveSessionTask removeSessionTask = new ElasticSearchController.RemoveSessionTask();
                     removeSessionTask.execute(sessionsOfInterest.get(index_r).getSessionID());
 
-                    Session newSession = new Session(subjectEdit.getText().toString(),descriptionEdit.getText().toString(),currentProfile.getProfileID(),thumbnail);
+                    Session newSession = new Session(subjectEdit.getText().toString(),descriptionEdit.getText().toString(),currentProfile.getProfileID(),thumbnail,tempPoint);
                     newSession.addThumbnail(thumbnail); //must add this line to properly attach image
 
                     ElasticSearchController.AddSessionTask addSessionTask = new ElasticSearchController.AddSessionTask();
@@ -92,7 +92,7 @@ public class EditSessionActivity extends MethodsController {
             }
         });
 
-        Button LocationButton = (Button)findViewById(R.id.AddLocationButton);
+        Button LocationButton = (Button)findViewById(R.id.newLocationButton);
         LocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,6 +104,19 @@ public class EditSessionActivity extends MethodsController {
                 }
 
 
+            }
+        });
+
+        Button LocationDeleteButton = (Button) findViewById(R.id.deleteLocationButton);
+        LocationDeleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Connectivity){
+                    sessionsOfInterest.get(index_r).setLocation(null);
+
+                }else{
+                    Toast.makeText(EditSessionActivity.this, "You need internet to delete a location.", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
