@@ -49,7 +49,7 @@ public class ViewOneUpcomingSession extends MethodsController {
                     builder.setTitle("Rate Tutor")
                             .setItems(items, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Profile wantedProfile = getProfile(sessionsOfInterest.get(index_r).getTutorID());
+                                    Profile wantedProfile = getProfile(sessions.get(index_r).getTutorID());
                                     Double rating = (double)which + 1;
                                     wantedProfile.addTutorRating(rating);
                                     updateElasticSearchProfile(wantedProfile);
