@@ -59,7 +59,6 @@ public class AddSessionActivity extends MethodsController  {
                 if (valid) {
                     EditText subjectEdit = (EditText) findViewById(R.id.subjectEdit);
                     EditText descriptionEdit = (EditText) findViewById(R.id.descriptionEdit);
-                    // TODO: implement Tutor
 
                     Session newSession = new Session(subjectEdit.getText().toString(),descriptionEdit.getText().toString(),currentProfile.getProfileID(), thumbnail, tempPoint);
 
@@ -114,6 +113,7 @@ public class AddSessionActivity extends MethodsController  {
         }
         return false;
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){

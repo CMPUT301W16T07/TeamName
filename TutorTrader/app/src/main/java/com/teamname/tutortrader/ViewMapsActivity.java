@@ -91,8 +91,8 @@ public class ViewMapsActivity extends FragmentActivity {
     }
 
     /**
-     * Centers the map
-     *
+     * Centers the map on the location passed in point.
+     * also zooms to closer view
      * @param point
      */
     public void centerOnLocation(LatLng point){

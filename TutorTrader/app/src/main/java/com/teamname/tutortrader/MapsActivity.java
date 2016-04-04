@@ -15,7 +15,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
- * Displays a map for some session.
+ * This activity brings up a map for the user to enter a location for their session.
+ * A long click on the map will drop a marker and get the location at that marker.
+ * This marker will be the location for the session.
  */
 public class MapsActivity extends FragmentActivity {
 
@@ -120,9 +122,9 @@ public class MapsActivity extends FragmentActivity {
 
 
     /**
-     * centers map on current location
-     *
+     * centers map on current location.
      * code based off of: http://stackoverflow.com/questions/18425141/android-google-maps-api-v2-zoom-to-current-location
+     * @param point
      */
     public void centerOnLocation(LatLng point){
         if (point != null) {
