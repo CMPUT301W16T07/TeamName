@@ -24,7 +24,7 @@ public class MySessionsActivity extends MethodsController {
     protected void onCreate(Bundle savedInstanceState) {
         ListView oldSessionsList;
         // inspired by lonelyTwitter code
-        ArrayAdapter<Session> adapter;
+        MySessionsAdapter adapter;
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_sessions);

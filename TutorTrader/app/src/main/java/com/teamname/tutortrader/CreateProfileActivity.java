@@ -62,7 +62,13 @@ public class CreateProfileActivity extends MethodsController{
 
     }
 
-    public boolean verifyFields() {
+
+    /**
+     * Checks all the profile fields to make sure they have valid entries.
+     * Also checks if username exists.
+     * @return boolean if the fields are valid
+     */
+    public boolean verifyFields () {
 
         EditText newUsername = (EditText) findViewById(R.id.editUsername);
         EditText newEmail = (EditText) findViewById(R.id.editEmail);

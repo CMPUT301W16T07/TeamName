@@ -48,8 +48,6 @@ public class MethodsController extends AppCompatActivity {
     protected static final String BIDFILE = "bids.sav";
 
 
-
-    //TODO:load user profile if it exists or make new one.
     protected Profile currentProfile;
 
     protected ArrayList<Session> sessions = new ArrayList<Session>();
@@ -157,9 +155,14 @@ public class MethodsController extends AppCompatActivity {
         }
     }
 
+    /**
+     * While offline this function is called to save new sessions to a local file.
+     * Returns an arrayList of sessions that should be pushed to elastic search.
+     * @return ArrayList of Sessions
+     */
     public ArrayList<Session> loadOffline(){
         ArrayList<Session> temp = new ArrayList<Session>();
-        try{
+        try {
 
             FileInputStream fis = openFileInput(OFFLINEFILE);
             BufferedReader in = new BufferedReader(new InputStreamReader(fis));
@@ -177,7 +180,7 @@ public class MethodsController extends AppCompatActivity {
 
     private void loadProfile(String filename){
 
-        try{
+        try {
             FileInputStream fis = openFileInput(filename);
             BufferedReader in = new BufferedReader(new InputStreamReader(fis));
             Gson gson = new Gson();
@@ -459,8 +462,7 @@ public class MethodsController extends AppCompatActivity {
 
     /**
      * http://stackoverflow.com/questions/5474089/how-to-check-currently-internet-connection-is-available-or-not-in-android
-     * retruns true if connected to internet
-     * @return
+     * This method will check if there is connectivity and force the user to MySession if there is no internet.
      */
     public void checkConnectivity(){
 
@@ -473,6 +475,11 @@ public class MethodsController extends AppCompatActivity {
         }
     }
 
+    /**
+     * setConnectivity will check the system for connectivity. If internet if found it will check to see if there were any sessions
+     * added while offline and then add those session to elastic search.
+     * The global variable Connectivity is set to true or false.
+     */
     public void setConnectivity() {
         ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
