@@ -10,4 +10,6 @@ Make sure you have a camera, or enable on on your emulator to use the photograph
 Make sure you enable locations on your device or emulator are enabled.    
 connectivity is not required but many features will not be usable without access to the internet.   
 On Emulator devices turning off sound will speed the app up.   
-SDK Version 23 will improve performance drastically.
+SDK Version 23 will improve performance drastically.    
+Link to video of demo   
+https://www.youtube.com/watch?v=PicTe_0A1Gg&feature=youtu.be
