@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -24,13 +25,12 @@ public class ViewOneSessionActivity extends MethodsController {
             The index of the entry that was clicked in the list of entries displayed on the main
             screen is passed through the intent. Here is where we access it
         */
-        /*final String index_receive = intent.getStringExtra("index");
-        final int index_r = Integer.parseInt(index_receive);*/
-        final int index_r = intent.getIntExtra("index",0);
-        final String index_receive = String.valueOf(index_r);
-        //loadSessions(SESSIONSFILE);
+        final Integer index_r = intent.getIntExtra("index", 0);
+
         loadElasticSearch();
         initializeFields(index_r);
+
+        //allBidsList.setBackgroundResource(R.drawable.black_chalkboard);
 
         Button allSessionsButton = (Button) findViewById(R.id.allSessionsButton);
         allSessionsButton.setOnClickListener(new View.OnClickListener() {
@@ -49,7 +49,7 @@ public class ViewOneSessionActivity extends MethodsController {
             public void onClick(View v) {
                 //TODO: we should pass the data entry so the fields can be filled in
                 Intent intent = new Intent(ViewOneSessionActivity.this, EditSessionActivity.class);
-                intent.putExtra("index", index_receive);
+                intent.putExtra("index", index_r);
                 startActivity(intent);
             }
         });
@@ -64,9 +64,6 @@ public class ViewOneSessionActivity extends MethodsController {
                         // This will delete the session of interest
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                //sessions.remove(sessionsOfInterest.get(index_r));
-                                //sessionsOfInterest.remove(index_r);
-                                //saveInFile(SESSIONSFILE, sessions);
                                 ElasticSearchController.RemoveSessionTask removeSessionTask = new ElasticSearchController.RemoveSessionTask();
                                 removeSessionTask.execute(sessionsOfInterest.get(index_r).getSessionID());
                                 loadElasticSearch();
@@ -90,7 +87,7 @@ public class ViewOneSessionActivity extends MethodsController {
             public void onClick(View v) {
                 //TODO: we should pass the data entry so the fields can be filled in
                 Intent intent = new Intent(ViewOneSessionActivity.this, ViewBidsActivity.class);
-                intent.putExtra("index", index_receive);
+                intent.putExtra("index", index_r);
                 startActivity(intent);
             }
         });
@@ -142,11 +139,11 @@ public class ViewOneSessionActivity extends MethodsController {
         ImageView sessionImage = (ImageView) findViewById(R.id.sessionImage);
 
         sessionImage.setImageBitmap(sessionsOfInterest.get(index).getThumbnail());
-        titleBody.setText("Title: "+ sessionsOfInterest.get(index).getTitle());
-        descriptionBody.setText("Description: "+sessionsOfInterest.get(index).getDescription());
-        postedByBody.setText("Posted By: "+ tutor.getName());
-        bodyEmail.setText("Email: " + tutor.getEmail());
-        bodyPhone.setText("Phone" + tutor.getPhone());
-        bodyStatus.setText("Status: "+sessionsOfInterest.get(index).getStatus());
+        titleBody.setText(Html.fromHtml("Title: <b>" + sessionsOfInterest.get(index).getTitle() + "</b>"));
+        descriptionBody.setText(Html.fromHtml("Description: <b>"+sessionsOfInterest.get(index).getDescription() + "</b>"));
+        postedByBody.setText(Html.fromHtml("Posted By: <b>"+ tutor.getName() + "</b>"));
+        bodyEmail.setText(Html.fromHtml("Email: <b>" + tutor.getEmail() + "</b>"));
+        bodyPhone.setText(Html.fromHtml("Phone: <b>" + tutor.getPhone() + "</b>"));
+        bodyStatus.setText(Html.fromHtml("Status: <b>"+sessionsOfInterest.get(index).getStatus() + "</b>"));
     }
 }

@@ -44,6 +44,7 @@
     <string name="CancelButton">Cancel</string>
     <string name="DeleteButton">Delete</string>
     <string name="SearchButton">Search</string>
+    <string name="RepostButton">Repost</string>
 
     <!-- Bid Fields/Buttons -->
     <string name="BidButton">Bid</string>
