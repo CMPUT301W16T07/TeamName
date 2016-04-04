@@ -55,7 +55,7 @@ public class MySessionsActivity extends MethodsController {
         addNewSession.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (currentProfile.isDefaultUser()) {
+                if (!currentProfile.isDefaultUser()) {
 
                     Intent intent = new Intent(MySessionsActivity.this, AddSessionActivity.class);
                     startActivity(intent);
