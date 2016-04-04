@@ -14,6 +14,10 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 /**
+ * This is a comprhensive test of the ui and the
+ * classes/methods involved in this activity
+ * For this test you must first run the app regularly to
+ * create a unique profile on the emulator or device
  * Created by abrosda on 4/3/16.
  */
 public class MySessionsActivityTest extends ActivityInstrumentationTestCase2 {
@@ -52,13 +56,15 @@ public class MySessionsActivityTest extends ActivityInstrumentationTestCase2 {
         super.tearDown();
     }
 
-
+    /**
+     * You must have a profile already built to run these tests.
+     */
     public void testaddSession () {
         solo.clickOnButton(4);
        solo.typeText(0, "TITLE");
        solo.typeText(1, "Description");
        solo.clickOnButton(1);
-        solo.sleep(2000);
+        solo.clickOnMenuItem("My Sessions");
         assertTrue(solo.searchText("TITLE"));
         assertTrue(solo.searchText("Description"));
         solo.clickOnText("TITLE");
@@ -71,7 +77,7 @@ public class MySessionsActivityTest extends ActivityInstrumentationTestCase2 {
         solo.clearEditText(1);
         solo.typeText(1, "New Description");
         solo.clickOnButton(2);
-        solo.sleep(2000);
+        solo.clickOnMenuItem("My Sessions");
         assertTrue(solo.searchText("New Description"));
         solo.clickOnText("TITLE");
         solo.clickOnButton(3);
