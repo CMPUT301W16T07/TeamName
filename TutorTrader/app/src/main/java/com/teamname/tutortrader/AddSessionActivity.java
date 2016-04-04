@@ -52,6 +52,7 @@ public class AddSessionActivity extends MethodsController  {
                     newSession.addThumbnail(thumbnail);
                     ElasticSearchController.AddSessionTask addSessionTask = new ElasticSearchController.AddSessionTask();
                     addSessionTask.execute(newSession);
+                    loadElasticSearch();
                     //finish();
                     Intent intent = new Intent(AddSessionActivity.this, MySessionsActivity.class);
                     startActivity(intent);

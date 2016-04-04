@@ -83,7 +83,8 @@ public class EditSessionActivity extends MethodsController {
                     addSessionTask.execute(newSession);
 
                     loadElasticSearch(); // load the newest addition
-                    finish();
+                    Intent intent = new Intent(EditSessionActivity.this, MySessionsActivity.class);
+                    startActivity(intent);
                 }
             }
         });
