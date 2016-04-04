@@ -64,9 +64,9 @@ public class UpcomingSessionsActivity extends MethodsController {
                         wantedIndex = i;
                     }
                 }
-                String index = String.valueOf(wantedIndex);
+                //String index = String.valueOf(wantedIndex);
                 // http://stackoverflow.com/questions/2091465/how-do-i-pass-data-between-activities-on-android
-                intent.putExtra("index", index);
+                intent.putExtra("index", wantedIndex);
                 startActivity(intent);
             }
         });

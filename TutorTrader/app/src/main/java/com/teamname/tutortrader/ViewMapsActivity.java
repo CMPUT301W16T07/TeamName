@@ -90,7 +90,11 @@ public class ViewMapsActivity extends FragmentActivity {
         }
     }
 
-
+    /**
+     * Centers the map
+     *
+     * @param point
+     */
     public void centerOnLocation(LatLng point){
         if (point != null) {
             mMap.addMarker(new MarkerOptions().position(point).title("Session Location"));

@@ -49,6 +49,7 @@ public class MethodsController extends AppCompatActivity {
     protected static final String BIDFILE = "bids.sav";
 
 
+
     //TODO:load user profile if it exists or make new one.
     protected Profile currentProfile;
 
