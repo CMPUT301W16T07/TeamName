@@ -77,7 +77,6 @@ public class AddSessionActivity extends MethodsController  {
                             tempSessions.add(newSession);
                             saveInFile(OFFLINEFILE, tempSessions);
                             Toast.makeText(AddSessionActivity.this, "Session will be uploaded once internet is connected", Toast.LENGTH_LONG).show();
-
                     }
                     loadElasticSearch(); // load the newest addition
 

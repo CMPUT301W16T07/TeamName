@@ -39,20 +39,27 @@ public class MySessionsAdapter extends ArrayAdapter<Session> {
         TextView descriptionView = (TextView) mySessionsView.findViewById(R.id.description);
         TextView statusView = (TextView) mySessionsView.findViewById(R.id.status);
         TextView bidView = (TextView) mySessionsView.findViewById(R.id.bids);
-        Profile tutor = MethodsController.getProfile(arrayList.get(index).getTutorID());
-        Integer pendingBidsCount;
 
-        // get current number of pending bids (bidsCount or bidsCount - 1 if session is booked)
+        // get current number of pending bids (or user who booked the session if booked)
+        String bidString;
         if (arrayList.get(index).getStatus().equals("booked")) {
-            pendingBidsCount = arrayList.get(index).getBidsCount() - 1;
+            Profile student = MethodsController.getProfile(arrayList.get(index).getBids().get(0).getBidder());
+            bidString = "Booked By: <b>" + student.getName() + "</b>";
         } else {
-            pendingBidsCount = arrayList.get(index).getBidsCount();
+            bidString = "Pending Bids: <b>" + arrayList.get(index).getBidsCount() + "</b>";
         }
 
-        String sessionString = "<b>" + arrayList.get(index).getTitle() + "</b> <i>by "  + tutor.getName() + "</i>";
+        String sessionString;
+        if (MethodsController.Connectivity) {
+            // need a separate condition checker because getProfile uses elastic search
+            Profile tutor = MethodsController.getProfile(arrayList.get(index).getTutorID());
+            sessionString = "<b>" + arrayList.get(index).getTitle() + "</b> <i>by " + tutor.getName() + "</i>";
+        } else {
+            sessionString = "<b>" + arrayList.get(index).getTitle() + "</b> <i> [[OFFLINE]] </i>";
+        }
+
         String descriptionString = arrayList.get(index).getDescription();
         String statusString = "Session Status: <b>" + arrayList.get(index).getStatus() + "</b>";
-        String bidString = "Pending Bids: <b>" + pendingBidsCount + "</b>";
 
         sessionView.setText(Html.fromHtml(sessionString));
         descriptionView.setText(Html.fromHtml(descriptionString));
