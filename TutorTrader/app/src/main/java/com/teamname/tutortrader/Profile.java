@@ -91,7 +91,7 @@ public class Profile {
      * Returns the average of all tutor ratings for this user - i.e.,
      * their actual tutor rating.
      */
-    public Double getTutorRating() {
+    public String getTutorRating() {
         Double sum = 0.0;
         if (tutorRatings.size() > 0) {
             // iterate through ratings to calculate average
@@ -99,14 +99,18 @@ public class Profile {
                 sum = sum + tutorRatings.get(i);
             }
         }
-        return sum/tutorRatings.size();
+        if (sum == 0) {
+            return "Unrated";
+        } else {
+            return String.valueOf(sum / tutorRatings.size());
+        }
     }
 
     /**
      * Returns the average of all student ratings for this user - i.e.,
      * their actual student rating.
      */
-    public Double getStudentRating() {
+    public String getStudentRating() {
         Double sum = 0.0; // 0.0 indicates that they havent been rated yet
         if (studentRatings.size() > 0) {
             // iterate through ratings to calculate average
@@ -114,7 +118,11 @@ public class Profile {
                 sum = sum + studentRatings.get(i);
             }
         }
-        return sum/studentRatings.size();
+        if (sum == 0) {
+            return "Unrated";
+        } else {
+            return String.valueOf(sum / studentRatings.size());
+        }
     }
 
     public void addTutorRating (double rating) {
