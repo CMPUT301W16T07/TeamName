@@ -40,11 +40,19 @@ public class MySessionsAdapter extends ArrayAdapter<Session> {
         TextView statusView = (TextView) mySessionsView.findViewById(R.id.status);
         TextView bidView = (TextView) mySessionsView.findViewById(R.id.bids);
         Profile tutor = MethodsController.getProfile(arrayList.get(index).getTutorID());
+        Integer pendingBidsCount;
+
+        // get current number of pending bids (bidsCount or bidsCount - 1 if session is booked)
+        if (arrayList.get(index).getStatus().equals("booked")) {
+            pendingBidsCount = arrayList.get(index).getBidsCount() - 1;
+        } else {
+            pendingBidsCount = arrayList.get(index).getBidsCount();
+        }
 
         String sessionString = "<b>" + arrayList.get(index).getTitle() + "</b> <i>by "  + tutor.getName() + "</i>";
         String descriptionString = arrayList.get(index).getDescription();
         String statusString = "Session Status: <b>" + arrayList.get(index).getStatus() + "</b>";
-        String bidString = "Pending Bids: <b>" + arrayList.get(index).getBidsCount() + "</b>";
+        String bidString = "Pending Bids: <b>" + pendingBidsCount + "</b>";
 
         sessionView.setText(Html.fromHtml(sessionString));
         descriptionView.setText(Html.fromHtml(descriptionString));

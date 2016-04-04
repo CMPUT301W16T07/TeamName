@@ -16,8 +16,6 @@ import java.util.concurrent.ExecutionException;
  * the sessions they've created.
  */
 public class MySessionsActivity extends MethodsController {
-    //final MethodsController instance = MethodsController.getInstance();
-    //final Profile currentProfile = instance.getCurrentProfile();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +26,7 @@ public class MySessionsActivity extends MethodsController {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_sessions);
         oldSessionsList = (ListView) findViewById(R.id.sessionList);
-        oldSessionsList.setBackgroundResource(R.drawable.apple_left);
+        oldSessionsList.setBackgroundResource(R.drawable.apple_righ);
         btn_CurrentBids = (Button) findViewById(R.id.currentBids);
         btn_CurrentBids.setOnClickListener(btnClickListener);
         btn_myProfile = (Button) findViewById(R.id.myProfile);
@@ -73,7 +71,6 @@ public class MySessionsActivity extends MethodsController {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MySessionsActivity.this, ViewOneSessionActivity.class);
-                Session session = sessionsOfInterest.get(position);
                 // http://stackoverflow.com/questions/2091465/how-do-i-pass-data-between-activities-on-android
                 intent.putExtra("index", position);
                 startActivity(intent);

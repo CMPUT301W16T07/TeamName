@@ -23,27 +23,24 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 /**
- *
  * The activity for the list of all available sessions (the main
  * screen of the app).
  */
 public class AvailableSessionsActivity extends MethodsController {
 
-
     private ListView oldSessions;
-   // private ArrayList<Session> sessions = new ArrayList<Session>();
     private ArrayAdapter adapter;
     protected EditText query;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //ListView sessionsList;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.available_sessions);
 
 
-
-
+        //sessionsList = (ListView) findViewById(R.id.sessionList);
+        //sessionsList.setBackgroundResource(R.drawable.apple_righ);
 
         btn_CurrentBids = (Button) findViewById(R.id.currentBids);
         btn_CurrentBids.setOnClickListener(btnClickListener);
@@ -61,15 +58,6 @@ public class AvailableSessionsActivity extends MethodsController {
         //populates the list of all sessions
         oldSessions = (ListView) findViewById(R.id.sessionList);
         oldSessions.setBackgroundResource(R.drawable.apple_righ);
-        /*ElasticSessionController.GetSessionsTask getSessionsTask = new ElasticSessionController.GetSessionsTask();
-        getSessionsTask.execute("");
-        try {
-            availableSessions = getSessionsTask.get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }*/
         loadElasticSearch();
 
         /**
@@ -85,18 +73,10 @@ public class AvailableSessionsActivity extends MethodsController {
             }
         }*/
 
-
-
         //adapter = new AvailableSessionsAdapter(this, sessions);
         adapter = new AvailableSessionsAdapter(this, availableSessions);
         oldSessions.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-
-//        adapter = new ArrayAdapter<>(this,
-//                R.layout.list_colour, availableSessions);
-//        oldSessions.setAdapter(adapter);
-//        adapter.notifyDataSetChanged();
-
 
         /**
          * handles the search button press.

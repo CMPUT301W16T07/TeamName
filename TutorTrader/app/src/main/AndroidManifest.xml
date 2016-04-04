@@ -48,14 +48,12 @@
         <activity android:name=".MyProfileActivity" />
         <activity android:name=".EditSessionActivity" />
 
-        <!-- added methods controller as an activity to be sagfe -->
+        <!-- added methods controller as an activity to be safe -->
         <activity android:name=".MethodsController" />
         <activity
-            android:name=".EditProfileActivity"
-            android:label="@string/title_activity_edit_profile" />
+            android:name=".EditProfileActivity" />
         <activity
-            android:name=".CreateProfileActivity"
-            android:label="@string/title_activity_create_profile" />
+            android:name=".CreateProfileActivity" />
         <activity android:name=".ViewBidsActivity" />
         <activity android:name=".ViewImageActivity" />
 
@@ -77,11 +75,10 @@
         </activity>
 
         <activity
-            android:name=".UpcomingSessionsActivity"
-            android:label="@string/title_activity_upcoming_sessions"></activity>
+            android:name=".UpcomingSessionsActivity" />
         <activity
-            android:name=".ViewOneUpcomingSession"
-            android:label="@string/title_activity_view_one_upcoming_session"></activity>
+
+            android:name=".ViewOneUpcomingSession" />
 
     </application>
 
