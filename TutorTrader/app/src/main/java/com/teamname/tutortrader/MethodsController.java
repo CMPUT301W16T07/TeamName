@@ -202,6 +202,7 @@ public class MethodsController extends AppCompatActivity {
     }
 
     private void loadProfile(String filename){
+
         try{
             FileInputStream fis = openFileInput(filename);
             BufferedReader in = new BufferedReader(new InputStreamReader(fis));
@@ -571,9 +572,13 @@ public class MethodsController extends AppCompatActivity {
 
         setConnectivity();
         if(!Connectivity){
-            Toast.makeText(MethodsController.this, "No Internet! \n continuing in offline mode", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(MethodsController.this, MySessionsActivity.class);
-            startActivity(intent);
+
+
+
+                Toast.makeText(MethodsController.this, "No Internet! \n continuing in offline mode", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(MethodsController.this, MySessionsActivity.class);
+                startActivity(intent);
+
         }
     }
 
@@ -596,6 +601,7 @@ public class MethodsController extends AppCompatActivity {
                 toUpload.clear();
                 saveInFile(OFFLINEFILE,toUpload);
             }
+
 
         }else{
             Connectivity = Boolean.FALSE;

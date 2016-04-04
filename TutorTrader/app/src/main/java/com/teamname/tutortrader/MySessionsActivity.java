@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.concurrent.ExecutionException;
 
@@ -54,8 +55,13 @@ public class MySessionsActivity extends MethodsController {
         addNewSession.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MySessionsActivity.this, AddSessionActivity.class);
-                startActivity(intent);
+                if (currentProfile.isDefaultUser()) {
+
+                    Intent intent = new Intent(MySessionsActivity.this, AddSessionActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(MySessionsActivity.this, "You need to have a profile to use this feature.\n Please connect to internet to continue", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
