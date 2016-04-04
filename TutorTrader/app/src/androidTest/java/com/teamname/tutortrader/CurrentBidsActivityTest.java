@@ -7,7 +7,8 @@ import com.robotium.solo.Solo;
 
 
 /**
- * Created by iali1 on 4/3/16.
+ * This class tests the current bids activity. To use this test
+ * you have to already have a profile made! This tests UI and methods
  */
 public class CurrentBidsActivityTest extends ActivityInstrumentationTestCase2{
     private Solo solo;
@@ -44,29 +45,12 @@ public class CurrentBidsActivityTest extends ActivityInstrumentationTestCase2{
         ElasticSearchController.AddSessionTask addSessionTask = new ElasticSearchController.AddSessionTask();
         addSessionTask.execute(session);
 
-        //float bidvalue = Float.valueOf(12); // valid amount
-        //Bid newbid = new Bid(session.getSessionID(), profile.getProfileID(),bidvalue);
-        //session.addBid(newbid);
-
         solo.clickOnMenuItem("Available");
         solo.clickOnText("Math");
         solo.typeText(0, "2");
         solo.clickOnButton(2);
 
-        ElasticSearchController.UpdateSessionTask updateSessionTask = new ElasticSearchController.UpdateSessionTask();
-        updateSessionTask.execute(session);
-
         solo.clickOnMenuItem("Current");
-        Bid bid = (session.getBids()).get(0);
-        bid.setStatus("Accepted");
-
-        session.setStatus("booked");
-
-        updateSessionTask.execute(session);
-
-        solo.clickOnMenuItem("Current");
-
-        solo.sleep(4000);
 
         solo.clickOnButton(4);
         solo.sleep(4000);
