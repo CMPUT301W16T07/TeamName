@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -15,18 +16,23 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class ViewMapsActivity extends FragmentActivity {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
-
+    private boolean success = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_maps);
-        setUpMapIfNeeded();
-        mMap.setMyLocationEnabled(true);
-        mMap.getUiSettings().setMyLocationButtonEnabled(true);
-        mMap.getUiSettings().setZoomControlsEnabled(true);
+        try {
+            setUpMapIfNeeded();
+            mMap.setMyLocationEnabled(true);
+            mMap.getUiSettings().setMyLocationButtonEnabled(true);
+            mMap.getUiSettings().setZoomControlsEnabled(true);
+        }catch (NullPointerException e){
+            Toast.makeText(this, "Please install google play APK to use maps", Toast.LENGTH_LONG).show();
+            success = false;
+        }
 
         Intent dataRecv = getIntent();
-        if (dataRecv != null){
+        if (dataRecv != null && success){
             LatLng startPoint = dataRecv.getParcelableExtra("place");
             centerOnLocation(startPoint);
 
@@ -36,7 +42,9 @@ public class ViewMapsActivity extends FragmentActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mMap.clear();
+                if (success) {
+                    mMap.clear();
+                }
                 finish();
             }
         });
