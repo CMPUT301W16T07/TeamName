@@ -66,7 +66,7 @@ public class ViewOneUpcomingSession extends MethodsController {
      * @param index the index of the session in the sessions arraylist is passed in.
      */
     public void initializeFields(int index) {
-        Profile tutor = getProfile(sessionsOfInterest.get(index).getTutorID());
+        Profile tutor = getProfile(sessions.get(index).getTutorID());
 
         TextView titleBody = (TextView) findViewById(R.id.upcomingOneTitleBody);
         TextView descriptionBody = (TextView) findViewById(R.id.upcomingOneDescriptionBody);
@@ -77,9 +77,9 @@ public class ViewOneUpcomingSession extends MethodsController {
 
         ImageView sessionImage = (ImageView) findViewById(R.id.upcomingOneSessionImage);
 
-        sessionImage.setImageBitmap(sessionsOfInterest.get(index).getThumbnail());
-        titleBody.setText("Title: " + sessionsOfInterest.get(index).getTitle());
-        descriptionBody.setText("Description: "+sessionsOfInterest.get(index).getDescription());
+        sessionImage.setImageBitmap(sessions.get(index).getThumbnail());
+        titleBody.setText("Title: " + sessions.get(index).getTitle());
+        descriptionBody.setText("Description: "+sessions.get(index).getDescription());
         postedByBody.setText("Posted By: "+tutor.getName());
         bodyEmail.setText("Email: " + tutor.getEmail());
         bodyPhone.setText("Phone" + tutor.getPhone());
