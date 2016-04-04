@@ -8,5 +8,5 @@ This app is designed for android devices.
 
 Make sure you have a camera, or enable on on your emulator to use the photograph feature.   
 Make sure you enable locations on your device or emulator are enabled.    
-connectivity is not required but many features will not be usable without access to the internet.
+connectivity is not required but many features will not be usable without access to the internet.   
 On Emulator devices turning off sound will speed the app up.
