@@ -15,6 +15,7 @@
     <string name="AddSessionField">Add New Session</string>
     <string name="EditSessionField">Edit Session</string>
     <string name="AddTutorSession">Add Tutor Session</string>
+    <string name="upcomingSessions">Upcoming Sessions</string>
 
     <!-- Profile Fields -->
     <string name="CreateProfileField">Create New Profile</string>
@@ -52,10 +53,15 @@
     <string name="EnterBidField">Enter your bid here ($/hour) </string>
     <string name="BidsOnMySessionsField">Bids On My Sessions</string>
     <string name="ClearDeclinedBidsField">Clear Declined Bids</string>
-    <string name="upcomingSessions">Upcoming Sessions</string>
+
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_create_profile">CreateProfileActivity</string>
+
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_view_maps">Map</string>
+
     <string name="title_activity_upcoming_sessions">UpcomingSessionsActivity</string>
     <string name="title_activity_view_one_upcoming_session">ViewOneUpcomingSession</string>
     <string name="titleBody">Subject</string>
+
 </resources>

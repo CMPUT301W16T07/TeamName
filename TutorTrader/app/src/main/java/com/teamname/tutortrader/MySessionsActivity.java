@@ -38,6 +38,7 @@ public class MySessionsActivity extends MethodsController {
 
         // verify user is logged in
         verifyLogin();
+        setConnectivity();
 
         // set activity title
         TextView activityTitle = (TextView) findViewById(R.id.activityTitle);

@@ -3,8 +3,10 @@ package com.teamname.tutortrader;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.UiThreadTest;
 import android.widget.Button;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 /**
@@ -44,7 +46,6 @@ public class BiddingTest extends ActivityInstrumentationTestCase2 {
      * Testing if a session's status is changed to pending after a valid bid is added.
      * Test if bid has been added to bids array.
      * */
-
     public void testBidForSessionValid() {
         BidOnSessionActivity msa = (BidOnSessionActivity)getActivity();
         Bitmap.Config conf = Bitmap.Config.ARGB_8888;

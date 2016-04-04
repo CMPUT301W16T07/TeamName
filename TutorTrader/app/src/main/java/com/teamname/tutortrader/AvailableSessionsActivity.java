@@ -38,8 +38,10 @@ public class AvailableSessionsActivity extends MethodsController {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.available_sessions);
 
+
         //sessionsList = (ListView) findViewById(R.id.sessionList);
         //sessionsList.setBackgroundResource(R.drawable.apple_righ);
+
         btn_CurrentBids = (Button) findViewById(R.id.currentBids);
         btn_CurrentBids.setOnClickListener(btnClickListener);
         btn_myProfile = (Button) findViewById(R.id.myProfile);
@@ -152,6 +154,8 @@ public class AvailableSessionsActivity extends MethodsController {
                 startActivity(intent);
             }
         });
+
+        checkConnectivity();
 
     }
 

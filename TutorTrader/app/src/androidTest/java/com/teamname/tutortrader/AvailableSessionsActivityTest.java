@@ -22,10 +22,9 @@ import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
 
 /**
- * This will test the addSessionActivity by adding a new activity and see that it has been
- * created
+ * This will test both the API and the code to see if we can add sessions, view sessions
+ * search sessions and delete sessionss
  *
- * @see AddSessionActivity for more details about what it does
  */
 public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCase2 {
 
@@ -114,9 +113,9 @@ public class AvailableSessionsActivityTest extends ActivityInstrumentationTestCa
          */
 
         solo.assertCurrentActivity("right activity", AvailableSessionsActivity.class);
-        solo.clickOnMenuItem("Profile");
-        solo.sleep(2000);
-        solo.clickOnMenuItem("Available");
+        //solo.clickOnMenuItem("Profile");
+        //solo.sleep(2000);
+        //solo.clickOnMenuItem("Available");
         solo.clickOnText("Math");
         solo.assertCurrentActivity("switched sessions", BidOnSessionActivity.class);
         assertTrue(solo.searchText("Math"));

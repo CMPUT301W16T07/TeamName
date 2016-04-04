@@ -67,7 +67,7 @@ public class ViewOneUpcomingSession extends MethodsController {
      * @param index the index of the session in the sessions arraylist is passed in.
      */
     public void initializeFields(int index) {
-        Profile tutor = getProfile(sessionsOfInterest.get(index).getTutorID());
+        Profile tutor = getProfile(sessions.get(index).getTutorID());
 
         TextView titleBody = (TextView) findViewById(R.id.upcomingOneTitleBody);
         TextView descriptionBody = (TextView) findViewById(R.id.upcomingOneDescriptionBody);
@@ -78,9 +78,9 @@ public class ViewOneUpcomingSession extends MethodsController {
 
         ImageView sessionImage = (ImageView) findViewById(R.id.upcomingOneSessionImage);
 
-        sessionImage.setImageBitmap(sessionsOfInterest.get(index).getThumbnail());
-        titleBody.setText(Html.fromHtml("Title: <b>" + sessionsOfInterest.get(index).getTitle() + "</b>"));
-        descriptionBody.setText(Html.fromHtml("Description: <b>"+sessionsOfInterest.get(index).getDescription() + "</b>"));
+        sessionImage.setImageBitmap(sessions.get(index).getThumbnail());
+        titleBody.setText(Html.fromHtml("Title: <b>" + sessions.get(index).getTitle() + "</b>"));
+        descriptionBody.setText(Html.fromHtml("Description: <b>"+sessions.get(index).getDescription() + "</b>"));
         postedByBody.setText(Html.fromHtml("Posted By: <b>"+tutor.getName() + "</b>"));
         bodyEmail.setText(Html.fromHtml("Email: <b> " + tutor.getEmail() + "</b>"));
         bodyPhone.setText(Html.fromHtml("Phone: <b>" + tutor.getPhone() + "</b>"));

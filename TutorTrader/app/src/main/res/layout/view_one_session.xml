@@ -15,6 +15,14 @@
             android:id="@+id/allSessionsButton" />
 
         <Button
+            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:text="Map"
+            android:id="@+id/mapButton"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Rate Student"
@@ -85,11 +93,13 @@
         android:id="@+id/sessionImage"
         android:layout_weight=".75" />
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal"
         android:background="@color/colorPrimaryDark" >
+
 
         <Button
             android:layout_weight="1"
@@ -124,5 +134,6 @@
             android:id="@+id/repostButton" />
 
     </LinearLayout>
+
 
 </LinearLayout>

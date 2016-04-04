@@ -54,6 +54,30 @@
         android:layout_toEndOf="@+id/newPhotoButton" />
 
 </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="New Location"
+            android:id="@+id/newLocationButton"
+            android:layout_weight="0.06"/>
+
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Delete Location"
+            android:id="@+id/deleteLocationButton"
+            android:layout_weight="0.06"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/newLocationButton"
+            android:layout_toEndOf="@+id/newLocationButton" />
+
+    </RelativeLayout>
+
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

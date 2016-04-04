@@ -91,6 +91,12 @@
     <Button
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
+        android:text="Add Location"
+        android:id="@+id/AddLocationButton" />
+
+    <Button
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
         android:id="@+id/saveButton"
         android:text="@string/SaveButton" />
 

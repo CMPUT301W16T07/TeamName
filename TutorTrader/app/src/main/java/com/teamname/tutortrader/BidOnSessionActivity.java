@@ -62,6 +62,25 @@ public class BidOnSessionActivity extends MethodsController {
             }
         });
 
+        Button mapButton = (Button) findViewById(R.id.mapButton);
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(Connectivity && (selectedSession.getLocation() != null)) {
+                    Intent intent = new Intent(BidOnSessionActivity.this, ViewMapsActivity.class);
+
+                    Bundle place = new Bundle();
+                    place.putParcelable("place", selectedSession.getLocation());
+                    intent.putExtras(place);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(BidOnSessionActivity.this, "No Location Available",Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+
         Button bidButton = (Button) findViewById(R.id.bidButton);
         bidButton.setOnClickListener(new View.OnClickListener() {
             @Override
