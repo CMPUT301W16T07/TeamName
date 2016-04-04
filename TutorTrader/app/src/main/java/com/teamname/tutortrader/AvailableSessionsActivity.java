@@ -27,6 +27,12 @@ public class AvailableSessionsActivity extends MethodsController {
     Boolean isSearchedList;
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        isSearchedList = false;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
@@ -123,13 +129,14 @@ public class AvailableSessionsActivity extends MethodsController {
         });
 
 
+
         oldSessions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Integer properIndex = -1;
                 if (isSearchedList) {
                     UUID clickedSessionID = searchedSessions.get(position).getSessionID();
-                    for (int i=0; i<searchedSessions.size();i++) {
+                    for (int i=0; i<sessions.size();i++) {
                         if (sessions.get(i).getSessionID().equals(clickedSessionID)) {
                             properIndex = i;
                         }
@@ -137,7 +144,6 @@ public class AvailableSessionsActivity extends MethodsController {
                 } else {
                     properIndex = position;
                 }
-
                 Intent intent = new Intent(AvailableSessionsActivity.this, BidOnSessionActivity.class);
                 // http://stackoverflow.com/questions/2091465/how-do-i-pass-data-between-activities-on-android
                 intent.putExtra("index", properIndex);
