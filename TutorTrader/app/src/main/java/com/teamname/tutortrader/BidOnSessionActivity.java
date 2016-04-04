@@ -4,9 +4,11 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +47,8 @@ public class BidOnSessionActivity extends MethodsController {
         checkForSelf(selectedSession);
         initializeFields(selectedSessionIndex);
 
+        ImageView viewImage = (ImageView) findViewById(R.id.sessionImage);
+        viewImage.setImageBitmap(sessions.get(index).getThumbnail());
 
         //super.onCreate(savedInstanceState);
         //setContentView(R.layout.bid_on_session);
@@ -74,17 +78,6 @@ public class BidOnSessionActivity extends MethodsController {
                     Toast.makeText(BidOnSessionActivity.this, "No Location Available",Toast.LENGTH_LONG).show();
                 }
 
-            }
-        });
-
-        Button viewImageButton = (Button) findViewById(R.id.viewImageButton);
-        viewImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(BidOnSessionActivity.this, ViewImageActivity.class);
-                // TODO: must pass the index so view image activity can return to proper bidonsession
-                intent.putExtra("index", String.valueOf(selectedSessionIndex));
-                startActivity(intent);
             }
         });
 
@@ -151,13 +144,13 @@ public class BidOnSessionActivity extends MethodsController {
 
         subjectText.setText(sessions.get(index).getTitle());
 
-        titleBody.setText("Title: "+ sessions.get(index).getTitle());
-        descriptionBody.setText("Description: "+sessions.get(index).getDescription());
-        postedByBody.setText("Posted By: "+ tutor.getName());
-        tutorRatingBody.setText("Tutor Rating: "+ tutor.getTutorRating());
-        bodyEmail.setText("Email: " + tutor.getEmail());
-        bodyPhone.setText("Phone: " + tutor.getPhone());
-        bodyStatus.setText("Status: "+sessions.get(index).getStatus());
+        titleBody.setText(Html.fromHtml("Title: <b>" + sessions.get(index).getTitle() + "</b>"));
+        descriptionBody.setText(Html.fromHtml("Description: <b>"+sessions.get(index).getDescription() + "</b>"));
+        postedByBody.setText(Html.fromHtml("Posted By: <b>"+ tutor.getName() + "</b>"));
+        tutorRatingBody.setText(Html.fromHtml("Tutor Rating: <b>"+ tutor.getTutorRating() + "</b>"));
+        bodyEmail.setText(Html.fromHtml("Email: <b>" + tutor.getEmail() + "</b>"));
+        bodyPhone.setText(Html.fromHtml("Phone: <b>" + tutor.getPhone() + "</b>"));
+        bodyStatus.setText(Html.fromHtml("Status: <b>"+sessions.get(index).getStatus() + "</b>"));
 
 
 

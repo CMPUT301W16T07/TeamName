@@ -1,129 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:weightSum="1"
+    android:background="@color/colorPrimaryDark" >
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ScrollView01"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/ScrollView01"
+        android:layout_width="fill_parent"
+        android:layout_height="447dp"
+        android:layout_weight="1.21"
+        android:background="@drawable/black_chalkboard">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".BidOnSessionActivity">
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical" android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/AvailableSessionsButton"
+                    android:id="@+id/allSessionsButton" />
+
+                <Button
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="Map"
+                    android:id="@+id/mapButton"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:textAlignment="center"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:id="@+id/subjectTextB" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:id="@+id/titleBodyB" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:id="@+id/descriptionBodyB" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:id="@+id/postedByBodyB" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:id="@+id/tutorRatingB" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:id="@+id/bodyEmailB" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:id="@+id/bodyPhoneB" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/StatusField"
+                android:id="@+id/bodyStatusB"
+                android:textColor="@color/white"
+                android:layout_gravity="center_horizontal" />
+
+            <ImageView
+                android:layout_width="279dp"
+                android:layout_height="297dp"
+                android:id="@+id/sessionImage"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
     <RelativeLayout
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/AvailableSessionsButton"
-            android:id="@+id/allSessionsButton" />
-        <Button
-            android:layout_height="wrap_content"
-            android:layout_width="100dp"
-            android:text="Map"
-            android:id="@+id/mapButton"
-            android:layout_toLeftOf="@+id/viewImageButton"
-
-            />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="View Image"
-            android:id="@+id/viewImageButton"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true" />
-    </RelativeLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:id="@+id/subjectTextB"
-            android:layout_gravity="center_horizontal" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/titleBodyB" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="30dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/descriptionBodyB" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="30dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/PostedByField"
-            android:id="@+id/postedByBodyB" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="30dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/tutorRatingB" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="30dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/bodyEmailB" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="30dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/bodyPhoneB" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="30dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/StatusField"
-            android:id="@+id/bodyStatusB" />
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
 
         <EditText
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:id="@+id/bidtext"
+            android:hint="@string/EnterBidField"
+            android:textColorHint="@color/colorAccent"
             android:inputType="numberDecimal"
-            android:layout_alignParentBottom="true"
-            android:hint="@string/EnterBidField" />
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/bidButton"
+            android:layout_toStartOf="@+id/bidButton"
+            android:textColor="@color/colorAccent" />
 
         <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/bidButton"
             android:text="@string/BidButton"
-            android:id="@+id/bidButton" />
+            android:layout_alignBottom="@+id/bidtext"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
-    </LinearLayout>
-</ScrollView>
+    </RelativeLayout>
+</LinearLayout>

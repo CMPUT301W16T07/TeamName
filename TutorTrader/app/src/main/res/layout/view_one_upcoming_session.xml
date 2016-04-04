@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/black_chalkboard" >
 
     <Button
         android:layout_width="wrap_content"
@@ -12,52 +13,50 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:textSize="20sp"
+        android:textColor="@color/white"
         android:text="@string/titleBody"
         android:id="@+id/upcomingOneTitleBody" />
 
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="30dp" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:textSize="20sp"
+        android:textColor="@color/white"
         android:text="@string/DescriptionField"
         android:id="@+id/upcomingOneDescriptionBody" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="30dp" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:textSize="20sp"
+        android:textColor="@color/white"
         android:text="@string/PostedByField"
         android:id="@+id/upcomingOnePostedByBody" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="30dp" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:textSize="20sp"
+        android:textColor="@color/white"
         android:text="@string/EmailField"
-        android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/upcomingOneBodyEmail" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="30dp" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:textSize="20sp"
+        android:textColor="@color/white"
         android:text="@string/PhoneField"
         android:id="@+id/upcomingOneBodyPhone" />
 
@@ -67,6 +66,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/StatusField"
         android:id="@+id/upcomingOneBodyStatus"
+        android:textColor="@color/white"
         android:layout_gravity="center_horizontal" />
 
     <ImageView
@@ -85,9 +85,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-
     </RelativeLayout>
-
-
 
 </LinearLayout>
