@@ -48,7 +48,7 @@ public class BidOnSessionActivity extends MethodsController {
         initializeFields(selectedSessionIndex);
 
         ImageView viewImage = (ImageView) findViewById(R.id.sessionImage);
-        viewImage.setImageBitmap(sessions.get(index).getThumbnail());
+        viewImage.setImageBitmap(selectedSession.getThumbnail());
 
         //super.onCreate(savedInstanceState);
         //setContentView(R.layout.bid_on_session);
