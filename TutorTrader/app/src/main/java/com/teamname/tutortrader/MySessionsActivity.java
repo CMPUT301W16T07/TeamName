@@ -1,5 +1,6 @@
 package com.teamname.tutortrader;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,7 +9,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -17,6 +20,7 @@ import java.util.concurrent.ExecutionException;
  */
 public class MySessionsActivity extends MethodsController {
 
+    private ArrayList<Session> offlineSessions = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ListView oldSessionsList;
@@ -45,7 +49,14 @@ public class MySessionsActivity extends MethodsController {
         activityTitle.setText(R.string.MySessionsButton);
 
         loadElasticSearch();
-        adapter = new MySessionsAdapter(this, sessionsOfInterest);
+        if (Connectivity) {
+            adapter = new MySessionsAdapter(this, sessionsOfInterest);
+
+        } else {
+            offlineSessions = loadOffline();
+            adapter = new MySessionsAdapter(this, offlineSessions);
+
+        }
         oldSessionsList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
@@ -54,8 +65,13 @@ public class MySessionsActivity extends MethodsController {
         addNewSession.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MySessionsActivity.this, AddSessionActivity.class);
-                startActivity(intent);
+                if (!currentProfile.isDefaultUser()) {
+
+                    Intent intent = new Intent(MySessionsActivity.this, AddSessionActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(MySessionsActivity.this, "You need to have a profile to use this feature.\n Please connect to internet to continue", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -66,14 +82,22 @@ public class MySessionsActivity extends MethodsController {
             If user clicks on an entry in the listview, the index of the entry clicked is
             passed onto the EditEntry activity, so editing can be done on the correct entry.
          */
-
         oldSessionsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MySessionsActivity.this, ViewOneSessionActivity.class);
-                // http://stackoverflow.com/questions/2091465/how-do-i-pass-data-between-activities-on-android
-                intent.putExtra("index", position);
-                startActivity(intent);
+                if (Connectivity) {
+                    Intent intent = new Intent(MySessionsActivity.this, ViewOneSessionActivity.class);
+
+                    // http://stackoverflow.com/questions/2091465/how-do-i-pass-data-between-activities-on-android
+                    intent.putExtra("index", position);
+                    startActivity(intent);
+                } else {
+                    Context context = getApplicationContext();
+                    CharSequence text = "Must Connect to Internet!";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
             }
         });
     }

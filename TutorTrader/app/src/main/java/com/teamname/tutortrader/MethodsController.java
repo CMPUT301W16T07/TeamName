@@ -23,6 +23,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -67,7 +68,7 @@ public class MethodsController extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1234;
     protected Bitmap thumbnail;
     protected ImageView newImage;
-    protected Boolean Connectivity;
+    static protected Boolean Connectivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -202,6 +203,7 @@ public class MethodsController extends AppCompatActivity {
     }
 
     private void loadProfile(String filename){
+
         try{
             FileInputStream fis = openFileInput(filename);
             BufferedReader in = new BufferedReader(new InputStreamReader(fis));
@@ -571,9 +573,13 @@ public class MethodsController extends AppCompatActivity {
 
         setConnectivity();
         if(!Connectivity){
-            Toast.makeText(MethodsController.this, "No Internet! \n continuing in offline mode", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(MethodsController.this, MySessionsActivity.class);
-            startActivity(intent);
+
+
+
+                Toast.makeText(MethodsController.this, "No Internet! \n continuing in offline mode", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(MethodsController.this, MySessionsActivity.class);
+                startActivity(intent);
+
         }
     }
 
@@ -595,7 +601,10 @@ public class MethodsController extends AppCompatActivity {
                 }
                 toUpload.clear();
                 saveInFile(OFFLINEFILE,toUpload);
+                // delete the file
+                
             }
+
 
         }else{
             Connectivity = Boolean.FALSE;

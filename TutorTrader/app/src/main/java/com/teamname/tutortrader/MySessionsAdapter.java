@@ -39,7 +39,6 @@ public class MySessionsAdapter extends ArrayAdapter<Session> {
         TextView descriptionView = (TextView) mySessionsView.findViewById(R.id.description);
         TextView statusView = (TextView) mySessionsView.findViewById(R.id.status);
         TextView bidView = (TextView) mySessionsView.findViewById(R.id.bids);
-        Profile tutor = MethodsController.getProfile(arrayList.get(index).getTutorID());
         Integer pendingBidsCount;
 
         // get current number of pending bids (bidsCount or bidsCount - 1 if session is booked)
@@ -48,8 +47,14 @@ public class MySessionsAdapter extends ArrayAdapter<Session> {
         } else {
             pendingBidsCount = arrayList.get(index).getBidsCount();
         }
-
-        String sessionString = "<b>" + arrayList.get(index).getTitle() + "</b> <i>by "  + tutor.getName() + "</i>";
+        String sessionString;
+        if (MethodsController.Connectivity) {
+            // need a separate condition checker becuse getProfile uses elastic search
+            Profile tutor = MethodsController.getProfile(arrayList.get(index).getTutorID());
+            sessionString = "<b>" + arrayList.get(index).getTitle() + "</b> <i>by " + tutor.getName() + "</i>";
+        } else {
+            sessionString = "<b>" + arrayList.get(index).getTitle() + "</b> <i> [[OFFLINE]] </i>";
+        }
         String descriptionString = arrayList.get(index).getDescription();
         String statusString = "Session Status: <b>" + arrayList.get(index).getStatus() + "</b>";
         String bidString = "Pending Bids: <b>" + pendingBidsCount + "</b>";
