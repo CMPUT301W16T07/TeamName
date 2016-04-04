@@ -70,7 +70,7 @@ public class MySessionsActivityTest extends ActivityInstrumentationTestCase2 {
         solo.typeText(0, "TITLE");
         solo.typeText(1, "Description");
 
-        solo.clickOnButton(1);
+        solo.clickOnButton("Save");
         solo.clickOnMenuItem("My Sessions");
 
         assertTrue(solo.searchText("TITLE"));
@@ -79,13 +79,13 @@ public class MySessionsActivityTest extends ActivityInstrumentationTestCase2 {
         solo.clickOnText("TITLE");
         solo.assertCurrentActivity("We switched sessions", ViewOneSessionActivity.class);
 
-        solo.clickOnButton(2);
+        solo.clickOnButton("View");
         solo.assertCurrentActivity("We are viewing bids", ViewBidsActivity.class);
         solo.clickOnButton(0);
-        solo.clickOnButton(3);
+        solo.clickOnButton("Edit");
 
         solo.assertCurrentActivity("Editing session", EditSessionActivity.class);
-        solo.clickOnButton(3);
+        solo.clickOnButton("Cancel");
 
         solo.assertCurrentActivity("Cancelled out", MySessionsActivity.class);
         solo.clickOnText("TITLE");
@@ -93,12 +93,12 @@ public class MySessionsActivityTest extends ActivityInstrumentationTestCase2 {
 
         solo.clearEditText(1);
         solo.typeText(1, "New Description");
-        solo.clickOnButton(2);
+        solo.clickOnButton("Save");
 
         solo.clickOnMenuItem("My Sessions");
         assertTrue(solo.searchText("New Description"));
         solo.clickOnText("TITLE");
-        solo.clickOnButton(4);
+        solo.clickOnButton("Delete");
         solo.sleep(2000);
         solo.clickOnText("Yes");
         assertFalse(solo.searchText("TITLE"));

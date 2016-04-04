@@ -6,7 +6,6 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.widget.EditText;
 
 /**
- * Abrosda @12/2/2016
  * US 03.02.01
  * As a user, I want to edit the contact information in my profile.
  *
@@ -37,6 +36,20 @@ public class ProfileTest extends ActivityInstrumentationTestCase2 {
         user.setPhone("7804737373");
         assertEquals(user.getPhone(),"7804737373");
     }
+    public void testEditName(){
+        Profile user = new Profile("john","this should not be changed","randomemail@email.email");
+        user.setName("worked");
+        assertEquals(user.getName(), "worked");
+    }
+//TODO:HELP
+    public void testUnique(){
+        Profile user = new Profile("john","ay", "baanana");
+        Profile user2 = new Profile("john","lol","bananan1");
 
+        ElasticSearchController.AddProfileTask profileTask = new ElasticSearchController.AddProfileTask();
+        profileTask.execute(user);
+        MethodsController.profileExists(user2.getName(), user.getName());
+        profileTask.execute(user2);
 
+    }
 }
