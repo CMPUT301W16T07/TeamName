@@ -45,7 +45,6 @@ public class ViewOneSessionActivity extends MethodsController {
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: we should pass the data entry so the fields can be filled in
                 Intent intent = new Intent(ViewOneSessionActivity.this, EditSessionActivity.class);
                 intent.putExtra("index", index_r);
                 startActivity(intent);
@@ -83,7 +82,6 @@ public class ViewOneSessionActivity extends MethodsController {
         viewBidsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: we should pass the data entry so the fields can be filled in
                 Intent intent = new Intent(ViewOneSessionActivity.this, ViewBidsActivity.class);
                 intent.putExtra("index", index_r);
                 startActivity(intent);

@@ -104,7 +104,6 @@ public class AddSessionActivity extends MethodsController  {
      * @return boolean variable true if valid, false if invalid
      */
     public boolean verifyFields () {
-        //Boolean validFields = false;
         EditText subjectEdit = (EditText) findViewById(R.id.subjectEdit);
         EditText descriptionEdit = (EditText) findViewById(R.id.descriptionEdit);
 
