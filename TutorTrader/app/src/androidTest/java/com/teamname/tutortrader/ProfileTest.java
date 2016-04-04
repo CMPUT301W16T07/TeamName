@@ -3,7 +3,13 @@ package com.teamname.tutortrader;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.ActivityTestCase;
+import android.test.UiThreadTest;
+import android.widget.Button;
 import android.widget.EditText;
+
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 /**
  * US 03.02.01
@@ -42,14 +48,39 @@ public class ProfileTest extends ActivityInstrumentationTestCase2 {
         assertEquals(user.getName(), "worked");
     }
 //TODO:HELP
+    @UiThreadTest
     public void testUnique(){
+        activity = getActivity();
+        activity.setContentView(R.layout.create_profile);
+        CreateProfileActivity creator = new CreateProfileActivity();
+
         Profile user = new Profile("john","ay", "baanana");
         Profile user2 = new Profile("john","lol","bananan1");
 
         ElasticSearchController.AddProfileTask profileTask = new ElasticSearchController.AddProfileTask();
         profileTask.execute(user);
-        MethodsController.profileExists(user2.getName(), user.getName());
-        profileTask.execute(user2);
+
+        EditText newUsername = (EditText) activity.findViewById(R.id.editUsername);
+        EditText newEmail = (EditText) activity.findViewById(R.id.editEmail);
+        EditText newPhone = (EditText) activity.findViewById(R.id.editPhone);
+        newUsername.setText("john");
+        newEmail.setText("test");
+        newPhone.setText("123456");
+
+        final Button saveButton = (Button) activity.findViewById(R.id.saveButton);
+        saveButton.performClick();
+
+        ArrayList<Profile> profiles = new ArrayList<>();
+        ElasticSearchController.GetProfileTask getProfileTask = new ElasticSearchController.GetProfileTask();
+        getProfileTask.execute("email", "test");
+        try {
+            profiles = getProfileTask.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        assertEquals(0, profiles.size());
 
     }
 }

@@ -62,7 +62,7 @@ public class CreateProfileActivity extends MethodsController{
 
     }
 
-    public boolean verifyFields () {
+    public boolean verifyFields() {
 
         EditText newUsername = (EditText) findViewById(R.id.editUsername);
         EditText newEmail = (EditText) findViewById(R.id.editEmail);
