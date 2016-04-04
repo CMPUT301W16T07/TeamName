@@ -38,11 +38,6 @@ public class MySessionsActivityTest extends ActivityInstrumentationTestCase2 {
         //This is where the solo object is create   d.
         solo = new Solo(getInstrumentation());
         activity = getActivity();
-        instrumentation = getInstrumentation();
-         profile = new Profile("TESTER", "test@test.test", "780-666-6666");
-         conf = Bitmap.Config.ARGB_8888;
-         bm1 = Bitmap.createBitmap(1, 2, conf);
-         session = new Session("Math", "Tutor for linear Algebra for all university levels", profile.getProfileID(), bm1);
     }
 
     @Override
