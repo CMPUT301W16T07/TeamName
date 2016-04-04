@@ -94,6 +94,26 @@ public class ViewOneSessionActivity extends MethodsController {
             }
         });
 
+
+        Button mapButton = (Button) findViewById(R.id.mapButton);
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(Connectivity && (sessionsOfInterest.get(index_r).getLocation() != null)){
+                    Intent intent = new Intent(ViewOneSessionActivity.this, ViewMapsActivity.class);
+
+                    Bundle place = new Bundle();
+                    place.putParcelable("place", sessionsOfInterest.get(index_r).getLocation());
+                    intent.putExtras(place);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(ViewOneSessionActivity.this, "No Location Available", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+
+
         Button repostButton = (Button) findViewById(R.id.repostButton);
         repostButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,6 +140,7 @@ public class ViewOneSessionActivity extends MethodsController {
                         });
                 AlertDialog alert = builder.create();
                 alert.show();
+
             }
         });
 
@@ -185,11 +206,15 @@ public class ViewOneSessionActivity extends MethodsController {
         ImageView sessionImage = (ImageView) findViewById(R.id.sessionImage);
 
         sessionImage.setImageBitmap(sessionsOfInterest.get(index).getThumbnail());
+
         titleBody.setText(Html.fromHtml("Title: <b>" + sessionsOfInterest.get(index).getTitle() + "</b>"));
         descriptionBody.setText(Html.fromHtml("Description: <b>"+sessionsOfInterest.get(index).getDescription() + "</b>"));
         postedByBody.setText(Html.fromHtml("Posted By: <b>"+ tutor.getName() + "</b>"));
         bodyEmail.setText(Html.fromHtml("Email: <b>" + tutor.getEmail() + "</b>"));
         bodyPhone.setText(Html.fromHtml("Phone: <b>" + tutor.getPhone() + "</b>"));
         bodyStatus.setText(Html.fromHtml("Status: <b>"+sessionsOfInterest.get(index).getStatus() + "</b>"));
+
     }
+
+
 }

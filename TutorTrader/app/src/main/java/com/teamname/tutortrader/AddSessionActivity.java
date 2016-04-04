@@ -9,6 +9,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+
+import com.google.android.gms.maps.model.LatLng;
+
+import java.util.ArrayList;
+
 
 /**
  *
@@ -16,10 +23,15 @@ import android.widget.ImageView;
  */
 public class AddSessionActivity extends MethodsController  {
 
+
+   private LatLng tempPoint;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_session);
+
         Button cancelAddSession = (Button) findViewById(R.id.cancelAddSession);
         cancelAddSession.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,15 +60,47 @@ public class AddSessionActivity extends MethodsController  {
                 if (valid) {
                     EditText subjectEdit = (EditText) findViewById(R.id.subjectEdit);
                     EditText descriptionEdit = (EditText) findViewById(R.id.descriptionEdit);
-                    Session newSession = new Session(subjectEdit.getText().toString(),descriptionEdit.getText().toString(),currentProfile.getProfileID(), thumbnail);
+                    // TODO: implement Tutor
+
+                    Session newSession = new Session(subjectEdit.getText().toString(),descriptionEdit.getText().toString(),currentProfile.getProfileID(), thumbnail, tempPoint);
+
                     newSession.addThumbnail(thumbnail);
-                    ElasticSearchController.AddSessionTask addSessionTask = new ElasticSearchController.AddSessionTask();
-                    addSessionTask.execute(newSession);
-                    loadElasticSearch();
-                    //finish();
+
+
+
+                    //sessions.add(newSession);
+                    if (Connectivity) {
+                        ElasticSearchController.AddSessionTask addSessionTask = new ElasticSearchController.AddSessionTask();
+                        addSessionTask.execute(newSession);
+                    }else{
+                         ArrayList<Session> tempSessions = loadOffline();
+                        tempSessions.add(newSession);
+                        saveInFile(OFFLINEFILE, tempSessions);
+                        Toast.makeText(AddSessionActivity.this, "Session will be uploaded once internet is connected", Toast.LENGTH_LONG);
+                    }
+                    loadElasticSearch(); // load the newest addition
+
+
                     Intent intent = new Intent(AddSessionActivity.this, MySessionsActivity.class);
                     startActivity(intent);
+
                 }
+            }
+        });
+
+        Button LocationButton = (Button)findViewById(R.id.AddLocationButton);
+        LocationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(Connectivity) {
+                    Intent intent = new Intent(AddSessionActivity.this, MapsActivity.class);
+                    startActivityForResult(intent, REQUEST_LOCATION);
+                }else{
+                    Toast.makeText(AddSessionActivity.this,"You need internet to add a location.",Toast.LENGTH_LONG).show();
+                }
+
+
             }
         });
 
@@ -87,5 +131,11 @@ public class AddSessionActivity extends MethodsController  {
             thumbnail = (Bitmap)extras.get("data");
             newImage.setImageBitmap(thumbnail);
         }
+        if(requestCode == REQUEST_LOCATION && resultCode == RESULT_OK){
+           Bundle extras = data.getExtras();
+            tempPoint = extras.getParcelable("point");
+
+        }
     }
+
 }

@@ -3,14 +3,30 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:background="@drawable/black_chalkboard"
     android:layout_height="match_parent">
+
 <RelativeLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/MySessionsButton"
-        android:id="@+id/allSessionsButton" />
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/MySessionsButton"
+            android:id="@+id/allSessionsButton" />
+
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:text="Map"
+            android:id="@+id/mapButton"
+            android:layout_alignParentRight="true"
+
+            />
+
+
+    </RelativeLayout>
+
 
     <Button
         android:layout_width="wrap_content"
@@ -18,7 +34,7 @@
         android:text="Rate Student"
         android:id="@+id/rateStudentButton"
         android:layout_alignParentEnd="true" />
-</RelativeLayout>
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -82,11 +98,13 @@
         android:id="@+id/sessionImage"
         android:layout_weight=".75" />
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal"
         android:background="@color/colorPrimaryDark" >
+
 
         <Button
             android:layout_weight="1"
@@ -121,5 +139,6 @@
             android:id="@+id/repostButton" />
 
     </LinearLayout>
+
 
 </LinearLayout>

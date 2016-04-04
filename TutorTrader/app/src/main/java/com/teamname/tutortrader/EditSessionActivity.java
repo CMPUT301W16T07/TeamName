@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.google.android.gms.maps.model.LatLng;
 
 /**
  * The activity that allows a user to edit a session
@@ -16,6 +19,7 @@ import android.widget.ImageView;
 public class EditSessionActivity extends MethodsController {
 //Bitmap thumbnail;
     Integer sessions_index;
+    private LatLng tempPoint;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,11 +76,41 @@ public class EditSessionActivity extends MethodsController {
                 EditText descriptionEdit = (EditText) findViewById(R.id.descriptionEdit);
                 valid = verifyFields();
                 if (valid) {
+
                     sessionsOfInterest.get(index_r).setTitle(subjectEdit.getText().toString());
                     sessionsOfInterest.get(index_r).setDescription(descriptionEdit.getText().toString());
                     updateElasticSearchSession(sessionsOfInterest.get(index_r));
                     Intent intent = new Intent(EditSessionActivity.this, MySessionsActivity.class);
                     startActivity(intent);
+
+                }
+            }
+        });
+
+        Button LocationButton = (Button)findViewById(R.id.newLocationButton);
+        LocationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Connectivity && (sessionsOfInterest.get(index_r).getLocation() != null)){
+                    Intent intent = new Intent(EditSessionActivity.this, MapsActivity.class);
+                    startActivityForResult(intent, REQUEST_LOCATION);
+                }else{
+                    Toast.makeText(EditSessionActivity.this, "You need internet to add a location.", Toast.LENGTH_LONG).show();
+                }
+
+
+            }
+        });
+
+        Button LocationDeleteButton = (Button) findViewById(R.id.deleteLocationButton);
+        LocationDeleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Connectivity){
+                    sessionsOfInterest.get(index_r).setLocation(null);
+
+                }else{
+                    Toast.makeText(EditSessionActivity.this, "You need internet to delete a location.", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -125,6 +159,13 @@ public class EditSessionActivity extends MethodsController {
             updateElasticSearchSession(sessions.get(sessions_index));
             //saveInFile(SESSIONSFILE, sessions);
             newImage.setImageBitmap(sessions.get(sessions_index).getThumbnail());
+        }
+
+        if(requestCode == REQUEST_LOCATION && resultCode == RESULT_OK){
+            if(data.hasExtra("point")){
+                Bundle extras = data.getExtras();
+                tempPoint = (LatLng) extras.get("point");
+            }
         }
     }
 }

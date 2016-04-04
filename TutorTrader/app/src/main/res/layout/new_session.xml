@@ -43,7 +43,12 @@
         android:id="@+id/takePhotoButton"
         android:layout_gravity="left"
  />
-
+    <Button
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="Add Location"
+        android:id="@+id/AddLocationButton"
+        />
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

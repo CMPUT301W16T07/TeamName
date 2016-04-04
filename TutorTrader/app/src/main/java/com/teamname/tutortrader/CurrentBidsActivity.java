@@ -19,6 +19,7 @@ public class CurrentBidsActivity extends MethodsController {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ListView currentBidsList; // view to display the current bids
+        checkConnectivity();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.current_bids);

@@ -8,12 +8,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -40,7 +43,10 @@ import java.util.concurrent.ExecutionException;
 public class MethodsController extends AppCompatActivity {
     //protected static final String SESSIONSFILE = "sessions.sav";
     protected static final String USERFILE = "profile.sav";
-    //protected static final String BIDFILE = "bids.sav";
+
+    protected static final String OFFLINEFILE = "tempSession.sav";
+    protected static final String BIDFILE = "bids.sav";
+
 
     //TODO:load user profile if it exists or make new one.
     protected Profile currentProfile;
@@ -57,24 +63,28 @@ public class MethodsController extends AppCompatActivity {
     protected ArrayList<Session> sessionsOfInterest = new ArrayList<Session>();
 
     private static final MethodsController instance = new MethodsController();
-
+    static final int REQUEST_LOCATION = 9999;
     static final int REQUEST_IMAGE_CAPTURE = 1234;
     protected Bitmap thumbnail;
     protected ImageView newImage;
+    protected Boolean Connectivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Load current profile
+        setConnectivity();
         loadProfile(USERFILE);
 
-        if (profiles.size() == 0) {
+
+        if(profiles.size() == 0) {
             Profile tempProfile = new Profile("Default","Default","Default");
             profiles.add(tempProfile);
         }
         currentProfile = profiles.get(0);
         loadElasticSearch();
+
+
     }
 
     @Override
@@ -104,10 +114,12 @@ public class MethodsController extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             if (v.getId() == R.id.myProfile) {
+
                 Intent intent = new Intent(MethodsController.this, MyProfileActivity.class);
                 startActivity(intent);
                 finish();
             } else if (v.getId() == R.id.availableSessions) {
+
                 //Intent intent = new Intent(MethodsController.this, AvailableSessionsActivity.class);
                 //startActivity(intent);
                 //finish();
@@ -115,6 +127,7 @@ public class MethodsController extends AppCompatActivity {
                 // set the new task and clear flags
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
+
             } else if (v.getId() == R.id.currentBids) {
                 Intent intent = new Intent(MethodsController.this, CurrentBidsActivity.class);
                 startActivity(intent);
@@ -163,6 +176,28 @@ public class MethodsController extends AppCompatActivity {
             // TODO Auto-generated catch block
             //e.printStackTrace();
             throw new RuntimeException();
+        }
+    }
+
+    public ArrayList<Session> loadOffline(){
+        ArrayList<Session> temp = new ArrayList<Session>();
+        try{
+
+            FileInputStream fis = openFileInput(OFFLINEFILE);
+            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+            Gson gson = new Gson();
+            // Took from https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/com/google/gson/Gson.html 01-2016-19
+            Type listType = new TypeToken<ArrayList<Session>>() {}.getType();
+            // Took from https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/com/google/gson/Gson.html 01-2016-19
+            temp = gson.fromJson(in, listType);
+            return temp;
+
+        }catch(FileNotFoundException e){
+            //TODO Auto-generated catch block
+            //currentProfile = new Profile("test username","test phone","test email");
+            //saveProfile(currentProfile);
+            return temp;
+
         }
     }
 
@@ -233,57 +268,61 @@ public class MethodsController extends AppCompatActivity {
      */
     public void loadElasticSearch () {
 
-        sessionsOfInterest = new ArrayList<Session>();
-        availableSessions = new ArrayList<>();
 
-        ElasticSearchController.GetProfileTask getProfileTask = new ElasticSearchController.GetProfileTask();
-        getProfileTask.execute("");
-        try {
-            allProfiles = getProfileTask.get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        if(Connectivity) {
+            sessionsOfInterest = new ArrayList<Session>();
+            availableSessions = new ArrayList<>();
 
-        // update sessions array
-        ElasticSearchController.GetSessionsTask getSessionsTask = new ElasticSearchController.GetSessionsTask();
-        getSessionsTask.execute("");
-        try {
-            sessions = getSessionsTask.get();
-            int size = sessions.size();
-            UUID currentProfileID = currentProfile.getProfileID();
-            for (int i = 0; i < size; i++){
-                //TODO: we need to properly save and load profiles so the proper ProfileID is saved and not randomly generated each time we use the app
-                UUID tutorProfileID = sessions.get(i).getTutorID();
-                if (currentProfileID.compareTo(tutorProfileID) == 0) {
-                    sessionsOfInterest.add(sessions.get(i));
-
-                }
-                if (sessions.get(i).getStatus().equals("available")) {
-                    availableSessions.add(sessions.get(i));
-
-                }
+            ElasticSearchController.GetProfileTask getProfileTask = new ElasticSearchController.GetProfileTask();
+            getProfileTask.execute("");
+            try {
+                allProfiles = getProfileTask.get();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
-        // code to notify peeps of the bids
-        for(int i = 0; i < allProfiles.size(); i++) {
-            if (allProfiles.get(i).getProfileID().equals(currentProfile.getProfileID())) {
-                if ( allProfiles.get(i).isNewBid() == true) {
-                    Notify();
-                    allProfiles.get(i).setNewBid(false);
+            //update sessions array
+            ElasticSearchController.GetSessionsTask getSessionsTask = new ElasticSearchController.GetSessionsTask();
+            getSessionsTask.execute("");
+            try {
+                sessions = getSessionsTask.get();
+                int size = sessions.size();
+                UUID currentProfileID = currentProfile.getProfileID();
+                for (int i = 0; i < size; i++) {
+                    //TODO: we need to properly save and load profiles so the proper ProfileID is saved and not randomly generated each time we use the app
+                    UUID tutorProfileID = sessions.get(i).getTutorID();
+                    if (currentProfileID.compareTo(tutorProfileID) == 0) {
+                        sessionsOfInterest.add(sessions.get(i));
 
-                    ElasticSearchController.UpdateProfileTask updateProfileTask = new ElasticSearchController.UpdateProfileTask();
-                    updateProfileTask.execute(currentProfile);
-                    //ElasticSearchController.RemoveProfileTask removeProfileTask = new ElasticSearchController.RemoveProfileTask();
-                    //removeProfileTask.execute(currentProfile.getProfileID());
-                    //ElasticSearchController.AddProfileTask addProfileTask = new ElasticSearchController.AddProfileTask();
-                    //addProfileTask.execute(currentProfile);
+                    }
+                    if (sessions.get(i).getStatus().equals("available")) {
+                        availableSessions.add(sessions.get(i));
+
+                    }
+                }
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+
+            // code to notify peeps of the bids
+            for (int i = 0; i < allProfiles.size(); i++) {
+                if (allProfiles.get(i).getProfileID().equals(currentProfile.getProfileID())) {
+                    if (allProfiles.get(i).isNewBid() == true) {
+                        Notify();
+                        allProfiles.get(i).setNewBid(false);
+
+                        ElasticSearchController.UpdateProfileTask updateProfileTask = new ElasticSearchController.UpdateProfileTask();
+                        updateProfileTask.execute(currentProfile);
+                        //ElasticSearchController.RemoveProfileTask removeProfileTask = new ElasticSearchController.RemoveProfileTask();
+                        //removeProfileTask.execute(currentProfile.getProfileID());
+                        //ElasticSearchController.AddProfileTask addProfileTask = new ElasticSearchController.AddProfileTask();
+                        //addProfileTask.execute(currentProfile);
+                    }
                 }
             }
         }
@@ -522,5 +561,50 @@ public class MethodsController extends AppCompatActivity {
             return null;
         }
     }
+
+    /**
+     * http://stackoverflow.com/questions/5474089/how-to-check-currently-internet-connection-is-available-or-not-in-android
+     * retruns true if connected to internet
+     * @return
+     */
+    public void checkConnectivity(){
+
+        setConnectivity();
+        if(!Connectivity){
+            Toast.makeText(MethodsController.this, "No Internet! \n continuing in offline mode", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(MethodsController.this, MySessionsActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    public void setConnectivity(){
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            Connectivity = Boolean.TRUE;
+            //Upload offline save file
+            ArrayList<Session> toUpload = loadOffline();
+            if(toUpload.size() > 0 ) {
+                for (int i = 0; i < toUpload.size(); i++) {
+                    Session session = toUpload.get(i);
+                    ElasticSearchController.AddSessionTask addSessionTask = new ElasticSearchController.AddSessionTask();
+                    addSessionTask.execute(session);
+                    //loadElasticSearch();
+
+                }
+                toUpload.clear();
+                saveInFile(OFFLINEFILE,toUpload);
+            }
+
+        }else{
+            Connectivity = Boolean.FALSE;
+        }
+
+
+
+    }
+
+
 
 }
