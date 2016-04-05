@@ -147,6 +147,7 @@ public class AvailableSessionsActivity extends MethodsController {
                 Intent intent = new Intent(AvailableSessionsActivity.this, BidOnSessionActivity.class);
                 // http://stackoverflow.com/questions/2091465/how-do-i-pass-data-between-activities-on-android
                 intent.putExtra("index", properIndex);
+                intent.putExtra("isSearchedList", isSearchedList);
                 startActivity(intent);
             }
         });

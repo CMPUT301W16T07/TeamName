@@ -39,9 +39,14 @@ public class BidOnSessionActivity extends MethodsController {
             screen is passed through the intent. Here is where we access it
         */
         final int index = intent.getIntExtra("index", 0);
+        final boolean isSearchedList = intent.getBooleanExtra("isSearchedList", false);
 
         loadElasticSearch();
-        selectedSessionIndex = sessions.indexOf(availableSessions.get(index));
+        if (isSearchedList) {
+            selectedSessionIndex = index;
+        } else {
+            selectedSessionIndex = sessions.indexOf(availableSessions.get(index));
+        }
         selectedSession = sessions.get(selectedSessionIndex);
         checkForSelf(selectedSession);
         initializeFields(selectedSessionIndex);
